@@ -25,3 +25,37 @@ Liste (non-exhaustive) des fonctionnalités à développer par version du projet
 - v2 :
     - Gestion des catégories
     - Notifications
+
+
+Dépendances pour la création des fonctionnalités
+
+- 1 :
+    - Sign Up
+    - Liste des jeux
+
+- 2 :
+    - Login
+    - Détails de chaque jeu
+    - Système de notation
+    - Pagination à l'affichage
+
+- 3 :
+    - Système de recommandations
+    - Liste des users
+
+- 4 :
+    - Gestion du profil de chaque user
+    - Gestion de la liste de jeux
+    - Gestion des détails de chaque jeu
+    - Moteur de recherche
+    - Possibilité de suivre un user
+    - Classement des meilleurs jeux
+
+
+- 5 :
+    - Filtres/Tri
+    - Classement des utilisateurs les plus suivis
+
+- 6 :
+    - Gestion des catégories
+    - Notifications
