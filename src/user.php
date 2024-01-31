@@ -15,6 +15,8 @@ class User {
             $this->id = $id;
             $this->vecteur = $vecteur;
         }
+    public function get_vecteur_jeux()
+        {}
     }
 
 ?>;
