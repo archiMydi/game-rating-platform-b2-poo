@@ -1,6 +1,6 @@
 <?php
 
-class jeux {
+class Jeux {
     private string $nom;
     private string $genre;
     protected int $id;
