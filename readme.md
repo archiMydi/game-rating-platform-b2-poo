@@ -29,6 +29,9 @@ Liste (non-exhaustive) des fonctionnalités à développer par version du projet
 
 Dépendances pour la création des fonctionnalités
 
+- 0 :
+    - Création de la base de données et des tables associées
+
 - 1 :
     - Sign Up
     - Liste des jeux
@@ -59,3 +62,5 @@ Dépendances pour la création des fonctionnalités
 - 6 :
     - Gestion des catégories
     - Notifications
+
+Menu

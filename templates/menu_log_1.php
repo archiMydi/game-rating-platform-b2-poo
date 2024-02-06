@@ -1,4 +1,5 @@
-<!-- nav-log-1 -->
+<!-- nav-log-1 
+Menu quand l'utilisateur n'est pas connecté -->
 <nav id='nav-log-1'>
     <ul class="menu-nav">
         <li class="menu-nav__item">
