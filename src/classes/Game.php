@@ -1,26 +1,30 @@
-class Game {
+<?php
 
+class game {
     private int $id;
-    private String $name;
-    private String $visuel;
-    private String $infos;
-
-    public function getName() {
-
-        return $name;
-
+    private $name;
+    private $infos;
+    private $visuel;
+    public function __construct($id, $name, $infos, $visuel) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->infos = $infos;
+        $this->visuel = $visuel;
     }
 
-    public function getURLVisuel() {
-
-        return $visuel;
-
+    public function getGame() {
+        $tab_game = array($this->visuel, $this->name, $this->infos);
+        return $tab_game;
     }
 
-    public function getID() {
-
-        return $id;
-
+    public function getGameForList() {
+        $tab_game = array($this->visuel, $this->name);
+        return $tab_game;
     }
 
+    public function getVisuel() {
+        return $this->visuel;
+    }
 }
+
+?>

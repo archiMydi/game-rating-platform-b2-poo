@@ -12,7 +12,7 @@
     <?php
         error_reporting(E_ALL); ini_set("display_errors", 1);
         include("src/classes/User.php");
-        $test = new User();
+        $test = new User(); // ajouter paramètres
         if($test->checkMDP("password")) {
 
             echo "C'est bon";
