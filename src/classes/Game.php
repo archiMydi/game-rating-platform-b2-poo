@@ -1,5 +1,6 @@
 class Game {
 
+    private int $id;
     private String $name;
     private String $visuel;
     private String $infos;
@@ -13,6 +14,12 @@ class Game {
     public function getURLVisuel() {
 
         return $visuel;
+
+    }
+
+    public function getID() {
+
+        return $id;
 
     }
 
