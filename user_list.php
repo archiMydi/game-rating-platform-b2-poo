@@ -1,23 +1,16 @@
-<!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Utilisateurs</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-</head>
+<?php include_once 'src/templates/html_head.php';
+htmlHead('Utilisateurs'); ?>
 
 <body id='user-list-page'>
     <section class='user-list-container'>
 
     </section>
     <script>
-
+        let db_users = <?php include_once 'src/scripts/users_to_js.php'; ?>
     </script>
 
-    <script src='script.js'></script>
+    <script src='static/js/user_list.js'></script>
 </body>
 
 </html>

@@ -1,7 +1,8 @@
 <?php
-include("../../connection.inc.php");
+include("src/templates/connection.inc.php");
 
-class User {
+class User
+{
 
     private int $id = 1;
     private String $pseudo = "enzo";
@@ -11,19 +12,20 @@ class User {
     private String $avatar = "rien";
     private int $jeu_fav = 3;
 
-    function getPseudo() {
+    function getPseudo()
+    {
 
         return $this->pseudo;
-
     }
 
-    function getEmail() {
+    function getEmail()
+    {
 
         return $this->email;
-
     }
 
-    function checkMDP($mdp) {
+    function checkMDP($mdp)
+    {
 
         $mdp_crypt = $mdp;
 
@@ -35,10 +37,9 @@ class User {
         $result = $this->conn->query($sql);
         if ($result->num_rows > 0) {
             // output data of each row
-            if($row = $result->fetch_assoc()) {
+            if ($row = $result->fetch_assoc()) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
         } else {
@@ -50,15 +51,13 @@ class User {
 
     }
 
-    function hasRated($game, $criterion) {
+    function hasRated($game, $criterion)
+    {
 
         $rated = false;
 
         //Test si le joueur a déjà voté
 
         return $rated;
-
     }
-
 }
-?>
