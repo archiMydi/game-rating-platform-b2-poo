@@ -1,14 +1,23 @@
 <?php
 
-class User {
+class user {
 
-    private int $id = 1;
-    private String $pseudo = "enzo";
-    private String $email = "enzo.guillemet@my-digital-school.org";
+    private int $id; // = 1;
+    private String $pseudo; // = "enzo";
+    private String $email; // = "enzo.guillemet@my-digital-school.org";
     //Description, pp, jeux pref -> add BDD
-    private String $description = "rien";
-    private String $avatar = "rien";
-    private int $jeu_fav = 3;
+    private String $description; // = "rien";
+    private String $avatar; // = "rien";
+    private int $jeu_fav; // = 3;
+
+    public function __construct($id, $pseudo, $email, $description, $avatar, $jeu_fav) {
+        $this->id = $id;
+        $this->pseudo = $pseudo;
+        $this->email = $email;
+        $this->description = $description;
+        $this->avatar = $avatar;
+        $this->jeu_fav = $jeu_fav;
+    }
 
     function getPseudo() {
 
@@ -24,7 +33,9 @@ class User {
 
     function checkMDP($mdp, $conn) {
 
-        $mdp_crypt = $mdp;
+        // encryptage du mot de passe avec l'algorithme BCRYPT, 
+        // crée une chaîne de 60 caractères
+        $mdp_crypt = password_hash($mdp, PASSWORD_BCRYPT);
 
         // Check connection
         if($conn != null) {
