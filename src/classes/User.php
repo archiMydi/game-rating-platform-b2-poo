@@ -5,7 +5,7 @@ class User {
 
     private int $id = 1;
     private String $pseudo = "enzo";
-    private String $email = "gameblack@rubiscraft.fr";
+    private String $email = "enzo.guillemet@my-digital-school.org";
     //Description, pp, jeux pref -> add BDD
     private String $description = "rien";
     private String $avatar = "rien";
