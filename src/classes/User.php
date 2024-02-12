@@ -10,13 +10,17 @@ class user {
     private String $avatar; // = "rien";
     private int $jeu_fav; // = 3;
 
-    public function __construct($id, $pseudo, $email, $description, $avatar, $jeu_fav) {
-        $this->id = $id;
+    public function __construct($pseudo, $mdp, $conn) {
         $this->pseudo = $pseudo;
-        $this->email = $email;
-        $this->description = $description;
-        $this->avatar = $avatar;
-        $this->jeu_fav = $jeu_fav;
+        $sql = "SELECT * FROM user WHERE pseudo = '$this->pseudo' AND password = '$mdp'";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+        $tab = $stmt->fetchAll();
+        if ($result > 0) {
+            $this->id = $tab[0]['id'];
+            $this->email = $tab[0]['email'];
+        }
     }
 
     function getPseudo() {
@@ -39,18 +43,18 @@ class user {
 
         // Check connection
         if($conn != null) {
-            $sql = "SELECT * FROM user WHERE pseudo = '$this->pseudo' AND password = '$mdp_crypt'";
+            $sql = "SELECT * FROM user WHERE pseudo = '$this->pseudo' AND password = '$mdp'";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $tab = $stmt->fetchAll();
             if ($result > 0) {
                 // output data of each row
                 return true;
-                
+
             } else {
                 return false;
             }
-            $conn->close();
 
         }
         else {
