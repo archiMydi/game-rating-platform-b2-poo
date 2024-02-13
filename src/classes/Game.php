@@ -12,14 +12,12 @@ class game {
         $this->visuel = $visuel;
     }
 
-    public function getGame() {
-        $tab_game = array($this->visuel, $this->name, $this->infos);
-        return $tab_game;
+    public function getName() {
+        return $this->name;
     }
 
-    public function getGameForList() {
-        $tab_game = array($this->visuel, $this->name);
-        return $tab_game;
+    public function getGameInfos() {
+        return $this->infos;
     }
 
     public function getVisuel() {
