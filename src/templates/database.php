@@ -147,4 +147,18 @@ function registerNewUser(string $pseudo, string $mdp, string $email) : int {
 
 }
 
+
+
+// fonction fourre-tout pour récupérer des informations de la base de données
+// prend une commande SQL en paramètre (pour les autres fichiers php)
+function getInfosFromDatabase(String $sql) {
+
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    return $result; // retourne un tuple d'informations
+
+}
+
 ?>

@@ -81,12 +81,15 @@ class user {
     public function GetRatedGames() {
         // renvoie la liste des jeux notés
 
-        /* paramètres nécéssaires :
-        - ratings où user = pseudo
-        ObjectUser.GetRatedGames -> SELECT * FROM RATING r WHERE
-         r.user_id = ObjectUser.id
-        */ 
-        return;
+        // requête récupérant la liste des jeux notés par l'utilisateur
+        $sql = 'SELECT g.name, g.visuel  
+        FROM rating r INNER JOIN game g ON g.id = r.game_id 
+        WHERE r.user_id = '.$this->id.' GROUP BY g.name;';
+
+        // appelle une fonction pour récupérer les données dans database.php
+        $result = getInfosFromDatabase($sql);
+
+        return $result;
     }
 
 }

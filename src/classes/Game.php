@@ -1,5 +1,7 @@
 <?php
 
+include_once("src/templates/database.php");
+
 class game {
     private int $id;
     private $name;
@@ -28,11 +30,18 @@ class game {
     }
 
     public function GetRatingUsers() {
-        // renvoie la liste des USERS ayant notés un jeu
+        // renvoie la liste des users ayant notés un jeu
 
-        // possibilité de récupérer un vecteur ratings dans user 
-        // (nécéssite d'abord l'implémentation de la fonction GetRatedGames dans user)
-        return;
+        // requête récupérant la liste des jeux notés par l'utilisateur
+        $sql = 'SELECT u.pseudo FROM rating r 
+        INNER JOIN user u ON u.id = r.user_id
+        WHERE r.game_id = '.$this->id.' GROUP BY u.pseudo';
+
+        // appelle une fonction pour récupérer les données dans database.php
+        $result = getInfosFromDatabase($sql);
+
+        return $result;
+
     }
 }
 
