@@ -1,5 +1,4 @@
 <?php
-include("../../connection.inc.php");
 
 class user {
 
@@ -32,30 +31,33 @@ class user {
 
     }
 
-    function checkMDP($mdp) {
+    function checkMDP($mdp, $conn) {
 
         // encryptage du mot de passe avec l'algorithme BCRYPT, 
         // crée une chaîne de 60 caractères
         $mdp_crypt = password_hash($mdp, PASSWORD_BCRYPT);
 
         // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $sql = "SELECT mdp FROM user WHERE pseudo = $this->pseudo AND mdp = $mdp_crypt";
-        $result = $this->conn->query($sql);
-        if ($result->num_rows > 0) {
-            // output data of each row
-            if($row = $result->fetch_assoc()) {
+        if($conn != null) {
+            $sql = "SELECT * FROM user WHERE pseudo = '$this->pseudo' AND password = '$mdp_crypt'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            if ($result > 0) {
+                // output data of each row
                 return true;
-            }
-            else {
+                
+            } else {
                 return false;
             }
-        } else {
-            return false;
+            $conn->close();
+
         }
-        $conn->close();
+        else {
+
+            echo "Null";
+
+        }
 
         //return md5($mdp) == $mdp_db;
 
