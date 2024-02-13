@@ -1,5 +1,7 @@
 <?php
 
+include_once("src/templates/database.php");
+
 class user {
 
     private int $id; // = 1;
@@ -10,16 +12,18 @@ class user {
     private String $avatar; // = "rien";
     private int $jeu_fav; // = 3;
 
-    public function __construct($pseudo, $mdp, $conn) {
+    public function __construct($id, $pseudo, $email, $description, $avatar, $jeu_fav) {
+        $this->id = $id;
         $this->pseudo = $pseudo;
-        $sql = "SELECT * FROM user WHERE pseudo = '$this->pseudo' AND password = '$mdp'";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $tab = $stmt->fetchAll();
-        if ($result > 0) {
-            $this->id = $tab[0]['id'];
-            $this->email = $tab[0]['email'];
+        $this->email = $email;
+        if($description != null) {
+            $this->description = $description;
+        }
+        if($avatar != null) {
+            $this->avatar = $avatar;
+        }
+        if($jeu_fav != null) {
+            $this->jeu_fav = $jeu_fav;
         }
     }
 
@@ -35,31 +39,28 @@ class user {
 
     }
 
-    function checkMDP($mdp, $conn) {
+    function getID() {
+
+        return $this->id;
+
+    }
+
+    function checkMDP($mdp) {
+
+        global $conn;
 
         // encryptage du mot de passe avec l'algorithme BCRYPT, 
         // crée une chaîne de 60 caractères
         $mdp_crypt = password_hash($mdp, PASSWORD_BCRYPT);
 
-        // Check connection
-        if($conn != null) {
-            $sql = "SELECT * FROM user WHERE pseudo = '$this->pseudo' AND password = '$mdp'";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-            $tab = $stmt->fetchAll();
-            if ($result > 0) {
-                // output data of each row
-                return true;
+        if($mdp == getMDP($this)) {
 
-            } else {
-                return false;
-            }
+            return true;
 
         }
         else {
 
-            echo "Null";
+            return false;
 
         }
 
