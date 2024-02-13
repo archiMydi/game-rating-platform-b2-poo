@@ -77,5 +77,16 @@ class user {
 
     }
 
+    public function GetRatedGames() {
+        // renvoie la liste des jeux notés
+
+        /* paramètres nécéssaires :
+        - ratings où user = pseudo
+        ObjectUser.GetRatedGames -> SELECT * FROM RATING r WHERE
+         r.user_id = ObjectUser.id
+        */ 
+        return;
+    }
+
 }
 ?>
