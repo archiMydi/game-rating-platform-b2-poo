@@ -1,27 +1,36 @@
 //Un user a les attributs suivant à afficher : Pseudo, Description, Photo, Jeu préféré
-
-let userTable = [];
-
-function createUserTable() { //Créer un array pour le stockage local des users
-    db_users.forEach(u => {
-        let user = {
-            id: u.id,
-            mail: u.email,
-            pseudo: u.pseudo,
-        }
-        userTable.push(user)
-    });
-}
-
 function appendUsers() {
-    userTable.forEach(u => {
-        console.log(u)
-        $($('.user-list-container')[0]).append(`<div class='user-container'><img class="profile-picture" src="https://placehold.co/50" alt="${u.pseudo}'s profile picture"/><p class='pseudo'>${u.pseudo}</p><p class='catch-phrase'>Lorem Ipsum Dolor Sit Amet</p></div>`)
+    db_users.forEach(u => {
+        $($('.user-list-container')[0]).append(`<div class='user-container' onclick='showUserDetails(${u.id})'>
+        <div class='user-first-container-line'>
+        <p class='pseudo'>${u.pseudo}</p>
+        <img class="profile-picture" src="${u.pictureSRC}" alt="${u.pseudo}'s profile picture"/>
+        </div>
+        <p class='catch-phrase'>${u.catchPhrase}</p>
+        <p class='fav-game'>${u.favGame}
+        </div>`)
     });
-
 }
 
+function showUserDetails(uid) {
+    let u = db_users.filter((db_user) => { return uid == db_user.id }).pop();
+    $.get('src/templates/user_details.php', {
+        id: u.id,
+        pseudo: u.pseudo,
+        favGame: u.favGame,
+        description: u.catchPhrase,
+        avatar: u.pictureSRC
+    }, function (response) {
+        $('body').append(response);
+        $('.modal').css("display", "block");
+    });
+}
 
+window.onclick = function (event) {
+    let modal = $('.modal')[0];
+    if (event.target == modal) {
+        modal.remove();
+    }
+}
 
-createUserTable()
 appendUsers()

@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1); //Enlever les 2 lignes avant de mettre en prod
+
 function htmlHead($title)
 {
     echo "<head>
