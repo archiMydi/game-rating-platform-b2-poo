@@ -4,16 +4,17 @@
   border: 0;
   list-style: none;
   text-decoration: none;
-  font-size: 22px;
-  font-family: "Helvatica", sans-serif;
 }
 
 #body-game-list {
   overflow-x: hidden;
+  font-size: 22px;
+  font-family: "Helvatica", sans-serif;
 }
 #body-game-list main {
   display: flex;
   flex-direction: row;
+  /*SOURCE RATING CSS : https://codepen.io/Diegobrix/pen/vYQKJbE*/
 }
 #body-game-list main #menu-aside {
   display: flex;
@@ -22,7 +23,7 @@
   flex-wrap: wrap;
   min-width: 150px;
   width: 15%;
-  height: 100vh;
+  height: 250vh;
   padding: 100px 30px;
   background-color: rgb(52, 69, 168);
 }
@@ -92,8 +93,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   flex-wrap: wrap;
+  gap: 20px;
   width: 100%;
   padding: 50px 0;
   background-color: rgb(59, 57, 133);
@@ -123,7 +124,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   width: 100%;
-  padding: 0 0;
+  padding: 0 0 100px;
   background-color: aliceblue;
 }
 #body-game-list main #details-game-section .gameFiche {
@@ -137,13 +138,20 @@
   display: flex;
   align-items: center;
   font-size: 30px;
-  width: 96.2%;
+  width: 100%;
   padding: 50px 30px;
   color: white;
   background-color: rgb(85, 81, 194);
 }
+#body-game-list main #details-game-section .gameFiche .game-header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
 #body-game-list main #details-game-section .gameFiche .galery {
   display: flex;
+  align-items: center;
   justify-content: center;
   width: 100%;
   height: 650px;
@@ -160,7 +168,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 70%;
+  width: 100%;
   color: white;
 }
 #body-game-list main #details-game-section .gameFiche .details-game-info .details-game-description {
@@ -174,10 +182,159 @@
   border-radius: 0 20px 20px 0;
   background-color: rgb(52, 69, 168);
 }
+#body-game-list main #details-game-section .gameFiche .recommandation {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 100px 0;
+}
+#body-game-list main #details-game-section .gameFiche .recommandation .game-list-recommandation {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 40px 0;
+}
+#body-game-list main #details-game-section .gameFiche .recommandation .game-list-recommandation img {
+  min-width: 200px;
+  width: 20%;
+  border-radius: 20px;
+}
+#body-game-list main #details-game-section .gameFiche .user-appreciation {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+#body-game-list main #details-game-section .gameFiche .game-note {
+  padding: 40px 0;
+}
 #body-game-list main #details-game-section .cta {
   padding: 10px 25px;
   border-radius: 10px;
   color: white;
   background-color: rgb(107, 101, 194);
   cursor: pointer;
+}
+#body-game-list main #rating-section {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  overflow: auto;
+  background-color: rgba(255, 255, 255, 0.486);
+}
+#body-game-list main #rating-section span {
+  display: flex;
+  z-index: 2;
+  position: relative;
+  top: 10%;
+  left: 20%;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: rgb(59, 57, 133);
+  cursor: pointer;
+  transition: 0.5s;
+}
+#body-game-list main #rating-section span:hover {
+  background-color: rgb(52, 69, 168);
+  transform: scale(0.95);
+}
+#body-game-list main #rating-section #rating-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 400px;
+  width: 45%;
+  padding: 40px;
+  border-radius: 30px;
+  background-color: rgb(52, 69, 168);
+  color: white;
+}
+#body-game-list main #rating-section #rating-form h3 {
+  margin-top: 20px;
+}
+#body-game-list main #rating-section #rating-form button {
+  margin-top: 40px;
+  padding: 10px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.5s;
+  background-color: rgb(107, 101, 194);
+  color: white;
+}
+#body-game-list main #rating-section #rating-form button:hover {
+  background-color: rgb(59, 57, 133);
+  transform: scale(0.95);
+}
+#body-game-list main #rating-section .rating {
+  min-width: 50px;
+  width: 35%;
+  margin: 30px 0;
+  transform: rotateY(180deg);
+}
+#body-game-list main #rating-section .rating .rating-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+#body-game-list main #rating-section .rating .rating-container input {
+  display: none;
+}
+#body-game-list main #rating-section .rating .rating-container label {
+  width: 20%;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+#body-game-list main #rating-section .rating .rating-container .star-stroke {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(107, 101, 194);
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+          clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  transition: 0.5s;
+}
+#body-game-list main #rating-section .rating .rating-container .star-fill {
+  width: 70%;
+  aspect-ratio: 1;
+  background-color: rgb(52, 69, 168);
+  -webkit-clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+          clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  transition: 0.5s;
+}
+#body-game-list main #rating-section .rating .rating-container input:hover ~ label .star-stroke,
+#body-game-list main #rating-section .rating .rating-container input:checked ~ label .star-stroke {
+  background-color: rgb(219, 152, 88);
+}
+#body-game-list main #rating-section .rating .rating-container input:checked ~ label .star-stroke .star-fill {
+  background-color: rgb(219, 152, 88);
+}
+#body-game-list main #rating-section .rating .rating-container label:hover .label-description::after {
+  content: attr(data-content);
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin-top: 10px;
+  margin-inline: auto;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  transform: rotateY(180deg);
 }/*# sourceMappingURL=style.css.map */
