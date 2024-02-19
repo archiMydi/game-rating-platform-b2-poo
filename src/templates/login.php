@@ -1,5 +1,7 @@
 <?php
     session_start();
+    session_destroy();
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +35,7 @@
                 if($user != null) {
             
                     $_SESSION['user'] = $user;
-                    echo "Connexion réussi !";
+                    header('Location: account.php');
             
                 }
                 else {
