@@ -5,7 +5,8 @@
 -- Server version	8.0.36
 
 USE db_game_rating_platform_b2_oop;
-
+ 
+DROP USER IF EXISTS 'dev'@'localhost';
 CREATE USER 'dev'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON db_game_rating_platform_b2_oop TO 'dev'@'localhost';
 

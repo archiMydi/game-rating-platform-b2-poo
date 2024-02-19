@@ -86,9 +86,8 @@ include ("src/templates/database.php");
 
     
     <script>
-        let list_all_games = <?php
-        GetAllGames(); // appelle la fonction php GetAllGames()
-        ?> //ajoute variable list_all_games dans index.js
+       let list_all_games = <?php getGamesForFrontend(); // appelle la fonction php GetAllGames()
+        ?>; //ajoute variable list_all_games dans index.js
         console.log('launched GetAllGames');
     </script>
     <script src='./src/scripts/index.js'></script>

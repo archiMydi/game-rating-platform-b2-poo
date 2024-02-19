@@ -208,7 +208,6 @@ function insertRating(int $id_user, int $id_game, array $notes) : int {
         return 1;
 
     }
-    return 0;
 
 }
 
@@ -252,7 +251,6 @@ function updateRating(int $id_user, int $id_game, array $notes) : int {
         return 1;
 
     }
-    return 0;
 
 }
 
@@ -377,7 +375,8 @@ function getListCriterion() : array {
 
 }
 
-function GetAllGames() : array {
+// fonction récupérant liste de jeux pour backend
+function getAllGames() : array {
     // récupère les informations de chaque jeu
     $sql = 'SELECT * FROM game;';
     //Sélection  des informations en base de données
@@ -388,18 +387,30 @@ function GetAllGames() : array {
     $tab = $stmt->fetchAll();
     
     return $tab;
-
 }
 
-function GetAllGenres() {
+// fonction récupérant liste de jeux pour front-end au format Json
+function getGamesForFrontend() {
+    // récupère les informations de chaque jeu
+    $sql = 'SELECT * FROM game;';
+    //Sélection  des informations en base de données
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $tab = $stmt->fetchAll(); // convertir en json
+    echo $tab;
+}
+
+function getAllGenres() {
     // récupère la liste de tous les genres (sans doublons)
     $sql = 'SELECT genre FROM game GROUP BY genre;';
     //Sélection  des informations en base de données
     global $conn;
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-
+    $request = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll();
     return $result;
 
 }
@@ -412,7 +423,8 @@ function getInfosFromDatabase(String $sql) {
     global $conn;
     $stmt = $conn->prepare($sql);
     $stmt->execute();
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $request = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $result = $stmt->fetchAll();
     return $result; // retourne un tuple d'informations
 
 }
