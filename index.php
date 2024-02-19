@@ -50,7 +50,7 @@
 
 
             <section id="rating-section">
-                <span  onclick="close('rating-section')">x</span>
+                <span  onclick="closeElement('rating-section')">x</span>
                 <form id="rating-form">
                     
                     <h3>Rating Gameplay</h3>

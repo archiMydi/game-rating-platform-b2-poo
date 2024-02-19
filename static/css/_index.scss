@@ -1,21 +1,13 @@
 @use 'var';
 
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    list-style: none;
-    text-decoration: none;
-}
 
 #body-game-list {
 
-    overflow-x: hidden;
-
     font: {
         size: var.$size;
-        family: var.$font;
     }
+
+    overflow-x: hidden;
 
     //STRUCTURE
 

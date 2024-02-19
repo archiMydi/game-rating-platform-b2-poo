@@ -1,14 +1,11 @@
 //FUNCTION DISPLAY POP-UP
-function show(id) {
+function showElement(id) {
   document.getElementById(id).style.display = 'flex';
 }
 
-function close(id) {
-  console.log("J'ai cliqué.");
-  console.log(id);
+function closeElement(id) {
   document.getElementById(id).style.display = 'none';
 }
-
 
 
 //GAMES
@@ -84,7 +81,7 @@ function showGameDetails(gameName) {
 
                     <section class="game-note">
                       <p>`+ gameNote + `</p>
-                      <button class="cta" type="button" onclick="show('rating-section')">Noter</button>
+                      <button class="cta" type="button" onclick="showElement('rating-section')">Noter</button>
                     </section>
 
 
@@ -125,6 +122,7 @@ function goBack() {
 
 
 
+//FORM RATING
 
 
 
