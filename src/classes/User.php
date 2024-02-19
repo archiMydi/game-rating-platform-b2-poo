@@ -50,9 +50,15 @@ class User
         $this->id = $id;
         $this->pseudo = $pseudo;
         $this->email = $email;
-        $this->description = $description;
-        $this->avatar = $avatar;
-        $this->jeu_fav = $jeu_fav;
+        if ($description != null) {
+            $this->description = $description;
+        }
+        if ($avatar != null) {
+            $this->avatar = $avatar;
+        }
+        if ($jeu_fav != null) {
+            $this->jeu_fav = $jeu_fav;
+        }
     }
 
     function getPseudo()
