@@ -51,12 +51,12 @@
                         <img src="./img/gameVisual.jpeg" alt="gameVisual" />
                     </section>
 
-                    <section id="details-game-info">
-                        <section id="details-game-description">
+                    <section class="details-game-info">
+                        <section class="details-game-description">
                             <h3>Description</h3>
                             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, veniam eum facilis voluptatum aut debitis, animi ipsam pariatur accusamus culpa voluptatibus unde sequi, recusandae reprehenderit dignissimos totam dolor fugit dicta.</p>
                         </section>
-                        <section id="details-game-genre">
+                        <section class="details-game-genre">
                             <h3>Genres</h3>
                             <ul>
                                 <li>Genre 1</li>
@@ -65,13 +65,13 @@
                         </section>
                     </section>
 
-                    <section id="recommandation">
+                    <section class="recommandation">
                         <img src="./img/gameVisual.jpeg" alt="gameVisual" />
                         <img src="./img/gameVisual.jpeg" alt="gameVisual" />
                         <img src="./img/gameVisual.jpeg" alt="gameVisual" />
                     </section>
 
-                    <section id="user-appreciation">
+                    <section class="user-appreciation">
                         <svg width="960" height="500"></svg>
                     </section>
                 </article>

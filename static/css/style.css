@@ -156,9 +156,23 @@
   -o-object-fit: cover;
      object-fit: cover;
 }
-#body-game-list main #details-game-section .gameFiche #details-game-info {
+#body-game-list main #details-game-section .gameFiche .details-game-info {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  width: 70%;
+  color: white;
+}
+#body-game-list main #details-game-section .gameFiche .details-game-info .details-game-description {
+  width: 50%;
+  padding: 50px;
+  border-radius: 20px 0 0 20px;
+  background-color: rgb(59, 57, 133);
+}
+#body-game-list main #details-game-section .gameFiche .details-game-info .details-game-genre {
+  padding: 50px;
+  border-radius: 0 20px 20px 0;
+  background-color: rgb(52, 69, 168);
 }
 #body-game-list main #details-game-section .cta {
   padding: 10px 25px;
