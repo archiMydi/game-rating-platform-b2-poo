@@ -82,5 +82,39 @@ class user {
 
     }
 
+    function hasRatedGame($id_game) {
+
+        return checkRatingGame($id_game, $this->id);
+
+    }
+
+    function getRatedGame() : array {
+
+        return getRatedGame($this->id);
+
+    }
+
+    function getNotRatedGame() : array {
+
+        $games_r = GetAllGames();
+        $games = array();
+        $ratedGame = getRatedGame($this->id);
+
+        foreach($games_r as $game) {
+
+            $game_elm = [$game['id'], $game['name']];
+
+            if(!in_array($game_elm, $ratedGame)) {
+
+                array_push($games, $game_elm);
+
+            }
+
+        }
+
+        return $games;
+
+    }
+
 }
 ?>

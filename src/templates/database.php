@@ -170,7 +170,214 @@ function registerNewUser(string $pseudo, string $mdp, string $email) : int {
 
 }
 
-function GetAllGames() {
+/**
+ * Enregistre une note pour un jeu
+ *
+ * @param int     $id_user   Identifiant de l'utilisateur
+ * @param int     $id_game   Identifiant du jeu
+ * @param array     $notes     Liste des notes
+ *
+ * @return int Resultat -> 1: erreur de BDD; 0: pas de problèmes
+ */
+function insertRating(int $id_user, int $id_game, array $notes) : int {
+
+    global $conn;
+
+    $sql = 'INSERT INTO rating (criterion_id, game_id, user_id, value) VALUES ';
+    $i = 0;
+
+    foreach($notes as $id => $note) {
+
+        if($i+1 === count($notes)) {
+            $sql .= "($id, $id_game, $id_user, $note)";
+        }
+        else {
+            $sql .= "($id, $id_game, $id_user, $note),";
+            $i++;
+        }
+
+    }
+
+    try{
+        $conn->exec($sql);
+        return 0;
+    }
+    catch (PDOException $e) {
+
+        echo $e->getMessage();
+        return 1;
+
+    }
+    return 0;
+
+}
+
+/**
+ * Enregistre une note pour un jeu
+ *
+ * @param int     $id_user   Identifiant de l'utilisateur
+ * @param int     $id_game   Identifiant du jeu
+ * @param array     $notes     Liste des notes
+ *
+ * @return int Resultat -> 1: erreur de BDD; 0: pas de problèmes
+ */
+function updateRating(int $id_user, int $id_game, array $notes) : int {
+
+    global $conn;
+
+    $sql = "";
+
+    foreach($notes as $id => $note) {
+
+        if(checkRated($id, $id_game, $id_user)) {
+
+            $sql .= "UPDATE rating SET value = $note WHERE criterion_id = $id AND game_id = $id_game AND user_id = $id_user;";
+
+        }
+        else {
+
+            $sql .= "INSERT INTO rating (criterion_id, game_id, user_id, value) VALUES ($id, $id_game, $id_user, $note);";
+
+        }
+
+    }
+
+    try{
+        $conn->exec($sql);
+        return 0;
+    }
+    catch (PDOException $e) {
+
+        echo $e->getMessage();
+        return 1;
+
+    }
+    return 0;
+
+}
+
+function checkRated(int $id_criterion, int $id_game, int $id_user) : bool {
+
+    global $conn;
+
+    $sql = "SELECT * FROM rating WHERE game_id = $id_game AND user_id = $id_user AND criterion_id = $id_criterion";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+
+        return true;
+
+    }
+    else {
+
+        return false;
+
+    }
+
+}
+
+function checkRatingGame(int $id_game, int $id_user) : bool {
+
+    global $conn;
+
+    $sql = "SELECT * FROM rating WHERE game_id = $id_game AND user_id = $id_user";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+
+        return true;
+
+    }
+    else {
+
+        return false;
+
+    }
+
+}
+
+function getRatingGame($id_game, $id_user) {
+
+    global $conn;
+
+    $list = array();
+
+    $sql = "SELECT c.id id_c, c.name nom, r.value note FROM `rating` r JOIN criterion c ON r.criterion_id = c.id WHERE game_id = $id_game AND user_id = $id_user";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+        
+        foreach($tab as $elm) {
+
+            $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
+
+        }
+
+    }
+
+    return $list;
+
+}
+
+function getRatedGame($id_user) : array {
+
+    global $conn;
+
+    $list = array();
+
+    $sql = "SELECT game.name name, game.id id FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+        
+        foreach($tab as $elm) {
+
+            array_push($list, [$elm['id'], $elm['name']]);
+
+        }
+
+    }
+
+    return $list;
+
+}
+
+/**
+ * Récupère la liste des critères de notation enregistrer
+ *
+ * @return array Liste des critères : liste[<id>] = [<nom>]
+ */
+function getListCriterion() : array {
+
+    $list = array();
+    global $conn;
+
+    $sql = 'SELECT * FROM criterion';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+        
+        foreach($tab as $elm) {
+
+            $list[$elm['id']] = $elm['name'];
+
+        }
+
+    }
+
+    return $list;
+
+}
+
+function GetAllGames() : array {
     // récupère les informations de chaque jeu
     $sql = 'SELECT * FROM game;';
     //Sélection  des informations en base de données
@@ -178,8 +385,9 @@ function GetAllGames() {
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $tab = $stmt->fetchAll();
     
-    return $result;
+    return $tab;
 
 }
 
