@@ -1,8 +1,40 @@
 let gameTest = 'Elden Ring';
 
+console.log(list_all_games);
+
+// let url='database.php'; // url = url du serveur PHP
+
 document.addEventListener('DOMContentLoaded', function() {
     showGame(gameTest);
+    getAllGames();
 })
+
+/* async function getAllGames() {
+    console.log('Launched getAllGames'); */
+    /* const response = await fetch(url, { 
+    method: "GET"
+    });
+    let result = await response.json();
+    console.log(result);
+    return result; */
+
+/*     $.ajax({
+        type: "POST",
+        url: 'database.php?action=GetAllGames',
+        dataType: 'json',
+        data: {functionname: 'add', arguments: [1, 2]},
+    
+        success: function (obj, textstatus) {
+                      if( !('error' in obj) ) {
+                          yourVariable = obj.result;
+                          console.log(yourVariable);
+                      }
+                      else {
+                          console.log(obj.error);
+                      }
+                }
+    });
+} */
 
 //AFFICHER LA LISTE JEUX
 function showGame(game) {

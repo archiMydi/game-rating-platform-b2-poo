@@ -5,9 +5,9 @@
 
 $servername = "localhost";
 $port = "port";
-$username = "user";
+$username = "dev";
 $password = "password";
-$dbname = "db name";
+$dbname = "db_game_rating_platform_b2_oop";
 
 try {
     $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
