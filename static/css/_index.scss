@@ -1,19 +1,10 @@
 @use 'var';
 
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    list-style: none;
-    text-decoration: none;
-
-    font: {
-        size: var.$size;
-        family: var.$font;
-    }
-}
 
 #body-game-list {
+    font: {
+        size: var.$size;
+    }
 
     overflow-x: hidden;
     //STRUCTURE
@@ -55,7 +46,7 @@
                 justify-content: center;
                 align-items: center;
                 flex-direction: column;
-                
+
                 padding: 50px 0px 50px 50px;
 
                 background-color: var.$background-color;
@@ -133,7 +124,7 @@
             align-items: center;
             flex-direction: column;
             flex-wrap: wrap;
-            
+
             width: 100%;
             padding: 50px 0;
 
@@ -174,12 +165,12 @@
             align-items: center;
             flex-direction: column;
             flex-wrap: wrap;
-            
+
             width: 100%;
             padding: 0 0;
 
             background-color: var.$main-color;
-    
+
             .gameFiche {
                 display: flex;
                 justify-content: center;

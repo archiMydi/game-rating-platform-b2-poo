@@ -254,6 +254,15 @@ function updateRating(int $id_user, int $id_game, array $notes) : int {
 
 }
 
+/**
+ * Vérifie si un critère d'un jeu a bien été noter par un utilisateur
+ * 
+ * @param int    $id_criterion  Identifiant du critère
+ * @param int    $id_game       Identifiant du jeu
+ * @param int    $id_user       Identifiant de l'utilisateur
+ *
+ * @return bool
+ */
 function checkRated(int $id_criterion, int $id_game, int $id_user) : bool {
 
     global $conn;
@@ -275,6 +284,14 @@ function checkRated(int $id_criterion, int $id_game, int $id_user) : bool {
 
 }
 
+/**
+ * Vérifie si un jeu a bien été noter par un utilisateur
+ * 
+ * @param int    $id_game       Identifiant du jeu
+ * @param int    $id_user       Identifiant de l'utilisateur
+ *
+ * @return bool
+ */
 function checkRatingGame(int $id_game, int $id_user) : bool {
 
     global $conn;
@@ -296,7 +313,15 @@ function checkRatingGame(int $id_game, int $id_user) : bool {
 
 }
 
-function getRatingGame($id_game, $id_user) {
+/**
+ * Récupère les notes d'un jeu donner par un utilisateur
+ * 
+ * @param int    $id_game       Identifiant du jeu
+ * @param int    $id_user       Identifiant de l'utilisateur
+ *
+ * @return array Retourne une liste de jeux (liste[id critere] = [nom, note])
+ */
+function getRatingGame(int $id_game, int $id_user) : array {
 
     global $conn;
 
@@ -321,6 +346,13 @@ function getRatingGame($id_game, $id_user) {
 
 }
 
+/**
+ * Récupère la liste des jeux noter par un utilisateur
+ * 
+ * @param int    $id_user       Identifiant de l'utilisateur
+ *
+ * @return array Retourne une liste de jeux ([id jeux, nom])
+ */
 function getRatedGame($id_user) : array {
 
     global $conn;
