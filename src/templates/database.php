@@ -10,7 +10,14 @@ try {
     echo "Erreur de connexion : " . $e->getMessage();
 }
 
-function getInfosUser(String $sql) : user {
+/**
+ * Récupère les informations d'un utilisateur s'il existe
+ *
+ * @param string     $sql Requête SQL
+ *
+ * @return user      retourne l'utilisateur sous forme d'objet user ou null s'il n'existe pas
+ */
+function getInfosUser(String $sql) : ?user {
 
     global $conn;
 
@@ -18,8 +25,11 @@ function getInfosUser(String $sql) : user {
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
-    if ($result > 0) {
+    if (count($tab) > 0) {
         return new user($tab[0]['id'], $tab[0]['pseudo'], $tab[0]['email'], $tab[0]['description'], $tab[0]['avatar'], $tab[0]['jeu_fav']);
+    }
+    else {
+        return null;
     }
 
 }
@@ -34,6 +44,20 @@ function getInfosUser(String $sql) : user {
 function getUserById(int $id) : user {
     global $conn;
     $sql = "SELECT * FROM user WHERE id = '$id'";
+    return getInfosUser($sql);
+}
+
+/**
+ * Récupère un utilisateur avec son pseudo / son adresse email et son mot de passe
+ *
+ * @param string     $id     Pseudo ou adresse email
+ * @param string     $mdp    Mot de passe
+ *
+ * @return user      retourne l'utilisateur sous forme d'objet user ou null s'il n'existe pas
+ */
+function getUser(string $id, string $mdp) : ?user {
+    global $conn;
+    $sql = "SELECT * FROM user WHERE (pseudo = '$id' OR email = '$id') AND password = '$mdp'";
     return getInfosUser($sql);
 }
 
@@ -111,7 +135,6 @@ function registerNewUser(string $pseudo, string $mdp, string $email) : int {
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
-        echo $tab[0]['pseudo'];
         return 1;
 
     }
