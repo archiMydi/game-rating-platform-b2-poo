@@ -29,13 +29,14 @@ class game {
         return $this->visuel;
     }
 
+
     public function GetRatingUsers() {
         // renvoie la liste des users ayant notés un jeu
 
         // requête récupérant la liste des jeux notés par l'utilisateur
         $sql = 'SELECT u.pseudo FROM rating r 
         INNER JOIN user u ON u.id = r.user_id
-        WHERE r.game_id = '.$this->id.' GROUP BY u.pseudo';
+        WHERE r.game_id = '.$this->id.' GROUP BY u.pseudo;';
 
         // appelle une fonction pour récupérer les données dans database.php
         $result = getInfosFromDatabase($sql);

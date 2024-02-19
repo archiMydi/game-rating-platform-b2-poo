@@ -153,7 +153,7 @@ function registerNewUser(string $pseudo, string $mdp, string $email) : int {
         else {
 
             try{
-                $sql = "INSERT INTO user (pseudo, email, password) VALUES ('$pseudo', '$email', '$mdp')";
+                $sql = "INSERT INTO user (pseudo, email, password) VALUES ('$pseudo', '$email', '$mdp');";
                 $conn->exec($sql);
                 return 0;
             }
@@ -170,6 +170,31 @@ function registerNewUser(string $pseudo, string $mdp, string $email) : int {
 
 }
 
+function GetAllGames() {
+    // récupère les informations de chaque jeu
+    $sql = 'SELECT * FROM game;';
+    //Sélection  des informations en base de données
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    
+    return $result;
+
+}
+
+function GetAllGenres() {
+    // récupère la liste de tous les genres (sans doublons)
+    $sql = 'SELECT genre FROM game GROUP BY genre;';
+    //Sélection  des informations en base de données
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+    return $result;
+
+}
 
 
 // fonction fourre-tout pour récupérer des informations de la base de données
