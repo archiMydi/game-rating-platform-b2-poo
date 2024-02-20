@@ -44,7 +44,17 @@ class User
         }
     }
 
-
+    /**
+     * Création d'un nouvel utilisateur
+     * 
+     * @param int $id               Identifiant de l'utilisateur
+     * @param string $pseudo        Pseudo de l'utilisateur
+     * @param string $email         Adresse email de l'utilisateur
+     * @param string $description   Description de l'utilisateur
+     * @param string $avatar        URL de l'image de l'avatar de l'utilisateur
+     * @param int $jeu_fav          Identifiant du jeu favori de l'utilisateur
+     *
+     */
     public function __construct($id, $pseudo, $email, $description, $avatar, $jeu_fav)
     {
         $this->id = $id;
