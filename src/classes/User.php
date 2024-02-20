@@ -10,7 +10,15 @@ class User
     private ?String $description = null; // = "rien";
     private String $avatar; // = "rien";
     private int $jeu_fav; // = 3;
-    public static function getUserListJSON($conn) //Récupérer la liste des users
+
+    /**
+     * Permet de récupérer la liste des utilisateurs au format JSON
+     *
+     * @param     $conn    Connexion à la base de données
+     *
+     * @return ?string Renvoie une liste JSON ou 'false' en cas d'erreur
+     */
+    public static function getUserListJSON($conn) : ?string //Récupérer la liste des users
     {
         try {
             $stmt = $conn->query("SELECT id, pseudo, jeu_fav, description, avatar FROM user");
@@ -204,11 +212,9 @@ class User
 
         foreach($games_r as $game) {
 
-            $game_elm = [$game['id'], $game['name']];
+            if(!in_array($game, $ratedGame)) {
 
-            if(!in_array($game_elm, $ratedGame)) {
-
-                array_push($games, $game_elm);
+                array_push($games, $game);
 
             }
 

@@ -2,6 +2,7 @@
 
 include_once('connection.inc.php');
 include_once('src/classes/User.php');
+include_once('src/classes/Game.php');
 $conn = null;
 try {
     $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
@@ -27,6 +28,30 @@ function getInfosUser(String $sql) : ?user {
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
         return new user($tab[0]['id'], $tab[0]['pseudo'], $tab[0]['email'], $tab[0]['description'], $tab[0]['avatar'], $tab[0]['jeu_fav']);
+    }
+    else {
+        return null;
+    }
+
+}
+
+/**
+ * Récupère les informations d'un jeu s'il existe
+ *
+ * @param string     $sql Requête SQL
+ *
+ * @return game      Retourne le jeu sous forme d'objet game ou null s'il n'existe pas
+ */
+function getInfosGame(String $sql) : ?game {
+
+    global $conn;
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel']);
     }
     else {
         return null;
@@ -89,6 +114,36 @@ function getUserByEmail(String $email) : user {
     $sql = "SELECT * FROM user WHERE email = '$email'";
     return getInfosUser($sql);
 
+}
+
+/**
+ * Récupère un jeu avec son identifiant
+ *
+ * @param int     $id     Identifiant du jeu
+ *
+ * @return ?game      Retourne le jeu sous forme d'objet game
+ */
+function getGameById(int $id) : ?game {
+
+    global $conn;
+    $sql = "SELECT * FROM game WHERE id = '$id'";
+    return getInfosGame($sql);
+
+}
+
+/**
+ * Récupère un jeu avec son identifiant
+ *
+ * @param string     $name     Nom du jeu
+ *
+ * @return ?game      Retourne le jeu sous forme d'objet game
+ */
+function getGameByName(string $name) : ?game {
+
+    global $conn;
+    $sql = "SELECT * FROM game WHERE name = '$name'";
+    return getInfosGame($sql);
+    
 }
 
 /**
@@ -351,7 +406,7 @@ function getRatingGame(int $id_game, int $id_user) : array {
  * 
  * @param int    $id_user       Identifiant de l'utilisateur
  *
- * @return array Retourne une liste de jeux ([id jeux, nom])
+ * @return array[game] Retourne une liste de jeux
  */
 function getRatedGame($id_user) : array {
 
@@ -359,7 +414,7 @@ function getRatedGame($id_user) : array {
 
     $list = array();
 
-    $sql = "SELECT game.name name, game.id id FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
+    $sql = "SELECT game.name name, game.id id, game.infos infos, game.visuel visuel FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -368,7 +423,8 @@ function getRatedGame($id_user) : array {
         
         foreach($tab as $elm) {
 
-            array_push($list, [$elm['id'], $elm['name']]);
+            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel']);
+            array_push($list, $game);
 
         }
 
@@ -408,6 +464,11 @@ function getListCriterion() : array {
 }
 
 // fonction récupérant liste de jeux pour backend
+/**
+ * Récupère la liste de tous les jeux
+ *
+ * @return array[game] Renvoie la liste des jeux
+ */
 function getAllGames() : array {
     // récupère les informations de chaque jeu
     $sql = 'SELECT * FROM game;';
@@ -417,8 +478,15 @@ function getAllGames() : array {
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
+    $liste = array();
+    foreach($tab as $game) {
+
+        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel']);
+        array_push($liste, $game_obj);
+
+    }
     
-    return $tab;
+    return $liste;
 }
 
 /** getInfosForFrontend

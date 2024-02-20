@@ -7,6 +7,16 @@ class game {
     private $name;
     private $infos;
     private $visuel;
+
+    /**
+     * Création d'un nouvel objet game
+     * 
+     * @param int $id               Identifiant du jeu
+     * @param string $name          Nom du jeu
+     * @param string $infos         Informations du jeu
+     * @param string $visuel        URL du visuel du jeu
+     *
+     */
     public function __construct($id, $name, $infos, $visuel) {
         $this->id = $id;
         $this->name = $name;
@@ -14,23 +24,53 @@ class game {
         $this->visuel = $visuel;
     }
 
-    public function getName() {
+    /**
+     * Récupère le nom du jeu
+     *
+     * @return string Retourne le nom
+     */
+    public function getName() : string {
         // renvoie le nom du jeu
         return $this->name;
     }
 
-    public function getGameInfos() {
+    /**
+     * Récupère l'identifiant du jeu
+     *
+     * @return int Retourne l'identifiant
+     */
+    function getID() : int {
+
+        return $this->id;
+
+    }
+
+    /**
+     * Récupère les informations du jeu
+     *
+     * @return string Retourne les informations
+     */
+    public function getGameInfos() : string {
         // renvoie les infos du jeu
         return $this->infos;
     }
 
-    public function getVisuel() {
+    /**
+     * Récupère l'URL du visuel du jeu
+     *
+     * @return string Retourne l'URL
+     */
+    public function getVisuel() : string {
         // renvoie l'image principale du jeu
         return $this->visuel;
     }
 
-
-    public function GetRatingUsers() {
+    /**
+     * Récupère la liste des utilisateurs ayant notés ce jeu
+     *
+     * @return ?array Retourne la liste ou false si aucun utilisateur a noté le jeu
+     */
+    public function GetRatingUsers() : ?array {
         // renvoie la liste des users ayant notés un jeu
 
         // requête récupérant la liste des jeux notés par l'utilisateur
