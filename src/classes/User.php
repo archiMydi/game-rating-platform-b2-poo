@@ -198,7 +198,7 @@ class User
      */
     function getNotRatedGame() : array {
 
-        $games_r = GetAllGames();
+        $games_r = getAllGames();
         $games = array();
         $ratedGame = getRatedGame($this->id);
 
