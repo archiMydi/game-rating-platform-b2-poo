@@ -4,6 +4,7 @@ include_once('connection.inc.php');
 include_once('src/classes/User.php');
 include_once('src/classes/Game.php');
 $conn = null;
+$nb_jeu_par_page = 3;
 try {
     $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -310,6 +311,35 @@ function updateRating(int $id_user, int $id_game, array $notes) : int {
 }
 
 /**
+ * Enregistre une note pour un jeu
+ *
+ * @param int     $id_user   Identifiant de l'utilisateur
+ * @param int     $id_game   Identifiant du jeu
+ * @param array     $notes     Liste des notes
+ *
+ * @return int Resultat -> 1: erreur de BDD; 0: pas de problèmes
+ */
+function updateUser(int $id_user, string $new_avatar, string $new_desc) : int {
+
+    global $conn;
+
+    $sql = "UPDATE user SET avatar = '$new_avatar', description = '$new_desc' WHERE id = $id_user;";
+
+    try{
+        $conn->exec($sql);
+        $_SESSION['user'] = getUserById($id_user);
+        return 0;
+    }
+    catch (PDOException $e) {
+
+        echo $e->getMessage();
+        return 1;
+
+    }
+
+}
+
+/**
  * Vérifie si un critère d'un jeu a bien été noter par un utilisateur
  * 
  * @param int    $id_criterion  Identifiant du critère
@@ -363,6 +393,81 @@ function checkRatingGame(int $id_game, int $id_user) : bool {
     else {
 
         return false;
+
+    }
+
+}
+
+/**
+ * Calcule le nombre de pages requis pour afficher la totalité des jeux
+ *
+ * @return ?int Nombre de pages
+ */
+function getMaxPages() : ?int {
+
+    global $conn;
+    global $nb_jeu_par_page;
+
+    $sql = "SELECT COUNT(*) nb FROM game";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+
+        $nb = $tab[0]['nb'];
+        $reste = $nb % $nb_jeu_par_page;
+        $reste = $nb_jeu_par_page-$reste;
+        $nb += $reste;
+        $nb = $nb/$nb_jeu_par_page;
+
+        if($reste == $nb_jeu_par_page) {
+            $nb -= 1;
+        }
+
+        return $nb;
+
+    }
+    else {
+
+        return null;
+
+    }
+
+}
+
+/**
+ * Récupère les jeux sur une page spécifique
+ *
+ * @param int     $page   Numéro de la page
+ *
+ * @return array[game] Liste des jeux
+ */
+function getGamesInPage(int $page) : ?array {
+
+    global $conn;
+    global $nb_jeu_par_page;
+
+    $list = array();
+    $id_min = ($page-1)*$nb_jeu_par_page;
+
+    $sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+
+        foreach($tab as $game_) {
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel']);
+            array_push($list, $game);
+
+        }
+
+        return $list;
+
+    }
+    else {
+
+        return null;
 
     }
 
