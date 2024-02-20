@@ -10,3 +10,48 @@
     text-decoration: none;
     font-family: 'Helvetica', sans-serif;
 }
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+
+    z-index: 1;
+    top: 0;
+    position: sticky;
+
+    padding: 0;
+
+    background-color: var.$background-color;
+    color: var.$white;
+
+    box-shadow: 0 10px 10px var.$box-shadow;
+
+
+    .navbar {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    
+        padding: 0 100px;
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        
+            padding: 28px 40px;
+            
+            color: var.$white;
+
+            transition: 1s;
+        }
+
+        a:hover {
+            cursor: pointer;
+            background-color: var.$second-color;
+        }
+    }
+}

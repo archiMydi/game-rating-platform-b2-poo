@@ -3,10 +3,6 @@
 
 #body-game-list {
 
-    font: {
-        size: var.$size;
-    }
-
     overflow-x: hidden;
 
     //STRUCTURE
@@ -14,6 +10,10 @@
     main {
         display: flex;
         flex-direction: row;
+        
+        font {
+            size: var.$size;
+        }
 
         //ASIDE
         #menu-aside {
@@ -268,6 +268,11 @@
                     flex-direction: row;
                     flex-wrap: wrap;
                     width: 100%;
+
+                    .radar-chart {
+                        width: 400px;
+                        height: 200px;
+                    }
                 }
 
                 .game-note {

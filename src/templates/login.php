@@ -15,6 +15,7 @@
         <script src='main.js'></script>
     </head>
     <body>
+        
         <form method="POST" action="#">
             <label>Pseudo ou Adresse Email</label>
             <input type="text" name="id" required>
