@@ -13,6 +13,7 @@ function closeElement(id) {
 let gameTest = 'Elden Ring';
 
 console.log(list_all_games);
+console.log(list_all_genres);
 
 // let url='database.php'; // url = url du serveur PHP
 

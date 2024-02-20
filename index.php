@@ -209,9 +209,13 @@ include ("src/templates/database.php");
 
     
     <script>
-       let list_all_games = <?php getGamesForFrontend(); // appelle la fonction php GetAllGames()
+        // récupère les informations de chaque jeu
+       let list_all_games = <?php getInfosForFrontend('SELECT * FROM game;'); // appelle la fonction php GetInfosForFrontend() (database.php)
         ?>; //ajoute variable list_all_games dans index.js
-        console.log('launched GetAllGames');
+        console.log('launched GetInfosForFrontend');
+        // récupère la liste des genres
+        let list_all_genres = <?php getInfosForFrontend('SELECT genre FROM game GROUP BY genre;'); 
+        ?>
     </script>
     <script src='./src/scripts/index.js'></script>
     
