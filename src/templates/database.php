@@ -489,19 +489,22 @@ function getAllGames() : array {
     return $liste;
 }
 
-// fonction récupérant liste de jeux pour front-end au format Json
-function getGamesForFrontend() {
-    // récupère les informations de chaque jeu
-    $sql = 'SELECT * FROM game;';
+/** getInfosForFrontend
+ * fonction récupérant liste d'informations probenant de ka base de données pour front-end au format Json
+ * paramètre $sql : requête sql (format string)
+ * renvoie un objet json contenant les informations de la requête sql passée en paramêtre*/ 
+function getInfosForFrontend($sql) {
+    // $sql = 'SELECT * FROM game;'; // $sql utilisable en paramètre ?
     //Sélection  des informations en base de données
     global $conn;
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll(); // convertir en json
-    echo $tab;
+    echo json_encode($tab);
 }
 
+// getAllgenres non référencée dans le code (non utilisée)
 function getAllGenres() {
     // récupère la liste de tous les genres (sans doublons)
     $sql = 'SELECT genre FROM game GROUP BY genre;';

@@ -1,5 +1,5 @@
 <?php
-include ("src/templates/database.php");
+include("src/templates/database.php");
 ?>
 
 <!DOCTYPE html>
@@ -14,9 +14,12 @@ include ("src/templates/database.php");
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <script src='./js/jquery.min.js'></script> <!-- lien vers JQuery -->
+    <!-- Chart.js doc:https://www.chartjs.org/docs/latest/charts/radar.html -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body id="body-game-list">
+    <?php include("src/templates/navbar.php"); ?>
     <main>
         <aside id="menu-aside">
             <h3>Genres</h3>
@@ -28,16 +31,17 @@ include ("src/templates/database.php");
         <section id="main-section">
             <section id="second-header">
                 <section id="search">
-                    <input type="search" id="input-search">
-                    <button type="button" onclick=""><i class="material-icons" id="icon_search">search</i></button>
+                    <input type="search" id="input-search" onkeyup="searchGame()">
+                    <button type="button" onclick="searchGame()"><i class="material-icons" id="icon_search">search</i></button>
                 </section>
 
                 <section id="filtre">
                     <label for="select-filtre">Trier par</label>
                     <select name="filtre" id="select-filtre">
                         <option value="pertinence" onclick="">Pertinence</option>
-                        <option value="alphabetique" onclick="">Par ordre alphabétique</option>
+                        <option value="alphabetique" onclick="filtreASC()">Par ordre alphabétique</option>
                     </select>
+                    <button type="button" onclick="filtreASC()">TEST FILTRE</button>
                 </section>
             </section>
 
@@ -54,9 +58,9 @@ include ("src/templates/database.php");
 
 
             <section id="rating-section">
-                <span  onclick="closeElement('rating-section')">x</span>
+                <span onclick="closeElement('rating-section')">x</span>
                 <form id="rating-form">
-                    
+
                     <h3>Rating Gameplay</h3>
                     <section class="rating" id="rating-gameplay">
                         <section class="rating-container">
@@ -207,14 +211,18 @@ include ("src/templates/database.php");
 
     </main>
 
-    
+
     <script>
-       let list_all_games = <?php getGamesForFrontend(); // appelle la fonction php GetAllGames()
+        // récupère les informations de chaque jeu
+       let list_all_games = <?php getInfosForFrontend('SELECT * FROM game;'); // appelle la fonction php GetInfosForFrontend() (database.php)
         ?>; //ajoute variable list_all_games dans index.js
-        console.log('launched GetAllGames');
+        console.log('launched GetInfosForFrontend');
+        // récupère la liste des genres
+        let list_all_genres = <?php getInfosForFrontend('SELECT genre FROM game GROUP BY genre;'); 
+        ?>
     </script>
     <script src='./src/scripts/index.js'></script>
-    
+
 </body>
 
 </html>
