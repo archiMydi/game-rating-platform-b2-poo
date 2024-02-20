@@ -36,8 +36,9 @@
 }
 #user-list-page .user-list-container .user-container .left-side .pseudo {
   font-weight: 500;
-  font-size: 1.3em;
+  font-size: 1.2vw;
   width: 100%;
+  text-overflow: ellipsis;
 }
 #user-list-page .user-list-container .user-container .right-side {
   width: 45%;
