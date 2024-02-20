@@ -7,6 +7,7 @@ $userListJSON = User::getUserListJSON($conn);
 htmlHead('Utilisateurs'); ?>
 
 <body id='user-list-page'>
+    <?php include 'src/templates/navbar.php'; ?>
     <?php include_once 'src/templates/user_details.php'; ?>
 
     <section class='user-list-container'>
