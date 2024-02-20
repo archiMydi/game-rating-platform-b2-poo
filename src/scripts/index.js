@@ -6,7 +6,7 @@ console.log(list_all_games);
 
 document.addEventListener('DOMContentLoaded', function() {
     showGame(gameTest);
-    getAllGames();
+    // getGamesForFrontend();
 })
 
 /* async function getAllGames() {
