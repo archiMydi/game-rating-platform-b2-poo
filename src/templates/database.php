@@ -311,6 +311,35 @@ function updateRating(int $id_user, int $id_game, array $notes) : int {
 }
 
 /**
+ * Enregistre une note pour un jeu
+ *
+ * @param int     $id_user   Identifiant de l'utilisateur
+ * @param int     $id_game   Identifiant du jeu
+ * @param array     $notes     Liste des notes
+ *
+ * @return int Resultat -> 1: erreur de BDD; 0: pas de problèmes
+ */
+function updateUser(int $id_user, string $new_avatar, string $new_desc) : int {
+
+    global $conn;
+
+    $sql = "UPDATE user SET avatar = '$new_avatar', description = '$new_desc' WHERE id = $id_user;";
+
+    try{
+        $conn->exec($sql);
+        $_SESSION['user'] = getUserById($id_user);
+        return 0;
+    }
+    catch (PDOException $e) {
+
+        echo $e->getMessage();
+        return 1;
+
+    }
+
+}
+
+/**
  * Vérifie si un critère d'un jeu a bien été noter par un utilisateur
  * 
  * @param int    $id_criterion  Identifiant du critère
