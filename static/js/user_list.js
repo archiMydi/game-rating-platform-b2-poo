@@ -2,12 +2,13 @@
 function appendUsers() {
     db_users.forEach(u => {
         $($('.user-list-container')[0]).append(`<div class='user-container' onclick='showUserDetails(${u.id})'>
-        <div class='user-first-container-line'>
-        <p class='pseudo'>${u.pseudo}</p>
+        <div class='left-side'>
         <img class="profile-picture" src="${u.pictureSRC}" alt="${u.pseudo}'s profile picture"/>
+        <p class='pseudo'>${u.pseudo}</p>     
         </div>
+        <div class='right-side'>
         <p class='catch-phrase'>${u.catchPhrase}</p>
-        <p class='fav-game'>${u.favGame}
+        </div>
         </div>`)
     });
 }
