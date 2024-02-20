@@ -18,22 +18,65 @@ try {
  *
  * @return user      retourne l'utilisateur sous forme d'objet user ou null s'il n'existe pas
  */
-function getInfosUser(String $sql) : ?user {
-
+function getInfosUser(String $sql): ?user
+{
     global $conn;
-
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
         return new user($tab[0]['id'], $tab[0]['pseudo'], $tab[0]['email'], $tab[0]['description'], $tab[0]['avatar'], $tab[0]['jeu_fav']);
-    }
-    else {
+    } else {
         return null;
     }
-
 }
+
+
+/**
+ * Permet de récupérer la liste des utilisateurs au format JSON
+ *
+ * @param     $conn    Connexion à la base de données
+ *
+ * @return ?string Renvoie une liste JSON ou 'false' en cas d'erreur
+ */
+
+function getUserListJSON($conn): ?string //Récupérer la liste des users
+{
+    try {
+        $stmt = $conn->query("SELECT id, pseudo, jeu_fav, description, avatar FROM user");
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        array_walk_recursive($rows, function (&$item, $key) {
+            if (is_string($item)) {
+                $item = mb_convert_encoding($item, 'UTF-8', 'UTF-8');
+            }
+        });
+
+        $userTable = array(); // Tableau pour stocker les utilisateurs
+
+        foreach ($rows as $row) {
+            // Création d'un objet utilisateur
+            $user = array(
+                'id' => $row['id'],
+                'pseudo' => $row['pseudo'],
+                'favGame' => $row['jeu_fav'],
+                'catchPhrase' => $row['description'],
+                'pictureSRC' => $row['avatar']
+            );
+
+            // Ajout de l'utilisateur au tableau
+            $userTable[] = $user;
+        }
+
+        return json_encode($userTable, JSON_UNESCAPED_UNICODE);
+    } catch (PDOException $e) {
+        echo "Erreur de requête : " . $e->getMessage();
+    }
+}
+
+
+
 
 /**
  * Récupère les informations d'un jeu s'il existe
@@ -42,7 +85,8 @@ function getInfosUser(String $sql) : ?user {
  *
  * @return game      Retourne le jeu sous forme d'objet game ou null s'il n'existe pas
  */
-function getInfosGame(String $sql) : ?game {
+function getInfosGame(String $sql): ?game
+{
 
     global $conn;
 
@@ -52,11 +96,9 @@ function getInfosGame(String $sql) : ?game {
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
         return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel']);
-    }
-    else {
+    } else {
         return null;
     }
-
 }
 
 /**
@@ -66,7 +108,8 @@ function getInfosGame(String $sql) : ?game {
  *
  * @return user      retourne l'utilisateur sous forme d'objet user
  */
-function getUserById(int $id) : user {
+function getUserById(int $id): user
+{
     global $conn;
     $sql = "SELECT * FROM user WHERE id = '$id'";
     return getInfosUser($sql);
@@ -80,7 +123,8 @@ function getUserById(int $id) : user {
  *
  * @return user      retourne l'utilisateur sous forme d'objet user ou null s'il n'existe pas
  */
-function getUser(string $id, string $mdp) : ?user {
+function getUser(string $id, string $mdp): ?user
+{
     global $conn;
     $sql = "SELECT * FROM user WHERE (pseudo = '$id' OR email = '$id') AND password = '$mdp'";
     return getInfosUser($sql);
@@ -93,12 +137,12 @@ function getUser(string $id, string $mdp) : ?user {
  *
  * @return user      retourne l'utilisateur sous forme d'objet user
  */
-function getUserByPseudo(String $pseudo) : user {
+function getUserByPseudo(String $pseudo): user
+{
 
     global $conn;
     $sql = "SELECT * FROM user WHERE pseudo = '$pseudo'";
     return getInfosUser($sql);
-
 }
 
 /**
@@ -108,12 +152,12 @@ function getUserByPseudo(String $pseudo) : user {
  *
  * @return user      retourne l'utilisateur sous forme d'objet user
  */
-function getUserByEmail(String $email) : user {
+function getUserByEmail(String $email): user
+{
 
     global $conn;
     $sql = "SELECT * FROM user WHERE email = '$email'";
     return getInfosUser($sql);
-
 }
 
 /**
@@ -123,12 +167,12 @@ function getUserByEmail(String $email) : user {
  *
  * @return ?game      Retourne le jeu sous forme d'objet game
  */
-function getGameById(int $id) : ?game {
+function getGameById(int $id): ?game
+{
 
     global $conn;
     $sql = "SELECT * FROM game WHERE id = '$id'";
     return getInfosGame($sql);
-
 }
 
 /**
@@ -138,12 +182,12 @@ function getGameById(int $id) : ?game {
  *
  * @return ?game      Retourne le jeu sous forme d'objet game
  */
-function getGameByName(string $name) : ?game {
+function getGameByName(string $name): ?game
+{
 
     global $conn;
     $sql = "SELECT * FROM game WHERE name = '$name'";
     return getInfosGame($sql);
-    
 }
 
 /**
@@ -153,7 +197,8 @@ function getGameByName(string $name) : ?game {
  *
  * @return string  retourne le mot de passe
  */
-function getMDP(user $user) : String {
+function getMDP(user $user): String
+{
     $id = $user->getID();
     global $conn;
     $sql = "SELECT password FROM user WHERE id = '$id'";
@@ -163,13 +208,10 @@ function getMDP(user $user) : String {
     $tab = $stmt->fetchAll();
     if ($result > 0) {
         return $tab[0]['password'];
-    }
-    else {
+    } else {
 
         return null;
-
     }
-
 }
 
 /**
@@ -181,7 +223,8 @@ function getMDP(user $user) : String {
  *
  * @return int Resultat -> 1: le pseudo existe déjà; 2: le mail existe déjà; 3: erreur de BDD; 0: pas de problèmes
  */
-function registerNewUser(string $pseudo, string $mdp, string $email) : int {
+function registerNewUser(string $pseudo, string $mdp, string $email): int
+{
 
     global $conn;
     $sql = "SELECT * FROM user WHERE pseudo = '$pseudo'";
@@ -191,9 +234,7 @@ function registerNewUser(string $pseudo, string $mdp, string $email) : int {
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
         return 1;
-
-    }
-    else {
+    } else {
 
         $sql = "SELECT * FROM user WHERE email = '$email'";
         $stmt = $conn->prepare($sql);
@@ -203,26 +244,19 @@ function registerNewUser(string $pseudo, string $mdp, string $email) : int {
         if (count($tab) > 0) {
 
             return 2;
+        } else {
 
-        }
-        else {
-
-            try{
+            try {
                 $sql = "INSERT INTO user (pseudo, email, password) VALUES ('$pseudo', '$email', '$mdp');";
                 $conn->exec($sql);
                 return 0;
-            }
-            catch (PDOException $e) {
+            } catch (PDOException $e) {
 
                 echo $e->getMessage();
                 return 3;
-
             }
-
         }
-
     }
-
 }
 
 /**
@@ -234,36 +268,32 @@ function registerNewUser(string $pseudo, string $mdp, string $email) : int {
  *
  * @return int Resultat -> 1: erreur de BDD; 0: pas de problèmes
  */
-function insertRating(int $id_user, int $id_game, array $notes) : int {
+function insertRating(int $id_user, int $id_game, array $notes): int
+{
 
     global $conn;
 
     $sql = 'INSERT INTO rating (criterion_id, game_id, user_id, value) VALUES ';
     $i = 0;
 
-    foreach($notes as $id => $note) {
+    foreach ($notes as $id => $note) {
 
-        if($i+1 === count($notes)) {
+        if ($i + 1 === count($notes)) {
             $sql .= "($id, $id_game, $id_user, $note)";
-        }
-        else {
+        } else {
             $sql .= "($id, $id_game, $id_user, $note),";
             $i++;
         }
-
     }
 
-    try{
+    try {
         $conn->exec($sql);
         return 0;
-    }
-    catch (PDOException $e) {
+    } catch (PDOException $e) {
 
         echo $e->getMessage();
         return 1;
-
     }
-
 }
 
 /**
@@ -275,38 +305,32 @@ function insertRating(int $id_user, int $id_game, array $notes) : int {
  *
  * @return int Resultat -> 1: erreur de BDD; 0: pas de problèmes
  */
-function updateRating(int $id_user, int $id_game, array $notes) : int {
+function updateRating(int $id_user, int $id_game, array $notes): int
+{
 
     global $conn;
 
     $sql = "";
 
-    foreach($notes as $id => $note) {
+    foreach ($notes as $id => $note) {
 
-        if(checkRated($id, $id_game, $id_user)) {
+        if (checkRated($id, $id_game, $id_user)) {
 
             $sql .= "UPDATE rating SET value = $note WHERE criterion_id = $id AND game_id = $id_game AND user_id = $id_user;";
-
-        }
-        else {
+        } else {
 
             $sql .= "INSERT INTO rating (criterion_id, game_id, user_id, value) VALUES ($id, $id_game, $id_user, $note);";
-
         }
-
     }
 
-    try{
+    try {
         $conn->exec($sql);
         return 0;
-    }
-    catch (PDOException $e) {
+    } catch (PDOException $e) {
 
         echo $e->getMessage();
         return 1;
-
     }
-
 }
 
 /**
@@ -318,7 +342,8 @@ function updateRating(int $id_user, int $id_game, array $notes) : int {
  *
  * @return bool
  */
-function checkRated(int $id_criterion, int $id_game, int $id_user) : bool {
+function checkRated(int $id_criterion, int $id_game, int $id_user): bool
+{
 
     global $conn;
 
@@ -329,14 +354,10 @@ function checkRated(int $id_criterion, int $id_game, int $id_user) : bool {
     if (count($tab) > 0) {
 
         return true;
-
-    }
-    else {
+    } else {
 
         return false;
-
     }
-
 }
 
 /**
@@ -347,7 +368,8 @@ function checkRated(int $id_criterion, int $id_game, int $id_user) : bool {
  *
  * @return bool
  */
-function checkRatingGame(int $id_game, int $id_user) : bool {
+function checkRatingGame(int $id_game, int $id_user): bool
+{
 
     global $conn;
 
@@ -358,14 +380,10 @@ function checkRatingGame(int $id_game, int $id_user) : bool {
     if (count($tab) > 0) {
 
         return true;
-
-    }
-    else {
+    } else {
 
         return false;
-
     }
-
 }
 
 /**
@@ -376,7 +394,8 @@ function checkRatingGame(int $id_game, int $id_user) : bool {
  *
  * @return array Retourne une liste de jeux (liste[id critere] = [nom, note])
  */
-function getRatingGame(int $id_game, int $id_user) : array {
+function getRatingGame(int $id_game, int $id_user): array
+{
 
     global $conn;
 
@@ -388,17 +407,14 @@ function getRatingGame(int $id_game, int $id_user) : array {
     $stmt->execute();
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
-        
-        foreach($tab as $elm) {
+
+        foreach ($tab as $elm) {
 
             $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
-
         }
-
     }
 
     return $list;
-
 }
 
 /**
@@ -408,7 +424,8 @@ function getRatingGame(int $id_game, int $id_user) : array {
  *
  * @return array[game] Retourne une liste de jeux
  */
-function getRatedGame($id_user) : array {
+function getRatedGame($id_user): array
+{
 
     global $conn;
 
@@ -420,18 +437,15 @@ function getRatedGame($id_user) : array {
     $stmt->execute();
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
-        
-        foreach($tab as $elm) {
+
+        foreach ($tab as $elm) {
 
             $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel']);
             array_push($list, $game);
-
         }
-
     }
 
     return $list;
-
 }
 
 /**
@@ -439,7 +453,8 @@ function getRatedGame($id_user) : array {
  *
  * @return array Liste des critères : liste[<id>] = [<nom>]
  */
-function getListCriterion() : array {
+function getListCriterion(): array
+{
 
     $list = array();
     global $conn;
@@ -450,17 +465,14 @@ function getListCriterion() : array {
     $stmt->execute();
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
-        
-        foreach($tab as $elm) {
+
+        foreach ($tab as $elm) {
 
             $list[$elm['id']] = $elm['name'];
-
         }
-
     }
 
     return $list;
-
 }
 
 // fonction récupérant liste de jeux pour backend
@@ -469,7 +481,8 @@ function getListCriterion() : array {
  *
  * @return array[game] Renvoie la liste des jeux
  */
-function getAllGames() : array {
+function getAllGames(): array
+{
     // récupère les informations de chaque jeu
     $sql = 'SELECT * FROM game;';
     //Sélection  des informations en base de données
@@ -479,21 +492,21 @@ function getAllGames() : array {
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
     $liste = array();
-    foreach($tab as $game) {
+    foreach ($tab as $game) {
 
         $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel']);
         array_push($liste, $game_obj);
-
     }
-    
+
     return $liste;
 }
 
 /** getInfosForFrontend
  * fonction récupérant liste d'informations probenant de ka base de données pour front-end au format Json
  * paramètre $sql : requête sql (format string)
- * renvoie un objet json contenant les informations de la requête sql passée en paramêtre*/ 
-function getInfosForFrontend($sql) {
+ * renvoie un objet json contenant les informations de la requête sql passée en paramêtre*/
+function getInfosForFrontend($sql)
+{
     // $sql = 'SELECT * FROM game;'; // $sql utilisable en paramètre ?
     //Sélection  des informations en base de données
     global $conn;
@@ -505,7 +518,8 @@ function getInfosForFrontend($sql) {
 }
 
 // getAllgenres non référencée dans le code (non utilisée)
-function getAllGenres() {
+function getAllGenres()
+{
     // récupère la liste de tous les genres (sans doublons)
     $sql = 'SELECT genre FROM game GROUP BY genre;';
     //Sélection  des informations en base de données
@@ -515,13 +529,13 @@ function getAllGenres() {
     $request = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $result = $stmt->fetchAll();
     return $result;
-
 }
 
 
 // fonction fourre-tout pour récupérer des informations de la base de données
 // prend une commande SQL en paramètre (pour les autres fichiers php)
-function getInfosFromDatabase(String $sql) {
+function getInfosFromDatabase(String $sql)
+{
 
     global $conn;
     $stmt = $conn->prepare($sql);
@@ -531,5 +545,3 @@ function getInfosFromDatabase(String $sql) {
     return $result; // retourne un tuple d'informations
 
 }
-
-?>

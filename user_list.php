@@ -1,6 +1,6 @@
 <?php
-include_once 'src/classes/User.php';
-$userListJSON = User::getUserListJSON($conn);
+include_once 'src/templates/database.php';
+$userListJSON = getUserListJSON($conn);
 ?>
 <html>
 <?php include_once 'src/templates/html_head.php';
