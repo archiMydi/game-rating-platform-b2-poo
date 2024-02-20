@@ -4,6 +4,12 @@
 -- ------------------------------------------------------
 -- Server version	8.0.36
 
+USE db_game_rating_platform_b2_oop;
+ 
+DROP USER IF EXISTS 'dev'@'localhost';
+CREATE USER 'dev'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON db_game_rating_platform_b2_oop TO 'dev'@'localhost';
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;

@@ -11,15 +11,41 @@ function closeElement(id) {
 //GAMES
 
 let gameTest = 'Elden Ring';
-let gameTest2 = 'Minecraft';
-let gameTest3 = 'Mario Kart';
 
+console.log(list_all_games);
+
+// let url='database.php'; // url = url du serveur PHP
 
 document.addEventListener('DOMContentLoaded', function() {
     showGame(gameTest);
-    showGame(gameTest2);
-    showGame(gameTest3);
 })
+
+/* async function getAllGames() {
+    console.log('Launched getAllGames'); */
+    /* const response = await fetch(url, { 
+    method: "GET"
+    });
+    let result = await response.json();
+    console.log(result);
+    return result; */
+
+/*     $.ajax({
+        type: "POST",
+        url: 'database.php?action=GetAllGames',
+        dataType: 'json',
+        data: {functionname: 'add', arguments: [1, 2]},
+    
+        success: function (obj, textstatus) {
+                      if( !('error' in obj) ) {
+                          yourVariable = obj.result;
+                          console.log(yourVariable);
+                      }
+                      else {
+                          console.log(obj.error);
+                      }
+                }
+    });
+} */
 
 //AFFICHER LA LISTE JEUX
 function showGame(game) {

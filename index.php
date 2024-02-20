@@ -1,3 +1,7 @@
+<?php
+include ("src/templates/database.php");
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -9,7 +13,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='./static/css/style.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <script src='./src/scripts/index.js'></script>
+    <script src='./js/jquery.min.js'></script> <!-- lien vers JQuery -->
 </head>
 
 <body id="body-game-list">
@@ -203,6 +207,14 @@
 
     </main>
 
+    
+    <script>
+       let list_all_games = <?php getGamesForFrontend(); // appelle la fonction php GetAllGames()
+        ?>; //ajoute variable list_all_games dans index.js
+        console.log('launched GetAllGames');
+    </script>
+    <script src='./src/scripts/index.js'></script>
+    
 </body>
 
 </html>
