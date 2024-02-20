@@ -5,7 +5,7 @@ include_once('src/classes/User.php');
 include_once('src/classes/Game.php');
 $conn = null;
 try {
-    $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "Erreur de connexion : " . $e->getMessage();
@@ -46,12 +46,6 @@ function getUserListJSON($conn): ?string //Récupérer la liste des users
     try {
         $stmt = $conn->query("SELECT id, pseudo, jeu_fav, description, avatar FROM user");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        array_walk_recursive($rows, function (&$item, $key) {
-            if (is_string($item)) {
-                $item = mb_convert_encoding($item, 'UTF-8', 'UTF-8');
-            }
-        });
 
         $userTable = array(); // Tableau pour stocker les utilisateurs
 
