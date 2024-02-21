@@ -5,21 +5,13 @@ include("src/templates/database.php");
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Game Rating</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='./static/css/style.css'>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <script src='./js/jquery.min.js'></script> <!-- lien vers JQuery -->
-    <!-- Chart.js doc:https://www.chartjs.org/docs/latest/charts/radar.html -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+<?php include_once 'src/templates/html_head.php';
+htmlHead('Game Rating'); ?>
 
 <body id="body-game-list">
     <?php include("src/templates/navbar.php"); ?>
+    <?php include("src/templates/login.php"); ?>
+
     <main>
         <aside id="menu-aside">
             <h3>Genres</h3>
@@ -224,6 +216,8 @@ include("src/templates/database.php");
                                 ?>
     </script>
     <script src='./src/scripts/index.js'></script>
+    <!-- Chart.js doc:https://www.chartjs.org/docs/latest/charts/radar.html -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 

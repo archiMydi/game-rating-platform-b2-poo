@@ -9,6 +9,7 @@ htmlHead('Utilisateurs'); ?>
 <body id='user-list-page'>
     <?php include 'src/templates/navbar.php'; ?>
     <?php include_once 'src/templates/user_details.php'; ?>
+    <?php include("src/templates/login.php"); ?>
 
     <section class='user-list-container'>
 
@@ -18,6 +19,7 @@ htmlHead('Utilisateurs'); ?>
     </script>
 
     <script src='static/js/user_list.js'></script>
+
 </body>
 
 </html>
