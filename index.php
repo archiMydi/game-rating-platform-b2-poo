@@ -37,11 +37,10 @@ include("src/templates/database.php");
 
                 <section id="filtre">
                     <label for="select-filtre">Trier par</label>
-                    <select name="filtre" id="select-filtre">
-                        <option value="pertinence" onclick="">Pertinence</option>
-                        <option value="alphabetique" onclick="filtreASC()">Par ordre alphabétique</option>
+                    <select name="filtre" id="select-filtre" onchange="selectFiltre()">
+                        <option value="pertinence">Pertinence</option>
+                        <option value="alphabetique">Par ordre alphabétique</option>
                     </select>
-                    <button type="button" onclick="filtreASC()">TEST FILTRE</button>
                 </section>
             </section>
 
@@ -216,16 +215,20 @@ include("src/templates/database.php");
     </main>
 
 
+    <?php include("src/templates/footer.php"); ?>
     <script>
         // récupère les informations de chaque jeu
-        let list_all_games = <?php 
-        getInfosForFrontend('SELECT g.*, json_arrayagg(ge.name) AS gender
+        let list_all_games = <?php
+                                getInfosForFrontend('SELECT g.*, json_arrayagg(ge.name) AS gender
         FROM game g, category c, gender ge
         WHERE g.id=c.game_id 
         AND c.gender_id= ge.id
         GROUP BY g.name 
-        ORDER BY g.id;'); 
-        ?>
+        ORDER BY g.id;');
+                                ?>
+        let list_all_genders = <?php
+                                getInfosForFrontend('SELECT * FROM gender;');
+                                ?>
     </script>
     <script src='./src/scripts/index.js'></script>
 

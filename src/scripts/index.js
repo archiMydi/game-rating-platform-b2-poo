@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function () {
 function showGameDetails(gameName) {
   let cible = document.getElementById("details-game-section");
   let hide = document.getElementById("game-section");
+  let hide2 = document.getElementById("global-game-section");
+  let hide3 = document.getElementById("second-header");
 
   cible.innerHTML = '';
 
@@ -161,6 +163,8 @@ function showGameDetails(gameName) {
 
   cible.style.display = 'flex';
   hide.style.display = 'none';
+  hide2.style.display = 'none';
+  hide3.style.display = 'none';
   cible.innerHTML = contenu;
 
   gameChart();
@@ -170,10 +174,16 @@ function showGameDetails(gameName) {
 //GO BACK
 function goBack() {
   let cible = document.getElementById("game-section");
+  let cible2 = document.getElementById("global-game-section");
+  let cible3 = document.getElementById("second-header");
+
   let hide = document.getElementById("details-game-section");
+  
 
   hide.style.display = 'none';
   cible.style.display = 'flex';
+  cible2.style.display = 'block';
+  cible3.style.display = 'flex';
 }
 
 
@@ -189,6 +199,7 @@ users = [
   { id: 3, name: 'C', data: [3, 2, 4] }
 ];
 
+//FONCTION USER CHART
 function userChart(users) {
 
   for (let i = 0; i < 3; i++) {
@@ -255,7 +266,6 @@ function userChart(users) {
 //GAME CHART
 function gameChart() {
   let canvas = document.getElementById('game-chart');
-  let nameUser = document.getElementById('')
 
   let data = {
     labels: [
@@ -320,6 +330,21 @@ async function searchGame() {
 
 }
 
+//SELECT FILTRE
+function selectFiltre() {
+  let select = document.getElementById("select-filtre");
+  let selectedValue = select.options[select.selectedIndex].value;
+
+  switch(selectedValue) {
+    case 'pertinence':
+      showGames(games);
+      break;
+    case 'alphabetique':
+      filtreASC();
+      break;
+  }
+}
+
 //FILTRE PAR ORDRE ALPHABETIQUE
 function filtreASC() {
   let filterASC = games.sort(function (a, b) {
@@ -329,7 +354,5 @@ function filtreASC() {
       return 1;
     }
   });
-
-  console.log(filterASC);
   showGames(filterASC);
 }
