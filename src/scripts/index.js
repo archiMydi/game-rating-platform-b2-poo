@@ -17,6 +17,7 @@ let games = [
 
 console.log(list_all_games);
 console.log(list_all_genres);
+console.log(list_categories);
 
 // let url='database.php'; // url = url du serveur PHP
 

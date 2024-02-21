@@ -218,7 +218,9 @@ include("src/templates/database.php");
                                 ?>; //ajoute variable list_all_games dans index.js
         console.log('launched GetInfosForFrontend');
         // récupère la liste des genres
-        let list_all_genres = <?php getInfosForFrontend('SELECT genre FROM game GROUP BY genre;');
+        let list_all_genres = <?php getInfosForFrontend('SELECT * FROM gender;');
+                                ?>
+        let list_categories = <?php getInfosForFrontend('SELECT * FROM category;');
                                 ?>
     </script>
     <script src='./src/scripts/index.js'></script>
