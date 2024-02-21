@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 //AFFICHER LES DETAILS DU JEU
-function showGameDetails(game_id) {
+function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisual.jpeg", gameDesc = "Lorem Ipsum") {
     // balise cible dans laquelle on ajoute le contenu
     let cible = document.getElementById("details-game-section");
     let hide = document.getElementById("game-section");
@@ -93,10 +93,7 @@ function showGameDetails(game_id) {
 
     let gameID = game_id;
 
-    let gameName;
-    let gameVisual; // définition des variables
     let gameGenre;
-    let gameInfos;
 
 
     list_all_games.forEach(game => {
