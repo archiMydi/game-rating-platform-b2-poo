@@ -11,46 +11,6 @@ class User
     private ?String $avatar = null; // = "rien";
     private int $jeu_fav; // = 3;
 
-    /**
-     * Permet de récupérer la liste des utilisateurs au format JSON
-     *
-     * @param     $conn    Connexion à la base de données
-     *
-     * @return ?string Renvoie une liste JSON ou 'false' en cas d'erreur
-     */
-    public static function getUserListJSON($conn) : ?string //Récupérer la liste des users
-    {
-        try {
-            $stmt = $conn->query("SELECT id, pseudo, jeu_fav, description, avatar FROM user");
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            array_walk_recursive($rows, function (&$item, $key) {
-                if (is_string($item)) {
-                    $item = mb_convert_encoding($item, 'UTF-8', 'UTF-8');
-                }
-            });
-
-            $userTable = array(); // Tableau pour stocker les utilisateurs
-
-            foreach ($rows as $row) {
-                // Création d'un objet utilisateur
-                $user = array(
-                    'id' => $row['id'],
-                    'pseudo' => $row['pseudo'],
-                    'favGame' => $row['jeu_fav'],
-                    'catchPhrase' => $row['description'],
-                    'pictureSRC' => $row['avatar']
-                );
-
-                // Ajout de l'utilisateur au tableau
-                $userTable[] = $user;
-            }
-
-            return json_encode($userTable, JSON_UNESCAPED_UNICODE);
-        } catch (PDOException $e) {
-            echo "Erreur de requête : " . $e->getMessage();
-        }
-    }
 
     /**
      * Création d'un nouvel utilisateur
@@ -84,7 +44,8 @@ class User
      *
      * @return string Retourne le pseudo
      */
-    function getPseudo() : string {
+    function getPseudo(): string
+    {
 
         return $this->pseudo;
     }
@@ -104,21 +65,21 @@ class User
      *
      * @return string Retourne l'adresse email
      */
-    function getEmail() : string {
+    function getEmail(): string
+    {
 
         return $this->email;
-
     }
-    
+
     /**
      * Récupère l'identifiant de l'utilisateur
      *
      * @return int Retourne l'identifiant
      */
-    function getID() : int {
+    function getID(): int
+    {
 
         return $this->id;
-
     }
 
     /**
@@ -126,7 +87,8 @@ class User
      *
      * @return ?string Retourne la description (ou 'null' s'il n'y en a pas)
      */
-    function getDescription() : ?string {
+    function getDescription(): ?string
+    {
         return $this->description;
     }
 
@@ -137,7 +99,8 @@ class User
      *
      * @return bool
      */
-    function checkMDP($mdp) {
+    function checkMDP($mdp)
+    {
 
         global $conn;
 
@@ -147,7 +110,7 @@ class User
 
         // Check connection
         //if ($conn->connect_error) {
-            //die("Connection failed: " . $conn->connect_error);
+        //die("Connection failed: " . $conn->connect_error);
         //}
         $sql = "SELECT mdp FROM user WHERE pseudo = $this->pseudo AND mdp = $mdp";
         $result = $this->$conn->query($sql);
@@ -175,14 +138,14 @@ class User
      *
      * @return bool
      */
-    function hasRated($game, $criterion) {
+    function hasRated($game, $criterion)
+    {
 
         $rated = false;
 
         //Test si le joueur a déjà voté
 
         return $rated;
-
     }
 
     /**
@@ -192,10 +155,10 @@ class User
      *
      * @return bool
      */
-    function hasRatedGame($id_game) {
+    function hasRatedGame($id_game)
+    {
 
         return checkRatingGame($id_game, $this->id);
-
     }
 
     /**
@@ -203,10 +166,10 @@ class User
      *
      * @return array Retourne une liste de jeux ([id jeux, nom])
      */
-    function getRatedGame() : array {
+    function getRatedGame(): array
+    {
 
         return getRatedGame($this->id);
-
     }
 
     /**
@@ -214,25 +177,21 @@ class User
      *
      * @return array Retourne une liste de jeux ([id jeux, nom])
      */
-    function getNotRatedGame() : array {
+    function getNotRatedGame(): array
+    {
 
         $games_r = getAllGames();
         $games = array();
         $ratedGame = getRatedGame($this->id);
 
-        foreach($games_r as $game) {
+        foreach ($games_r as $game) {
 
-            if(!in_array($game, $ratedGame)) {
+            if (!in_array($game, $ratedGame)) {
 
                 array_push($games, $game);
-
             }
-
         }
 
         return $games;
-
     }
-
 }
-?>
