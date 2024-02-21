@@ -7,40 +7,72 @@ function closeElement(id) {
   document.getElementById(id).style.display = 'none';
 }
 
-console.log(list_all_games);
-console.log(list_all_genders);
 
+//GAMES
+let games = [
+  {name: 'Elden Ring', id: 1},
+  {name: 'Minecraft', id: 2},
+  {name: 'Mario Kart', id: 3},
+];
+
+console.log(list_all_games);
+
+
+// let url='database.php'; // url = url du serveur PHP
+
+/* async function getAllGames() {
+    console.log('Launched getAllGames'); */
+    /* const response = await fetch(url, { 
+    method: "GET"
+    });
+    let result = await response.json();
+    console.log(result);
+    return result; */
+
+/*     $.ajax({
+        type: "POST",
+        url: 'database.php?action=GetAllGames',
+        dataType: 'json',
+        data: {functionname: 'add', arguments: [1, 2]},
+    
+        success: function (obj, textstatus) {
+                      if( !('error' in obj) ) {
+                          yourVariable = obj.result;
+                          console.log(yourVariable);
+                      }
+                      else {
+                          console.log(obj.error);
+                      }
+                }
+    });
+} */
 
 //AFFICHER LA LISTE JEUX
-
-// liste de jeux passée en paramètre
-function showGames(list_games) {
+function showGames(games) {
     let cible = document.getElementById("game-section");
     let hide = document.getElementById("details-game-section");
 
     //cible.innerHTML = '';
 
-    list_games.forEach(game => {
+    games.forEach(game => {
       let gameName = game.name;
-      let gameVisual = game.visuel;
-      let gameId = game.id
+      let gameVisual = './img/gameVisual.jpeg';
 
-      let contenu = `<article class="game" onclick="showGameDetails('${gameId}')">
+      let contenu = `<article class="game" onclick="showGameDetails('${gameName}')">
         <p>${gameName}</p>
         <img class="game-img" src="${gameVisual}" alt="${gameVisual}"/>
     </article>`;
 
-    cible.innerHTML += contenu;
+    //cible.innerHTML += contenu;
     })
     
 
-  hide.style.display = 'none';
-  cible.style.display = 'flex';
+    hide.style.display = 'none';
+    cible.style.display = 'flex';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  showGames(list_all_games);
-  showListGender();
+  showGames(games);
 });
 
 
@@ -48,12 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 //AFFICHER LES DETAILS DU JEU
-<<<<<<< HEAD
-function showGameDetails(gameName, gameID = 1, gameVisual = "./img/gameVisual.jpeg", gameDesc = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, veniam eum facilis voluptatum aut debitis, animi ipsam pariatur accusamus culpa voluptatibus unde sequi, recusandae reprehenderit dignissimos totam dolor fugit dicta.") {
-=======
-function showGameDetails(game_id) {
+function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisual.jpeg", gameDesc = "Lorem Ipsum") {
     // balise cible dans laquelle on ajoute le contenu
->>>>>>> f8ac2f7fda2888cec8bdde2ac777a40b98bcae75
     let cible = document.getElementById("details-game-section");
     let hide = document.getElementById("game-section");
     let hide2 = document.getElementById("global-game-section");
@@ -61,19 +89,30 @@ function showGameDetails(game_id) {
     gameName = gameName.replace("#%7!8$9%#", "'");
     gameDesc = gameDesc.replace("#%7!8$9%#", "'");
 
-  cible.innerHTML = '';
+    cible.innerHTML = '';
 
-    let gameID = 1;
+    let gameID = game_id;
 
-    let gameVisual = "./img/gameVisual.jpeg";
+    let gameGenre;
 
-    let gameGenre = "Genre";
 
-  let gameNote = "Note";
+    list_all_games.forEach(game => {
+      if (game.id == gameID) {
+        gameName = game.name;
+        gameVisual = game.visuel; // implémentation des variables quand l'identifiant correspond
+        gameGenre = JSON.parse(game.gender);
+        gameInfos = game.infos;
+      }
+    });
 
-  let contenu = `<article class="gameFiche">
+    console.log(gameGenre);
+
+
+    let gameNote = "Note";
+
+    let contenu = `<article class="gameFiche">
                     <section class="game-header">
-                      <h2>`+ gameID + ` : ` + gameName + `</h2>
+                      <h2>`+ gameID + ` : `+ gameName +`</h2>
                       <section class="galery">
                         <img src="`+ gameVisual + `" alt="` + gameVisual + `"/>
                       </section>
@@ -83,24 +122,19 @@ function showGameDetails(game_id) {
                     <section class="details-game-info">
                         <section class="details-game-description">
                             <h3>Description</h3>
-<<<<<<< HEAD
-                            <p>` + gameDesc + `</p>
-=======
                             <p>`+ gameInfos + `</p>
->>>>>>> f8ac2f7fda2888cec8bdde2ac777a40b98bcae75
                         </section>
                         <section class="details-game-genre">
                             <h3>Genres</h3>
-                            <ul id='details-game-list_genre'>
-                                
+                            <ul>
+                                <li>`+ gameGenre + `</li>
+                                <li>`+ gameGenre + `</li>
                             </ul>
                         </section>
                     </section>
 
                     <section class="game-note">
-                      <section class="canvas">
-                        <canvas id="game-chart" class="radar-chart"></canvas>
-                      </section>
+                      <p>`+ gameNote + `</p>
                       <button class="cta" type="button" onclick="showElement('rating-section')">Noter</button>
                     </section>
 
@@ -116,40 +150,20 @@ function showGameDetails(game_id) {
                     </section>
 
                     <section class="user-appreciation">
-                      <h2>Avis des Followers</h2>
+                    <h2>Avis des Followers</h2>
                         <article class="users">
-                            <h3 id="user0"></h3>
-                            <section class="canvas">
-                            <canvas id="user-chart0" class="radar-chart"></canvas>
-                        </section>
-                        </article>
-
-                        <article class="users">
-                          <h3 id="user1"></h3>
-                          <section class="canvas">
-                            <canvas id="user-chart1" class="radar-chart"></canvas>
-                          </section>
-                        </article>
-
-                        <article class="users">
-                          <h3 id="user2"></h3>
-                          <section class="canvas">
-                            <canvas id="user-chart2" class="radar-chart"></canvas>
-                          </section>
+                            <h3>NameUser</h3>
+                            <canvas id="user-chart" class="radar-chart"></canvas>
                         </article>
                     </section>
                 </article>
 
                 <button class="cta" type="button" onclick="goBack()">Retourner à la liste</button>`;
-
-  cible.style.display = 'flex';
-  hide.style.display = 'none';
-  hide2.style.display = 'none';
-
-  cible.innerHTML = contenu;
-
-  gameChart();
-  userChart(users);
+    
+    cible.style.display = 'flex';
+    hide.style.display = 'none';
+    hide2.style.display = 'none';
+    cible.innerHTML = contenu;
 
     gameGenre.forEach(genre => {    
       let li_genre = '<li>' + genre + '</li>';
@@ -184,17 +198,11 @@ function selectGamesByGender(gender_name) {
 
 //GO BACK
 function goBack() {
-  let cible = document.getElementById("game-section");
-  let cible2 = document.getElementById("global-game-section");
-  let cible3 = document.getElementById("second-header");
+    let cible = document.getElementById("game-section");
+    let hide = document.getElementById("details-game-section");
 
-  let hide = document.getElementById("details-game-section");
-  
-
-  hide.style.display = 'none';
-  cible.style.display = 'flex';
-  cible2.style.display = 'block';
-  cible3.style.display = 'flex';
+    hide.style.display = 'none';
+    cible.style.display = 'flex';
 }
 
 
@@ -202,129 +210,58 @@ function goBack() {
 //FORM RATING
 
 
-//USER CHART
-//User data
-users = [
-  { id: 1, name: 'A', data: [3, 4, 4] },
-  { id: 2, name: 'B', data: [3, 5, 5] },
-  { id: 3, name: 'C', data: [3, 2, 4] }
-];
+//RADAR CHART
+let canvas = document.getElementById('user-chart');
 
-//FONCTION USER CHART
-function userChart(users) {
-
-  for (let i = 0; i < 3; i++) {
-    let canvas = document.getElementById('user-chart' + i);
-    let cibleNameUser = document.getElementById('user' + i);
-
-    console.log(cibleNameUser);
-    console.log(i);
-    console.log(users[i].name, users[i].data);
-
-    cibleNameUser.innerHTML = users[i].name;
-
-    let data = {
-      labels: [
-        'Gameplay',
-        'Graphisme',
-        'Sound Design'
-      ],
-      datasets: [{
-        label: 'User Appreciation',
-        data: users[i].data,
-        fill: true,
-        backgroundColor: 'rgba(52, 69, 168, 0.473)',
-        borderColor: 'rgb(85, 81, 194)',
-        pointBackgroundColor: 'rgb(85, 81, 194)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(85, 81, 194)'
-      }]
-    };
-
-    let config = {
-      type: 'radar',
-      data: data,
-      options: {
-        scales: {
-          r: {
-            beginAtZero: true,
-            min: 0,
-            max: 5
-          }
-        },
-
-        ticks: {
-          stepSize: 1,
-        },
-
-        elements: {
-          line: {
-            borderWidth: 3
-          }
-        }
-      },
-    };
-
-    let radarChart = new Chart(canvas,
-      config
-    );
-  }
-
-}
-
-
-//GAME CHART
-function gameChart() {
-  let canvas = document.getElementById('game-chart');
-
-  let data = {
-    labels: [
-      'Gameplay',
-      'Graphisme',
-      'Sound Design'
-    ],
-    datasets: [{
-      label: 'Game Rating',
-      data: [3, 4, 4],
-      fill: true,
-      backgroundColor: 'rgba(82, 123, 212, 0.5)',
-      borderColor: 'rgb(82, 123, 212)',
-      pointBackgroundColor: 'rgb(85, 81, 194)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgb(85, 81, 194)'
-    }]
-  };
-
-  let config = {
-    type: 'radar',
-    data: data,
-    options: {
-      scales: {
-        r: {
-          beginAtZero: true,
-          min: 0,
-          max: 5
-        }
-      },
-
-      ticks: {
-        stepSize: 1,
-      },
-
-      elements: {
-        line: {
-          borderWidth: 3
-        }
+new Chart(canvas, {
+  type: 'radar',
+  data: data,
+  options: {
+    elements: {
+      line: {
+        borderWidth: 3
       }
-    },
-  };
+    }
+  },
+});
 
-  let radarChart = new Chart(canvas,
-    config
-  );
-}
+
+let data = {
+  labels: [
+    'Eating',
+    'Drinking',
+    'Sleeping',
+    'Designing',
+    'Coding',
+    'Cycling',
+    'Running'
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [65, 59, 90, 81, 56, 55, 40],
+    fill: true,
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgb(255, 99, 132)',
+    pointBackgroundColor: 'rgb(255, 99, 132)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(255, 99, 132)'
+  }, {
+    label: 'My Second Dataset',
+    data: [28, 48, 40, 19, 96, 27, 100],
+    fill: true,
+    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    borderColor: 'rgb(54, 162, 235)',
+    pointBackgroundColor: 'rgb(54, 162, 235)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(54, 162, 235)'
+  }]
+};
+
+
+
+
 
 
 
@@ -338,32 +275,25 @@ async function searchGame() {
   let resultat = games.filter(game => game.name.toLowerCase().includes(searchTerm));
 
   showGames(resultat);
-
-}
-
-//SELECT FILTRE
-function selectFiltre() {
-  let select = document.getElementById("select-filtre");
-  let selectedValue = select.options[select.selectedIndex].value;
-
-  switch(selectedValue) {
-    case 'pertinence':
-      showGames(games);
-      break;
-    case 'alphabetique':
-      filtreASC();
-      break;
-  }
+  
 }
 
 //FILTRE PAR ORDRE ALPHABETIQUE
 function filtreASC() {
-  let filterASC = games.sort(function (a, b) {
+  let filterASC = games.sort(function(a, b) {
     if (a.name.toLowerCase() < b.name.toLowerCase()) {
       return -1;
     } else {
       return 1;
     }
   });
+
+  console.log(filterASC);
   showGames(filterASC);
 }
+
+
+//USER APPRECIATIONS STATS PENTAGON
+//Pentagon stats sources : https://gist.github.com/curran/8b4b7791fc25cfd2c459e74f3d0423f2
+//Other : https://codepen.io/semibran/pen/NPOGdd
+//Other :https://github.com/jpenninkhof/pentagon/tree/master?tab=readme-ov-file

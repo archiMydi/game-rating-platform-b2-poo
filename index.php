@@ -15,9 +15,9 @@ htmlHead('Game Rating'); ?>
     <main>
         <aside id="menu-aside">
             <h3>Genres</h3>
-            <p onclick="">Genre 1</p>
+            <!-- <p onclick="">Genre 1</p>
             <p onclick="">Genre 2</p>
-            <p onclick="">Genre 3</p>
+            <p onclick="">Genre 3</p> -->
         </aside>
 
         <section id="main-section">
@@ -29,10 +29,11 @@ htmlHead('Game Rating'); ?>
 
                 <section id="filtre">
                     <label for="select-filtre">Trier par</label>
-                    <select name="filtre" id="select-filtre" onchange="selectFiltre()">
-                        <option value="pertinence">Pertinence</option>
-                        <option value="alphabetique">Par ordre alphabétique</option>
+                    <select name="filtre" id="select-filtre">
+                        <option value="pertinence" onclick="">Pertinence</option>
+                        <option value="alphabetique" onclick="filtreASC()">Par ordre alphabétique</option>
                     </select>
+                    <button type="button" onclick="filtreASC()">TEST FILTRE</button>
                 </section>
             </section>
 
@@ -44,7 +45,6 @@ htmlHead('Game Rating'); ?>
                 getPage(1);
                 ?>
             </section>
-
 
 
             <section id="details-game-section">
@@ -197,30 +197,29 @@ htmlHead('Game Rating'); ?>
                         </section>
                     </section>
 
-                    <button class="cta" type="submit">Noter</button>
+                    <button type="submit">Noter</button>
                 </form>
 
             </section>
 
         </section>
-    
+
     </main>
 
 
-    <?php include("src/templates/footer.php"); ?>
     <script>
         // récupère les informations de chaque jeu
         let list_all_games = <?php
                                 getInfosForFrontend('SELECT g.*, json_arrayagg(ge.name) AS gender
         FROM game g, category c, gender ge
-        WHERE g.id=c.game_id 
-        AND c.gender_id= ge.id
+        WHERE g.id = c.game_id 
+        AND c.gender_id = ge.id
         GROUP BY g.name 
-        ORDER BY g.id;');
-                                ?>
-        let list_all_genders = <?php
-                                getInfosForFrontend('SELECT * FROM gender;');
-                                ?>
+        ORDER BY g.id;'); 
+        ?>;
+        let list_all_genders = <?php 
+        getInfosForFrontend('SELECT * FROM gender;'); 
+        ?>;
     </script>
     <script src='src/scripts/index.js'></script>
 

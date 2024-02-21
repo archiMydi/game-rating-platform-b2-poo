@@ -610,17 +610,6 @@ nav .navbar p:hover {
   background-color: rgb(107, 101, 194);
 }
 
-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 50px 0;
-  background-color: rgb(59, 57, 133);
-}
-footer p {
-  color: white;
-}
-
 .login-modal {
   display: none;
   position: fixed;
@@ -676,4 +665,15 @@ footer p {
 }
 .login-modal .login-modal-content a:hover {
   text-decoration: underline;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0;
+  background-color: rgb(59, 57, 133);
+}
+footer p {
+  color: white;
 }/*# sourceMappingURL=style.css.map */
