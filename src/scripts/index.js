@@ -15,37 +15,24 @@ let games = [
   {name: 'Mario Kart', id: 3},
 ];
 
+let apiRawgData = getRawgApiData();
+
 console.log(list_all_games);
+console.log(apiRawgData);
 
-
-// let url='database.php'; // url = url du serveur PHP
-
-/* async function getAllGames() {
-    console.log('Launched getAllGames'); */
-    /* const response = await fetch(url, { 
+/** Function getRawgApiData :
+ * Récupère les données de l'API Rawg avec une requête fetch
+ * Doit retourner un tableau d'objets au format json 
+ * (fonction à initier au lancement et à stocker dans la base de données)
+ */
+async function getRawgApiData() { // fonction déclinable avec 
+  const rawgData = await fetch('https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88', {
+    // url doir inclure la clé de l'API (API Key) en paramètre
     method: "GET"
     });
-    let result = await response.json();
-    console.log(result);
-    return result; */
-
-/*     $.ajax({
-        type: "POST",
-        url: 'database.php?action=GetAllGames',
-        dataType: 'json',
-        data: {functionname: 'add', arguments: [1, 2]},
-    
-        success: function (obj, textstatus) {
-                      if( !('error' in obj) ) {
-                          yourVariable = obj.result;
-                          console.log(yourVariable);
-                      }
-                      else {
-                          console.log(obj.error);
-                      }
-                }
-    });
-} */
+    console.log(rawgData);
+    return rawgData;
+}
 
 //AFFICHER LA LISTE JEUX
 function showGames(games) {
