@@ -1,39 +1,35 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset='utf-8'>
-        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <title>Pagination</title>
-        <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-        <script src='main.js'></script>
-    </head>
-    <body>
-        <?php
-            $page = $_GET['page'] ?? 1;
-            include_once("src/templates/database.php");
-            $nb = getMaxPages();
-            if($page < 1) {
-                $page = 1;
-            }
-            else if($page > $nb) {
-                $page = $nb;
-            }
-            $list = getGamesInPage($page);
-            if($list != null) {
-                echo "<h1>Page $page</h1>";
-                foreach($list as $game) {
+<?php
+    function getPage($page) {
+        $page = $_GET['page'] ?? 1;
+        include_once("src/templates/database.php");
+        $nb = getMaxPages();
+        if($page < 1) {
+            $page = 1;
+        }
+        else if($page > $nb) {
+            $page = $nb;
+        }
+        $list = getGamesInPage($page);
+        if($list != null) {
+            echo "<h1>Page $page</h1><br><section id='game-section'>";
+            foreach($list as $game) {
+                $show = "showGameDetails('".$game->getName()."')";
 
-                    echo "<br><h3>".$game->getName()."</h3>";
+                echo '<article class="game" onclick="'.$show.'">
+                <p>'.$game->getName().'</p>
+                <img class="game-img" src="img/gameVisual.jpeg" alt="img/gameVisual.jpeg"/>
+            </article>';
 
+            }
+            echo "</section><br>";
+            for($i = 1; $i <= $nb; $i++) {
+                if($i != $page) {
+                    echo "<a href='?page=$i'><button class='innactif'>$i</button></a>";
                 }
-                echo "<br>";
-                for($i = 1; $i <= $nb; $i++) {
-                    if($i != $page) {
-                        echo "<br><a href='?page=$i'>Page $i</a>";
-                    }
+                else {
+                    echo "<a href='?page=$i'><button class='actif'>$i</button></a>";
                 }
             }
-        ?>
-    </body>
-</html>
+        }
+    }
+?>
