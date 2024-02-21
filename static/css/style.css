@@ -196,12 +196,28 @@
 #body-game-list {
   overflow-x: hidden;
 }
+#body-game-list font {
+  size: 22px;
+}
+#body-game-list .cta {
+  margin-top: 40px;
+  padding: 10px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.5s;
+  background-color: rgb(107, 101, 194);
+  color: white;
+}
+#body-game-list .cta:hover {
+  background-color: rgb(59, 57, 133);
+  transform: scale(0.95);
+}
 #body-game-list main {
   display: flex;
   flex-direction: row;
   /*SOURCE RATING CSS : https://codepen.io/Diegobrix/pen/vYQKJbE*/
 }
-#body-game-list main font {
+#body-game-list main button font {
   size: 22px;
 }
 #body-game-list main #menu-aside {
@@ -211,8 +227,12 @@
   flex-wrap: wrap;
   min-width: 150px;
   width: 15%;
-  height: 250vh;
+  height: 1000px;
   padding: 100px 30px;
+  overflow-y: auto;
+  z-index: 1;
+  top: 0;
+  position: sticky;
   background-color: rgb(52, 69, 168);
 }
 #body-game-list main #menu-aside h3,
@@ -343,7 +363,7 @@
   justify-content: center;
   width: 100%;
   height: 650px;
-  padding: 30px;
+  padding: 30px 0;
 }
 #body-game-list main #details-game-section .gameFiche .galery img {
   width: 70%;
@@ -395,21 +415,24 @@
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 50px;
   width: 100%;
+  gap: 100px;
 }
-#body-game-list main #details-game-section .gameFiche .user-appreciation .radar-chart {
-  width: 400px;
-  height: 200px;
+#body-game-list main #details-game-section .gameFiche .user-appreciation .users {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+#body-game-list main #details-game-section .gameFiche .user-appreciation .canvas {
+  display: flex;
 }
 #body-game-list main #details-game-section .gameFiche .game-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding: 40px 0;
-}
-#body-game-list main #details-game-section .cta {
-  padding: 10px 25px;
-  border-radius: 10px;
-  color: white;
-  background-color: rgb(107, 101, 194);
-  cursor: pointer;
 }
 #body-game-list main #rating-section {
   display: none;
@@ -457,19 +480,6 @@
 }
 #body-game-list main #rating-section #rating-form h3 {
   margin-top: 20px;
-}
-#body-game-list main #rating-section #rating-form button {
-  margin-top: 40px;
-  padding: 10px 30px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.5s;
-  background-color: rgb(107, 101, 194);
-  color: white;
-}
-#body-game-list main #rating-section #rating-form button:hover {
-  background-color: rgb(59, 57, 133);
-  transform: scale(0.95);
 }
 #body-game-list main #rating-section .rating {
   min-width: 50px;
@@ -545,13 +555,13 @@ nav {
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   position: sticky;
   padding: 0;
   background-color: rgb(85, 81, 194);
   color: white;
-  box-shadow: 0 10px 10px rgba(52, 69, 168, 0.473);
+  box-shadow: 0 10px 10px rgba(52, 69, 168, 0.5);
 }
 nav .navbar {
   display: flex;

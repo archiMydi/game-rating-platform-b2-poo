@@ -15,7 +15,7 @@ include("src/templates/database.php");
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <script src='./js/jquery.min.js'></script> <!-- lien vers JQuery -->
     <!-- Chart.js doc:https://www.chartjs.org/docs/latest/charts/radar.html -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body id="body-game-list">
@@ -50,6 +50,7 @@ include("src/templates/database.php");
             <section id="game-section">
 
             </section>
+
 
 
             <section id="details-game-section">
@@ -202,25 +203,16 @@ include("src/templates/database.php");
                         </section>
                     </section>
 
-                    <button type="submit">Noter</button>
+                    <button class="cta" type="submit">Noter</button>
                 </form>
 
             </section>
 
         </section>
-
+    
     </main>
 
 
-    <script>
-        // récupère les informations de chaque jeu
-       let list_all_games = <?php getInfosForFrontend('SELECT * FROM game;'); // appelle la fonction php GetInfosForFrontend() (database.php)
-        ?>; //ajoute variable list_all_games dans index.js
-        console.log('launched GetInfosForFrontend');
-        // récupère la liste des genres
-        let list_all_genres = <?php getInfosForFrontend('SELECT genre FROM game GROUP BY genre;'); 
-        ?>
-    </script>
     <script src='./src/scripts/index.js'></script>
 
 </body>
