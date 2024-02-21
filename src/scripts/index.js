@@ -15,8 +15,6 @@ console.log(list_all_games);
 //AFFICHER LA LISTE JEUX
 function showGames(games) {
     let cible = document.getElementById("game-section");
-    let cible2 = document.getElementById("global-game-section");
-    let cible3 = document.getElementById("second-header");
     let hide = document.getElementById("details-game-section");
     
 
@@ -74,7 +72,6 @@ function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisu
     console.log(gameGenre);
 
 
-    let gameNote = "Note";
 
     let contenu = `<article class="gameFiche">
                     <section class="game-header">
@@ -374,7 +371,9 @@ function filtreASC() {
 }
 
 
-//USER APPRECIATIONS STATS PENTAGON
-//Pentagon stats sources : https://gist.github.com/curran/8b4b7791fc25cfd2c459e74f3d0423f2
-//Other : https://codepen.io/semibran/pen/NPOGdd
-//Other :https://github.com/jpenninkhof/pentagon/tree/master?tab=readme-ov-file
+//FONCTION GET GAMES
+
+function  getGames() {
+  
+}
+https://api.rawg.io/api/games

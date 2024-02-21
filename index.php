@@ -15,9 +15,7 @@ htmlHead('Game Rating'); ?>
     <main>
         <aside id="menu-aside">
             <h3>Genres</h3>
-            <!-- <p onclick="">Genre 1</p>
-            <p onclick="">Genre 2</p>
-            <p onclick="">Genre 3</p> -->
+
         </aside>
 
         <section id="main-section">
@@ -33,7 +31,6 @@ htmlHead('Game Rating'); ?>
                         <option value="pertinence" onclick="">Pertinence</option>
                         <option value="alphabetique" onclick="filtreASC()">Par ordre alphabétique</option>
                     </select>
-                    <button type="button" onclick="filtreASC()">TEST FILTRE</button>
                 </section>
             </section>
 
@@ -197,15 +194,18 @@ htmlHead('Game Rating'); ?>
                         </section>
                     </section>
 
-                    <button type="submit">Noter</button>
+                    <button class="cta" type="submit">Noter</button>
                 </form>
 
             </section>
 
         </section>
 
-    </main>
 
+    </main>
+        <?php
+        include_once("src/templates/footer.php");
+        ?>
 
     <script>
         // récupère les informations de chaque jeu
@@ -215,11 +215,11 @@ htmlHead('Game Rating'); ?>
         WHERE g.id = c.game_id 
         AND c.gender_id = ge.id
         GROUP BY g.name 
-        ORDER BY g.id;'); 
-        ?>;
-        let list_all_genders = <?php 
-        getInfosForFrontend('SELECT * FROM gender;'); 
-        ?>;
+        ORDER BY g.id;');
+                                ?>;
+        let list_all_genders = <?php
+                                getInfosForFrontend('SELECT * FROM gender;');
+                                ?>;
     </script>
     <script src='src/scripts/index.js'></script>
 
