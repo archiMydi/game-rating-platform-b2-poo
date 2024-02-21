@@ -337,24 +337,22 @@ function updateRating(int $id_user, int $id_game, array $notes): int
  *
  * @return int Resultat -> 1: erreur de BDD; 0: pas de problèmes
  */
-function updateUser(int $id_user, string $new_avatar, string $new_desc) : int {
+function updateUser(int $id_user, string $new_avatar, string $new_desc): int
+{
 
     global $conn;
 
     $sql = "UPDATE user SET avatar = '$new_avatar', description = '$new_desc' WHERE id = $id_user;";
 
-    try{
+    try {
         $conn->exec($sql);
         $_SESSION['user'] = getUserById($id_user);
         return 0;
-    }
-    catch (PDOException $e) {
+    } catch (PDOException $e) {
 
         echo $e->getMessage();
         return 1;
-
     }
-
 }
 
 /**
@@ -415,7 +413,8 @@ function checkRatingGame(int $id_game, int $id_user): bool
  *
  * @return ?int Nombre de pages
  */
-function getMaxPages() : ?int {
+function getMaxPages(): ?int
+{
 
     global $conn;
     global $nb_jeu_par_page;
@@ -428,23 +427,19 @@ function getMaxPages() : ?int {
 
         $nb = $tab[0]['nb'];
         $reste = $nb % $nb_jeu_par_page;
-        $reste = $nb_jeu_par_page-$reste;
+        $reste = $nb_jeu_par_page - $reste;
         $nb += $reste;
-        $nb = $nb/$nb_jeu_par_page;
+        $nb = $nb / $nb_jeu_par_page;
 
-        if($reste == $nb_jeu_par_page) {
+        if ($reste == $nb_jeu_par_page) {
             $nb -= 1;
         }
 
         return $nb;
-
-    }
-    else {
+    } else {
 
         return null;
-
     }
-
 }
 
 /**
@@ -454,13 +449,14 @@ function getMaxPages() : ?int {
  *
  * @return array[game] Liste des jeux
  */
-function getGamesInPage(int $page) : ?array {
+function getGamesInPage(int $page): ?array
+{
 
     global $conn;
     global $nb_jeu_par_page;
 
     $list = array();
-    $id_min = ($page-1)*$nb_jeu_par_page;
+    $id_min = ($page - 1) * $nb_jeu_par_page;
 
     $sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
     $stmt = $conn->prepare($sql);
@@ -468,21 +464,16 @@ function getGamesInPage(int $page) : ?array {
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
 
-        foreach($tab as $game_) {
+        foreach ($tab as $game_) {
             $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel']);
             array_push($list, $game);
-
         }
 
         return $list;
-
-    }
-    else {
+    } else {
 
         return null;
-
     }
-
 }
 
 /**
@@ -493,13 +484,14 @@ function getGamesInPage(int $page) : ?array {
  *
  * @return array[game] Liste des jeux
  */
-function getSpecificGamesInPage(int $page, $sql) : ?array {
+function getSpecificGamesInPage(int $page, $sql): ?array
+{
 
     global $conn;
     global $nb_jeu_par_page;
 
     $list = array();
-    $id_min = ($page-1)*$nb_jeu_par_page;
+    $id_min = ($page - 1) * $nb_jeu_par_page;
 
     $sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
     $sql .= "ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
@@ -508,25 +500,41 @@ function getSpecificGamesInPage(int $page, $sql) : ?array {
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
 
-        foreach($tab as $game_) {
+        foreach ($tab as $game_) {
             $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel']);
             array_push($list, $game);
-
         }
 
         return $list;
-
-    }
-    else {
+    } else {
 
         return null;
-
     }
-
 }
 
 /**
- * Récupère les notes d'un jeu donner par un utilisateur
+ * Récupère toutes les notes d'un utilisateur
+ * 
+ * @param int    $id_user       Identifiant de l'utilisateur
+ *
+ * @return array Retourne une liste de jeux (liste[id jeu] = [id critere => [nom, note]])
+ */
+function getAllRatedGame(int $id_user): array
+{
+
+    $rated_games = getRatedGame($id_user);
+    $list = array();
+
+    foreach ($rated_games as $game) {
+
+        $list[$game->getID()] = getRatingGame($game->getID(), $id_user);
+    }
+
+    return $list;
+}
+
+/**
+ * Récupère les notes d'un jeu, données par un utilisateur
  * 
  * @param int    $id_game       Identifiant du jeu
  * @param int    $id_user       Identifiant de l'utilisateur
