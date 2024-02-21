@@ -8,14 +8,7 @@ function closeElement(id) {
 }
 
 console.log(list_all_games);
-
-//GAMES (remplacer par list_all_games (informations de la base de données))
-/* let games = [
-  {name: 'Elden Ring', id: 1},
-  {name: 'Minecraft', id: 2},
-  {name: 'Mario Kart', id: 3},
-];
- */
+console.log(list_all_genders);
 
 
 //AFFICHER LA LISTE JEUX
@@ -47,6 +40,7 @@ function showGames(list_games) {
 
 document.addEventListener('DOMContentLoaded', function() {
   showGames(list_all_games);
+  showListGender();
 });
 
 
@@ -57,8 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function showGameDetails(game_id) {
     // balise cible dans laquelle on ajoute le contenu
     let cible = document.getElementById("details-game-section");
-    // balise cible pour ajouter les genres d'un jeu
-    let gameDetailsListGenres = document.getElementById("details-game-list_genre");
     let hide = document.getElementById("game-section");
 
     cible.innerHTML = '';
@@ -71,14 +63,16 @@ function showGameDetails(game_id) {
     let gameInfos;
 
 
-    list_games.forEach(game => {
+    list_all_games.forEach(game => {
       if (game.id == gameID) {
         gameName = game.name;
         gameVisual = game.visuel; // implémentation des variables quand l'identifiant correspond
-        gameGenre = game.gender;
+        gameGenre = JSON.parse(game.gender);
         gameInfos = game.infos;
       }
     });
+
+    console.log(gameGenre);
 
 
     let gameNote = "Note";
@@ -136,11 +130,27 @@ function showGameDetails(game_id) {
     hide.style.display = 'none';
     cible.innerHTML = contenu;
 
-      // ajouter un élément de liste pour chaque genre d'un jeu
-      gameGenre.forEach(genre => {    
-        let li_genre = '<li>' + genre + '</li>';
-        gameDetailsListGenres.innerHTML = li_genre;
-      });
+    gameGenre.forEach(genre => {    
+      let li_genre = '<li>' + genre + '</li>';
+      // balise cible pour ajouter les genres d'un jeu
+    $("#details-game-list_genre").append(li_genre);
+    }); 
+}
+
+// affiche la liste des genres dans le menu
+function showListGender() {
+  list_all_genders.forEach(gender => {    
+    let nav_gender = '<p onclick="showGames(' + gender.id + ')">' 
+    + gender.name + '</p>';
+    // TODO implémenter fonction onclick
+    // balise cible pour ajouter les genres d'un jeu
+  $("#menu-aside").append(nav_gender);
+  }); 
+}
+
+function selectGamesByGender(id) {
+  let list_games_by_gender = [];
+  showGames(list_games_by_gender)
 }
 
 //GO BACK
