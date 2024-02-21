@@ -29,7 +29,7 @@ if ($id != null && $mdp != null) {
 
     if ($user != null) {
         $_SESSION['user'] = $user;
-        header('Location: src/templates/account.php');
+        header('Location: account.php');
     } else {
 
         echo "Identifiant ou mot de passe invalide";
