@@ -1,7 +1,4 @@
     <!--NAVBAR-->
-    <?php
-        session_start();
-    ?>
     <nav>
         <h3>Game Rating Platform</h3>
         <ul class="navbar">
