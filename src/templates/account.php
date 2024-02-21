@@ -2,7 +2,7 @@
 include_once("src/templates/database.php");
 session_start();
 if ($_SESSION['user'] == null) {
-    header("Location: login.php");
+    header("Location: src/templates/login.php");
 }
 ?>
 
