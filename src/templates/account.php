@@ -17,6 +17,11 @@ htmlHead('Compte'); ?>
     echo "<h2>
                 Bienvenue " . $user->getPseudo() . " !
             </h2>
+            <a href='edit_profil.php'>
+                <button>
+                    Modifier le profil
+                </button>
+            </a>
             <a href='login.php'>
                 <button>
                     Déconnexion

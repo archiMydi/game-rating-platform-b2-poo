@@ -8,7 +8,7 @@ class User
     private String $email; // = "enzo.guillemet@my-digital-school.org";
     //Description, pp, jeux pref -> add BDD
     private ?String $description = null; // = "rien";
-    private String $avatar; // = "rien";
+    private ?String $avatar = null; // = "rien";
     private int $jeu_fav; // = 3;
 
 
@@ -48,6 +48,16 @@ class User
     {
 
         return $this->pseudo;
+    }
+
+    /**
+     * Récupère l'URL de l'avatar de l'utilisateur
+     *
+     * @return ?string Retourne l'URL
+     */
+    function getAvatar() : ?string {
+
+        return $this->avatar;
     }
 
     /**

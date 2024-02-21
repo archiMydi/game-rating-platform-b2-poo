@@ -39,8 +39,11 @@ htmlHead('Game Rating'); ?>
 
 
 
-            <section id="game-section">
-
+            <section id="global-game-section">
+                <?php
+                include_once("src/templates/pagination.php");
+                getPage(1);
+                ?>
             </section>
 
 
@@ -206,18 +209,19 @@ htmlHead('Game Rating'); ?>
 
     <script>
         // récupère les informations de chaque jeu
-        let list_all_games = <?php getInfosForFrontend('SELECT * FROM game;'); // appelle la fonction php GetInfosForFrontend() (database.php)
-                                ?>; //ajoute variable list_all_games dans index.js
-        console.log('launched GetInfosForFrontend');
-        // récupère la liste des genres
-        let list_all_genres = <?php getInfosForFrontend('SELECT * FROM gender;');
+        let list_all_games = <?php
+                                getInfosForFrontend('SELECT g.*, json_arrayagg(ge.name) AS gender
+        FROM game g, category c, gender ge
+        WHERE g.id=c.game_id 
+        AND c.gender_id= ge.id
+        GROUP BY g.name 
+        ORDER BY g.id;');
                                 ?>
-        let list_categories = <?php getInfosForFrontend('SELECT * FROM category;');
+        let list_all_genders = <?php
+                                getInfosForFrontend('SELECT * FROM gender;');
                                 ?>
     </script>
-    <script src='./src/scripts/index.js'></script>
-    <!-- Chart.js doc:https://www.chartjs.org/docs/latest/charts/radar.html -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src='src/scripts/index.js'></script>
 
 </body>
 
