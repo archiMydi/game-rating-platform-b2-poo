@@ -47,8 +47,11 @@ include("src/templates/database.php");
 
 
 
-            <section id="game-section">
-
+            <section id="global-game-section">
+                <?php
+                    include_once("src/templates/pagination.php");
+                    getPage(1);
+                ?>
             </section>
 
 
