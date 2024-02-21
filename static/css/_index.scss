@@ -5,6 +5,27 @@
 
     overflow-x: hidden;
 
+    font {
+        size: var.$size;
+    }
+
+    .cta {
+        margin-top: 40px;
+        padding: 10px 30px;
+        border-radius: 10px;
+
+        cursor: pointer;
+        transition: 0.5s;
+
+        background-color: var.$second-color;
+        color: var.$white;
+    }
+
+    .cta:hover {
+        background-color: var.$background-color-second;
+        transform: scale(0.95);
+    }
+
     //STRUCTURE
 
     main {
@@ -15,6 +36,8 @@
             size: var.$size;
         }
 
+
+
         //ASIDE
         #menu-aside {
             display: flex;
@@ -24,8 +47,14 @@
 
             min-width: 150px;
             width: 15%;
-            height: 250vh;
+            height: 800px;
             padding: 100px 30px;
+
+            overflow-y: auto;
+
+            z-index: 1;
+            top: 0;
+            position: sticky;
 
             background-color: var.$background-color-third;
 
@@ -243,7 +272,7 @@
                     justify-content: center;
                     width: 100%;
                     height: 650px;
-                    padding: 30px;
+                    padding: 30px 0;
                 }
 
                 .galery img {
@@ -306,28 +335,30 @@
                     justify-content: center;
                     flex-direction: row;
                     flex-wrap: wrap;
+                    margin-bottom: 50px;
                     width: 100%;
+                    gap: 100px;
 
-                    .radar-chart {
-                        width: 400px;
-                        height: 200px;
+                    .users {
+                        display: flex;
+                        align-items: center;
+                        flex-direction: column;
+                    }
+                    
+                    .canvas {
+                        display: flex;
                     }
                 }
 
                 .game-note {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
                     padding: 40px 0;
                 }
             }
 
-            .cta {
-                padding: 10px 25px;
-                border-radius: 10px;
-
-                color: var.$white;
-                background-color: var.$second-color;
-
-                cursor: pointer;
-            }
         }
 
         /*SOURCE RATING CSS : https://codepen.io/Diegobrix/pen/vYQKJbE*/
@@ -391,23 +422,6 @@
 
                 h3 {
                     margin-top: 20px;
-                }
-
-                button {
-                    margin-top: 40px;
-                    padding: 10px 30px;
-                    border-radius: 10px;
-
-                    cursor: pointer;
-                    transition: 0.5s;
-
-                    background-color: var.$second-color;
-                    color: var.$white;
-                }
-
-                button:hover {
-                    background-color: var.$background-color-second;
-                    transform: scale(0.95);
                 }
 
             }
