@@ -18,7 +18,7 @@ function showGames(list_games) {
     let cible = document.getElementById("game-section");
     let hide = document.getElementById("details-game-section");
 
-    cible.innerHTML = '';
+    //cible.innerHTML = '';
 
     list_games.forEach(game => {
       let gameName = game.name;
@@ -30,7 +30,7 @@ function showGames(list_games) {
         <img class="game-img" src="${gameVisual}" alt="${gameVisual}"/>
     </article>`;
 
-    cible.innerHTML += contenu;
+    //cible.innerHTML += contenu;
     })
     
 
@@ -52,6 +52,10 @@ function showGameDetails(game_id) {
     // balise cible dans laquelle on ajoute le contenu
     let cible = document.getElementById("details-game-section");
     let hide = document.getElementById("game-section");
+    let hide2 = document.getElementById("global-game-section");
+
+    gameName = gameName.replace("#%7!8$9%#", "'");
+    gameDesc = gameDesc.replace("#%7!8$9%#", "'");
 
     cible.innerHTML = '';
 
@@ -128,6 +132,7 @@ function showGameDetails(game_id) {
     
     cible.style.display = 'flex';
     hide.style.display = 'none';
+    hide2.style.display = 'none';
     cible.innerHTML = contenu;
 
     gameGenre.forEach(genre => {    
