@@ -7,30 +7,63 @@ function closeElement(id) {
   document.getElementById(id).style.display = 'none';
 }
 
-console.log(list_all_games);
-console.log(list_all_genders);
 
+//GAMES
+let games = [
+  {name: 'Elden Ring', id: 1},
+  {name: 'Minecraft', id: 2},
+  {name: 'Mario Kart', id: 3},
+];
+
+console.log(list_all_games);
+
+
+// let url='database.php'; // url = url du serveur PHP
+
+/* async function getAllGames() {
+    console.log('Launched getAllGames'); */
+    /* const response = await fetch(url, { 
+    method: "GET"
+    });
+    let result = await response.json();
+    console.log(result);
+    return result; */
+
+/*     $.ajax({
+        type: "POST",
+        url: 'database.php?action=GetAllGames',
+        dataType: 'json',
+        data: {functionname: 'add', arguments: [1, 2]},
+    
+        success: function (obj, textstatus) {
+                      if( !('error' in obj) ) {
+                          yourVariable = obj.result;
+                          console.log(yourVariable);
+                      }
+                      else {
+                          console.log(obj.error);
+                      }
+                }
+    });
+} */
 
 //AFFICHER LA LISTE JEUX
-
-// liste de jeux passée en paramètre
-function showGames(list_games) {
+function showGames(games) {
     let cible = document.getElementById("game-section");
     let hide = document.getElementById("details-game-section");
 
-    cible.innerHTML = '';
+    //cible.innerHTML = '';
 
-    list_games.forEach(game => {
+    games.forEach(game => {
       let gameName = game.name;
-      let gameVisual = game.visuel;
-      let gameId = game.id
+      let gameVisual = './img/gameVisual.jpeg';
 
-      let contenu = `<article class="game" onclick="showGameDetails('${gameId}')">
+      let contenu = `<article class="game" onclick="showGameDetails('${gameName}')">
         <p>${gameName}</p>
         <img class="game-img" src="${gameVisual}" alt="${gameVisual}"/>
     </article>`;
 
-    cible.innerHTML += contenu;
+    //cible.innerHTML += contenu;
     })
     
 
@@ -39,8 +72,7 @@ function showGames(list_games) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  showGames(list_all_games);
-  showListGender();
+  showGames(games);
 });
 
 
@@ -52,6 +84,10 @@ function showGameDetails(game_id) {
     // balise cible dans laquelle on ajoute le contenu
     let cible = document.getElementById("details-game-section");
     let hide = document.getElementById("game-section");
+    let hide2 = document.getElementById("global-game-section");
+
+    gameName = gameName.replace("#%7!8$9%#", "'");
+    gameDesc = gameDesc.replace("#%7!8$9%#", "'");
 
     cible.innerHTML = '';
 
@@ -93,8 +129,9 @@ function showGameDetails(game_id) {
                         </section>
                         <section class="details-game-genre">
                             <h3>Genres</h3>
-                            <ul id='details-game-list_genre'>
-                                
+                            <ul>
+                                <li>`+ gameGenre + `</li>
+                                <li>`+ gameGenre + `</li>
                             </ul>
                         </section>
                     </section>
@@ -128,6 +165,7 @@ function showGameDetails(game_id) {
     
     cible.style.display = 'flex';
     hide.style.display = 'none';
+    hide2.style.display = 'none';
     cible.innerHTML = contenu;
 
     gameGenre.forEach(genre => {    
