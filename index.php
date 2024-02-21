@@ -47,8 +47,11 @@ include("src/templates/database.php");
 
 
 
-            <section id="game-section">
-
+            <section id="global-game-section">
+                <?php
+                    include_once("src/templates/pagination.php");
+                    getPage(1);
+                ?>
             </section>
 
 
@@ -213,6 +216,17 @@ include("src/templates/database.php");
     </main>
 
 
+    <script>
+        // récupère les informations de chaque jeu
+        let list_all_games = <?php 
+        getInfosForFrontend('SELECT g.*, json_arrayagg(ge.name) AS gender
+        FROM game g, category c, gender ge
+        WHERE g.id=c.game_id 
+        AND c.gender_id= ge.id
+        GROUP BY g.name 
+        ORDER BY g.id;'); 
+        ?>
+    </script>
     <script src='./src/scripts/index.js'></script>
 
 </body>

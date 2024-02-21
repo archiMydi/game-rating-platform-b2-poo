@@ -22,6 +22,11 @@ include_once("src/templates/database.php");
         echo "<h2>
                 Bienvenue ".$user->getPseudo()." !
             </h2>
+            <a href='edit_profil.php'>
+                <button>
+                    Modifier le profil
+                </button>
+            </a>
             <a href='login.php'>
                 <button>
                     Déconnexion
@@ -35,8 +40,8 @@ include_once("src/templates/database.php");
         $list_game = $user->getRatedGame();
         foreach($list_game as $game) {
 
-            $id_g = $game[0];
-            $name_g = $game[1];
+            $id_g = $game->getID();
+            $name_g = $game->getName();
 
             echo "<h4>$name_g</h4><br>
                 <a href='rate_game.php?id_g=$id_g'>
