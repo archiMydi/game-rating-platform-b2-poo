@@ -52,7 +52,7 @@ function showGames(games) {
     let cible = document.getElementById("game-section");
     let hide = document.getElementById("details-game-section");
 
-    cible.innerHTML = '';
+    //cible.innerHTML = '';
 
     games.forEach(game => {
       let gameName = game.name;
@@ -63,7 +63,7 @@ function showGames(games) {
         <img class="game-img" src="${gameVisual}" alt="${gameVisual}"/>
     </article>`;
 
-    cible.innerHTML += contenu;
+    //cible.innerHTML += contenu;
     })
     
 
@@ -80,15 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 //AFFICHER LES DETAILS DU JEU
-function showGameDetails(gameName) {
+function showGameDetails(gameName, gameID = 1, gameVisual = "./img/gameVisual.jpeg", gameDesc = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, veniam eum facilis voluptatum aut debitis, animi ipsam pariatur accusamus culpa voluptatibus unde sequi, recusandae reprehenderit dignissimos totam dolor fugit dicta.") {
     let cible = document.getElementById("details-game-section");
     let hide = document.getElementById("game-section");
+    let hide2 = document.getElementById("global-game-section");
+
+    gameName = gameName.replace("#%7!8$9%#", "'");
+    gameDesc = gameDesc.replace("#%7!8$9%#", "'");
 
     cible.innerHTML = '';
-
-    let gameID = 1;
-
-    let gameVisual = "./img/gameVisual.jpeg";
 
     let gameGenre = "Genre";
 
@@ -106,7 +106,7 @@ function showGameDetails(gameName) {
                     <section class="details-game-info">
                         <section class="details-game-description">
                             <h3>Description</h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, veniam eum facilis voluptatum aut debitis, animi ipsam pariatur accusamus culpa voluptatibus unde sequi, recusandae reprehenderit dignissimos totam dolor fugit dicta.</p>
+                            <p>` + gameDesc + `</p>
                         </section>
                         <section class="details-game-genre">
                             <h3>Genres</h3>
@@ -146,6 +146,7 @@ function showGameDetails(gameName) {
     
     cible.style.display = 'flex';
     hide.style.display = 'none';
+    hide2.style.display = 'none';
     cible.innerHTML = contenu;
 }
 

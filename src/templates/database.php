@@ -133,7 +133,7 @@ function getGameById(int $id) : ?game {
 }
 
 /**
- * Récupère un jeu avec son identifiant
+ * Récupère un jeu avec son nom
  *
  * @param string     $name     Nom du jeu
  *
@@ -268,7 +268,7 @@ function insertRating(int $id_user, int $id_game, array $notes) : int {
 }
 
 /**
- * Enregistre une note pour un jeu
+ * Met à jour une note pour un jeu
  *
  * @param int     $id_user   Identifiant de l'utilisateur
  * @param int     $id_game   Identifiant du jeu
@@ -311,7 +311,7 @@ function updateRating(int $id_user, int $id_game, array $notes) : int {
 }
 
 /**
- * Enregistre une note pour un jeu
+ * Met à jour un utilisateur
  *
  * @param int     $id_user   Identifiant de l'utilisateur
  * @param int     $id_game   Identifiant du jeu
@@ -451,6 +451,46 @@ function getGamesInPage(int $page) : ?array {
     $id_min = ($page-1)*$nb_jeu_par_page;
 
     $sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+
+        foreach($tab as $game_) {
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel']);
+            array_push($list, $game);
+
+        }
+
+        return $list;
+
+    }
+    else {
+
+        return null;
+
+    }
+
+}
+
+/**
+ * Récupère les jeux avec une requête sur une page spécifique
+ *
+ * @param int     $page   Numéro de la page
+ * @param         $sql    Requête pour la selection de jeu
+ *
+ * @return array[game] Liste des jeux
+ */
+function getSpecificGamesInPage(int $page, $sql) : ?array {
+
+    global $conn;
+    global $nb_jeu_par_page;
+
+    $list = array();
+    $id_min = ($page-1)*$nb_jeu_par_page;
+
+    $sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
+    $sql .= "ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $tab = $stmt->fetchAll();

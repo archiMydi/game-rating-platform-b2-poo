@@ -13,11 +13,15 @@
         if($list != null) {
             echo "<h1>Page $page</h1><br><section id='game-section'>";
             foreach($list as $game) {
-                $show = "showGameDetails('".$game->getName()."')";
-
+                $name = $game->getName();
+                $desc = $game->getGameInfos();
+                $visu = $game->getVisuel();
+                $name = str_replace("'", "#%7!8$9%#", $name);
+                $desc = str_replace("'", "#%7!8$9%#", $desc);
+                $show = "showGameDetails('".$name."',".$game->getID().", '$visu', '".$desc."')";
                 echo '<article class="game" onclick="'.$show.'">
                 <p>'.$game->getName().'</p>
-                <img class="game-img" src="img/gameVisual.jpeg" alt="img/gameVisual.jpeg"/>
+                <img class="game-img" src="'.$visu.'" alt="'.$visu.'"/>
             </article>';
 
             }
