@@ -309,6 +309,9 @@
 #body-game-list main #global-game-section a {
   margin-left: 1%;
 }
+#body-game-list main #global-game-section a button {
+  cursor: pointer;
+}
 #body-game-list main #global-game-section a button.actif {
   background-color: rgb(52, 69, 168);
   padding: 0.5%;

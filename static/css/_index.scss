@@ -32,10 +32,8 @@
         display: flex;
         flex-direction: row;
 
-        button {
-            font {
-                size: var.$size;
-            }
+        font {
+            size: var.$size;
         }
 
 
@@ -159,6 +157,10 @@
             padding-bottom: 2%;
 
             a {
+
+                button {
+                    cursor: pointer;
+                }
 
                 margin-left: 1%;
 

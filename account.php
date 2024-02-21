@@ -2,11 +2,12 @@
 include_once("src/templates/database.php");
 session_start();
 if ($_SESSION['user'] == null) {
-    header("Location: login.php");
+    header("Location: index.php");
 }
 ?>
 
 <!DOCTYPE html>
+
 <html>
 <?php include('src/templates/html_head.php');
 htmlHead('Compte'); ?>
