@@ -140,7 +140,7 @@ function showGameDetails(game_id) {
 // affiche la liste des genres dans le menu
 function showListGender() {
   list_all_genders.forEach(gender => {    
-    let nav_gender = '<p onclick="showGames(' + gender.id + ')">' 
+    let nav_gender = '<p onclick="selectGamesByGender(' + gender.name + ')">' 
     + gender.name + '</p>';
     // TODO implémenter fonction onclick
     // balise cible pour ajouter les genres d'un jeu
@@ -148,8 +148,16 @@ function showListGender() {
   }); 
 }
 
-function selectGamesByGender(id) {
+function selectGamesByGender(gender_name) {
   let list_games_by_gender = [];
+  list_all_games.forEach(game => {
+    for (let i=0; i<game.gender.length; i++) {
+      if (game.gender[i].name == gender_name) {
+        list_games_by_gender.append(game);
+      }    
+    }
+  }); 
+  console.log(list_games_by_gender);
   showGames(list_games_by_gender)
 }
 
