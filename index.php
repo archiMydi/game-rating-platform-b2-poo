@@ -23,9 +23,9 @@ include("src/templates/database.php");
     <main>
         <aside id="menu-aside">
             <h3>Genres</h3>
-            <p onclick="">Genre 1</p>
+            <!-- <p onclick="">Genre 1</p>
             <p onclick="">Genre 2</p>
-            <p onclick="">Genre 3</p>
+            <p onclick="">Genre 3</p> -->
         </aside>
 
         <section id="main-section">
@@ -220,14 +220,14 @@ include("src/templates/database.php");
         let list_all_games = <?php 
         getInfosForFrontend('SELECT g.*, json_arrayagg(ge.name) AS gender
         FROM game g, category c, gender ge
-        WHERE g.id=c.game_id 
-        AND c.gender_id= ge.id
+        WHERE g.id = c.game_id 
+        AND c.gender_id = ge.id
         GROUP BY g.name 
         ORDER BY g.id;'); 
-        ?>
+        ?>;
         let list_all_genders = <?php 
         getInfosForFrontend('SELECT * FROM gender;'); 
-        ?>
+        ?>;
     </script>
     <script src='src/scripts/index.js'></script>
 

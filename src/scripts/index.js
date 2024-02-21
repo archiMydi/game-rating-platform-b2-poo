@@ -140,7 +140,7 @@ function showGameDetails(game_id) {
 // affiche la liste des genres dans le menu
 function showListGender() {
   list_all_genders.forEach(gender => {    
-    let nav_gender = '<p onclick="selectGamesByGender(' + gender.name + ')">' 
+    let nav_gender = '<p onclick="selectGamesByGender("' + gender.name + '")">' 
     + gender.name + '</p>';
     // TODO implémenter fonction onclick
     // balise cible pour ajouter les genres d'un jeu
