@@ -290,7 +290,7 @@ function goBack() {
 
 //USER CHART
 //User data
-users = [
+let users = [
   { id: 1, name: 'A', data: [3, 4, 4] },
   { id: 2, name: 'B', data: [3, 5, 5] },
   { id: 3, name: 'C', data: [3, 2, 4] }
