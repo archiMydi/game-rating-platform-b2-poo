@@ -12,6 +12,7 @@ if ($_SESSION['user'] == null) {
 htmlHead('Compte'); ?>
 
 <body>
+    <?php include 'src/templates/navbar.php'; ?>
     <?php
     $user = $_SESSION['user'];
     echo "<h2>
@@ -22,7 +23,7 @@ htmlHead('Compte'); ?>
                     Modifier le profil
                 </button>
             </a>
-            <a href='index.php'>
+            <a href='src/templates/logout.php'>
                 <button>
                     Déconnexion
                 </button>
