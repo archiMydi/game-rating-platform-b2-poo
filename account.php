@@ -1,6 +1,6 @@
 <?php
 include_once("src/templates/database.php");
-session_start();
+require_once("src/templates/init.php");
 if ($_SESSION['user'] == null) {
     header("Location: index.php");
 }
@@ -23,7 +23,7 @@ htmlHead('Compte'); ?>
                     Modifier le profil
                 </button>
             </a>
-            <a href='login.php'>
+            <a href='index.php'>
                 <button>
                     Déconnexion
                 </button>

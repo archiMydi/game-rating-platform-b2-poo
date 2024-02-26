@@ -1,0 +1,40 @@
+.reco-page {
+    width: 100%;
+
+    .reco-section {
+        padding: 4%;
+
+        .reco-h1 {
+            margin-bottom: 2%;
+        }
+
+        .reco-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-evenly;
+            text-align: center;
+            margin-top: 4%;
+
+            .reco-container {
+                width: 45%;
+                margin-bottom: 4%;
+
+                h1 {
+                    margin-bottom: 2%;
+                }
+
+                .reco-img-container {
+                    overflow: hidden;
+
+                    img {
+                        width: auto;
+                        height: 60vh;
+                        margin-bottom: 2%;
+                    }
+                }
+            }
+        }
+    }
+}

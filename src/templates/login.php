@@ -1,9 +1,3 @@
-<?php
-session_start();
-session_destroy();
-session_start();
-?>
-
 <div class='login-modal'>
     <div class='login-modal-content'>
         <h1>Welcome Back</h1>
