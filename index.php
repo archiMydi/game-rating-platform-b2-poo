@@ -38,14 +38,19 @@ htmlHead('Game Rating'); ?>
 
             <section id="global-game-section">
                 <?php
+
                 include_once("src/templates/pagination.php");
                 getPage(1);
                 ?>
+
             </section>
 
 
             <section id="details-game-section">
-
+                <?php
+                include_once("src/scripts/create-json.php");
+                getRawgApiData();
+                ?>
             </section>
 
 
@@ -203,9 +208,9 @@ htmlHead('Game Rating'); ?>
 
 
     </main>
-        <?php
-        include_once("src/templates/footer.php");
-        ?>
+    <?php
+    include_once("src/templates/footer.php");
+    ?>
 
     <script>
         // récupère les informations de chaque jeu

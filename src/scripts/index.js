@@ -7,25 +7,59 @@ function closeElement(id) {
   document.getElementById(id).style.display = 'none';
 }
 
+
+//ANCIENNES FONCTIONS POUR APPELER L'API ET TRAITER LES DONNÉES
 // appel de la fonction get RawgApiData
 // récupère les données de l'API
-let apiRawgData = getRawgApiData(); 
-console.log(list_all_games);
-console.log(apiRawgData);
+// let apiRawgData = getRawgApiData(); 
+// console.log("API RawData : ",apiRawgData);
 
 /** Function getRawgApiData :
  * Récupère les données de l'API Rawg avec une requête fetch
  * Doit retourner un tableau d'objets au format json 
  * (fonction à initier au lancement et à stocker dans la base de données)
  */
-async function getRawgApiData() { // fonction déclinable avec 
-  const rawgData = await fetch('https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88', {
-    // url doir inclure la clé de l'API (API Key) en paramètre
-    method: "GET"
-    });
-    console.log(rawgData);
-    return rawgData;
-}
+// async function getRawgApiData() { // fonction déclinable avec 
+//   let response = await fetch('https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88&page_size=1000', {
+//     // url doir inclure la clé de l'API (API Key) en paramètre
+//     method: "GET"
+//     });
+//   let rawgData = await response.json();
+//   console.log("RawgData : ",rawgData);
+//   insertData(rawgData);
+// }
+
+
+// function insertData(data) {
+//   let results = data.results;
+
+//   results.forEach(element => {
+//     dataGame(element)
+//   });
+// };
+
+// function dataGame(game) {
+
+//     let name = game.name;
+//     let visuel = game.background_image;
+//     let genres = game.genres.map(genre => genre.name);
+//     let galery = game.short_screenshots.map(screen => screen.image);
+//     let tags = game.tags.map(tag => tag.name);
+//     let metacritic = game.metacritic;
+    
+//     let gameData = {"name": name, "visuel": visuel, "genres": [genres], "galery": [galery], "tags": [tags], "metacritic": metacritic};
+
+//     let gameString = JSON.stringify(gameData);
+
+//     console.log("Game String : ", gameString);
+
+//     let fs = require('fs');
+//     fs.writeFile('data.json', gameString, function(error, result) {
+//       if(error) console.log('error', error);
+//     });
+
+// }
+
 
 //AFFICHER LA LISTE JEUX
 function showGames(games) {
@@ -230,10 +264,6 @@ function userChart(users) {
     let canvas = document.getElementById('user-chart' + i);
     let cibleNameUser = document.getElementById('user' + i);
 
-    console.log(cibleNameUser);
-    console.log(i);
-    console.log(users[i].name, users[i].data);
-
     cibleNameUser.innerHTML = users[i].name;
 
     let data = {
@@ -384,11 +414,3 @@ function filtreASC() {
 
   showGames(filterASC);
 }
-
-
-//FONCTION GET GAMES
-
-function  getGames() {
-  
-}
-// https://api.rawg.io/api/games
