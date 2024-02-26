@@ -376,4 +376,4 @@ function filtreASC() {
 function  getGames() {
   
 }
-https://api.rawg.io/api/games
+// https://api.rawg.io/api/games
