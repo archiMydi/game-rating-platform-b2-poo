@@ -45,12 +45,13 @@ function showGames(games) {
 
 
 //AFFICHER LES DETAILS DU JEU
-function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisual.jpeg", gameDesc = "Lorem Ipsum") {
+function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisual.jpeg", gameDesc = "Lorem Ipsum", data = [3, 3, 3]) {
     // balise cible dans laquelle on ajoute le contenu
     let cible = document.getElementById("details-game-section");
     let hide = document.getElementById("game-section");
     let hide2 = document.getElementById("global-game-section");
     let hide3 = document.getElementById("second-header");
+    console.log("LES DATAS (NOTES) : " + data[0]);
 
     gameName = gameName.replace("#%7!8$9%#", "'");
     gameDesc = gameDesc.replace("#%7!8$9%#", "'");
@@ -93,7 +94,6 @@ function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisu
                         <section class="details-game-genre">
                             <h3>Genres</h3>
                             <ul>
-                                <li>`+ gameGenre + `</li>
                                 <li>`+ gameGenre + `</li>
                             </ul>
                         </section>
@@ -157,7 +157,7 @@ function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisu
     $("#details-game-list_genre").append(li_genre);
     });
 
-    gameChart();
+    gameChart(data);
     userChart(users);
 }
 
@@ -276,7 +276,7 @@ function userChart(users) {
 
 
 //GAME CHART
-function gameChart() {
+function gameChart(data_) {
   let canvas = document.getElementById('game-chart');
 
   let data = {
@@ -287,7 +287,7 @@ function gameChart() {
     ],
     datasets: [{
       label: 'Game Rating',
-      data: [3, 4, 4],
+      data: data_,
       fill: true,
       backgroundColor: 'rgba(82, 123, 212, 0.5)',
       borderColor: 'rgb(82, 123, 212)',

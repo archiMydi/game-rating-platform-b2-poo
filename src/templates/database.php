@@ -443,6 +443,40 @@ function getMaxPages(): ?int
 }
 
 /**
+ * Calcule le nombre de pages requis pour afficher la totalité des jeux
+ *
+ * @return ?int Nombre de pages
+ */
+function getSQLMaxPages($sql): ?int
+{
+
+    global $conn;
+    global $nb_jeu_par_page;
+
+    //$sql = "SELECT COUNT(*) nb FROM game";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+
+        $nb = $tab[0]['nb'];
+        $reste = $nb % $nb_jeu_par_page;
+        $reste = $nb_jeu_par_page - $reste;
+        $nb += $reste;
+        $nb = $nb / $nb_jeu_par_page;
+
+        if ($reste == $nb_jeu_par_page) {
+            $nb -= 1;
+        }
+
+        return $nb;
+    } else {
+
+        return null;
+    }
+}
+
+/**
  * Récupère les jeux sur une page spécifique
  *
  * @param int     $page   Numéro de la page
@@ -493,8 +527,8 @@ function getSpecificGamesInPage(int $page, $sql): ?array
     $list = array();
     $id_min = ($page - 1) * $nb_jeu_par_page;
 
-    $sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
-    $sql .= "ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
+    //$sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
+    $sql .= " ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $tab = $stmt->fetchAll();
