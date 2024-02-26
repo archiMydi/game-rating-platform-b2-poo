@@ -123,17 +123,38 @@ class game
         $sql_get_id = 'SELECT id FROM game WHERE visuel = '.$this->visuel.';';
         $game_id = getInfosFromDatabase($sql_get_id);
 
-        /* pour chaque élément du tableau genre (foreach) :
-        faire un SELECT id, nom FROM genre WHERE nom_genre = genre(élément du tableau)
-        si requête non null -> utiliser id pour insert into category
-        si requete null -> insérer le genre dans le tableau
-        puis refaire un select pour obtenir l'id
+        $gender_id_array = array();
 
-        insérer tous les id dans un tableau
-        Puis parcourir le tableau en faisant pour chaque élément : 
-        insert into category (id_genre, $game_id) */
+        // récupérer chaque genre
+        foreach ($this->listGender as $x) {
+            $sql_get_gender = 'SELECT id FROM gender WHERE name = '.$x.';';
+            $gender_id = getInfosFromDatabase($sql_get_gender); // retourne un tableau de longueur 0 ou 1
+            if (sizeof($gender_id) > 0) {
+                array_push($gender_id_array, $gender_id[0]); // ajoute l'id du genre dans le tableau
+            }
+            else { // si la requête renvoie un résultat vide, insérer le nouveau genre dans la table gender
+                $sql_insert_gender = 'INSERT INTO gender (name) VALUES ('.$x.')';
+                sendDataToDatabase($sql_insert_gender);
+                // puis ajouter le genre dans le tableau de la liste des genres d'un jeu
+                $sql_get_insert_gender_id = 'SELECT id FROM gender WHERE name = '.$x.';';
+                $gender_id = getInfosFromDatabase($sql_get_insert_gender_id);
+                array_push($gender_id_array, $gender_id[0]);
+            }
+          }
 
+        // insérer les genres dans la table catégorie (table de liaison entre jeux et genres)
+        foreach ($gender_id_array as $y) {
+            $sql_insert_into_category = 'INSERT INTO category (game_id, gender_id) 
+            VALUES ('.$game_id.', '.$y.')';
+            sendDataToDatabase($sql_insert_into_category);
+        }
 
+        // insérer les images dans la table galerie
+        foreach ($this->listGallery as $z) {
+            $sql_insert_into_gallery = 'INSERT INTO category (game_id, url) 
+            VALUES ('.$game_id.', '.$z.')';
+            sendDataToDatabase($sql_insert_into_gallery);
+        }
 
     }
 
