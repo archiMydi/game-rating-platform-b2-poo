@@ -1,4 +1,5 @@
 <?php
+require_once("src/templates/init.php");
 include("src/templates/database.php");
 ?>
 
@@ -220,9 +221,9 @@ htmlHead('Game Rating'); ?>
 
 
     </main>
-        <?php
-        include_once("src/templates/footer.php");
-        ?>
+    <?php
+    include_once("src/templates/footer.php");
+    ?>
 
 </body>
 

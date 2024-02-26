@@ -55,7 +55,8 @@ class User
      *
      * @return ?string Retourne l'URL
      */
-    function getAvatar() : ?string {
+    function getAvatar(): ?string
+    {
 
         return $this->avatar;
     }
