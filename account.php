@@ -7,7 +7,6 @@ if ($_SESSION['user'] == null) {
 ?>
 
 <!DOCTYPE html>
-
 <html>
 <?php include('src/templates/html_head.php');
 htmlHead('Compte'); ?>
