@@ -39,7 +39,7 @@ let test_data = [];
  * Paramètre : tab : tableau d'objets traité par la fonction getDataToPostToDatabase
  * Transmet les données traitées au serveur
  */
-/* async function sendDataToBack(tab) {
+async function sendDataToBack(tab) {
   await fetch("../templates/database.php", {
     method: "POST",
     body: JSON.stringify(tab),
@@ -49,7 +49,7 @@ let test_data = [];
   })
     .then((response) => response.json())
     .then((json) => console.log(json));
-} */
+} 
 
 /** Function getDataToPostToDatabase :
  * Paramètre : data : tableau d'objets reçu par la requête fetch dans getRawgApiData()
@@ -57,7 +57,7 @@ let test_data = [];
  * Doit retourner tableau contenant un objet json pour chaque élément de la requête 
  * 
  */
-/* function getDataToPostToDatabase(p_data) {
+function getDataToPostToDatabase(p_data) {
 
   // tableau contenant plusieurs objet à envoyer au back-end en requête POST
   let tabToPost = [];
@@ -98,7 +98,7 @@ let test_data = [];
 // tester avec apiRawgData
 // getDataToPostToDatabase(apiRawgData);
 getDataToPostToDatabase(test_data);
- */
+
 
 //AFFICHER LA LISTE JEUX
 function showGames(games) {

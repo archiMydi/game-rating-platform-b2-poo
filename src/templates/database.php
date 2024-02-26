@@ -90,7 +90,7 @@ function getInfosGame(String $sql): ?game
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
-        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel'], $tab[0]['metacritic']);
+        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel'], $tab[0]['metacritic'], $tab[0]['listGender'], $tab[0]['listGallery']);
     } else {
         return null;
     }
@@ -499,7 +499,7 @@ function getGamesInPage(int $page): ?array
     if (count($tab) > 0) {
 
         foreach ($tab as $game_) {
-            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic']);
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic'], $game_['listGender'], $game_['listGallery']);
             array_push($list, $game);
         }
 
@@ -535,7 +535,7 @@ function getSpecificGamesInPage(int $page, $sql): ?array
     if (count($tab) > 0) {
 
         foreach ($tab as $game_) {
-            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic']);
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic'], $game_['listGender'], $game_['listGallery']);
             array_push($list, $game);
         }
 
@@ -621,7 +621,7 @@ function getRatedGame($id_user): array
 
         foreach ($tab as $elm) {
 
-            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel'], $elm['metacritic']);
+            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel'], $elm['metacritic'], $elm['listGender'], $elm['listGallery']);
             array_push($list, $game);
         }
     }
@@ -675,7 +675,7 @@ function getAllGames(): array
     $liste = array();
     foreach ($tab as $game) {
 
-        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel'], $game['metacritic']);
+        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel'], $game['metacritic'], $game['listGender'], $game['listGallery']);
         array_push($liste, $game_obj);
     }
 

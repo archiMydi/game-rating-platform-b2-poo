@@ -9,6 +9,8 @@ class game
     private $infos;
     private $visuel;
     private int $metacritic;
+    private array $listGender; 
+    private array $listGallery;
 
     /**
      * Création d'un nouvel objet game
@@ -18,14 +20,18 @@ class game
      * @param string $infos         Informations du jeu
      * @param string $visuel        URL du visuel du jeu
      * @param int $metacritic       Note metacritic du jeu
+     * @param array $listGender     Liste des genres du jeu
+     * @param array $listGallery    Liste des images de la galerie
      *
      */
-    public function __construct($id, $name, $infos, $visuel, $metacritic) {
+    public function __construct($id, $name, $infos, $visuel, $metacritic, $listGender, $listGallery) {
         $this->id = $id;
         $this->name = $name;
         $this->infos = $infos;
         $this->visuel = $visuel;
         $this->metacritic = $metacritic;
+        $this->listGender = $listGender;
+        $this->listGallery = $listGallery;
     }
 
     /**
@@ -96,6 +102,41 @@ class game
 
         return $result;
     }
+
+    /**
+ * Transmet en base de données les données d'un objet de la classe game
+ * 
+ */
+    public function sendNewGameToDatabase() {
+        // renvoie la liste des users ayant notés un jeu
+
+        // requête récupérant la liste des jeux notés par l'utilisateur
+        $sql_post_game = 'INSERT INTO game(name, visuel, infos, metacritic) VALUES (
+            '.$this->name.', '.$this->visuel.', '.$this->infos.', '.$this->metacritic.' 
+        );';
+
+        // appelle une fonction dans database.php
+        // pour envoyer les données dans la database
+        sendDataToDatabase($sql_post_game);
+
+        // récupérer l'id du jeu
+        $sql_get_id = 'SELECT id FROM game WHERE visuel = '.$this->visuel.';';
+        $game_id = getInfosFromDatabase($sql_get_id);
+
+        /* pour chaque élément du tableau genre (foreach) :
+        faire un SELECT id, nom FROM genre WHERE nom_genre = genre(élément du tableau)
+        si requête non null -> utiliser id pour insert into category
+        si requete null -> insérer le genre dans le tableau
+        puis refaire un select pour obtenir l'id
+
+        insérer tous les id dans un tableau
+        Puis parcourir le tableau en faisant pour chaque élément : 
+        insert into category (id_genre, $game_id) */
+
+
+
+    }
+
 
     public static function getTop10()
     {
