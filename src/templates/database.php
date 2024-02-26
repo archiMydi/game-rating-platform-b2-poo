@@ -90,7 +90,7 @@ function getInfosGame(String $sql): ?game
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
-        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel']);
+        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel'], $tab[0]['metacritic']);
     } else {
         return null;
     }
@@ -465,7 +465,7 @@ function getGamesInPage(int $page): ?array
     if (count($tab) > 0) {
 
         foreach ($tab as $game_) {
-            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel']);
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic']);
             array_push($list, $game);
         }
 
@@ -501,7 +501,7 @@ function getSpecificGamesInPage(int $page, $sql): ?array
     if (count($tab) > 0) {
 
         foreach ($tab as $game_) {
-            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel']);
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic']);
             array_push($list, $game);
         }
 
@@ -587,7 +587,7 @@ function getRatedGame($id_user): array
 
         foreach ($tab as $elm) {
 
-            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel']);
+            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel'], $elm['metacritic']);
             array_push($list, $game);
         }
     }
@@ -641,7 +641,7 @@ function getAllGames(): array
     $liste = array();
     foreach ($tab as $game) {
 
-        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel']);
+        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel'], $game['metacritic']);
         array_push($liste, $game_obj);
     }
 
@@ -691,4 +691,12 @@ function getInfosFromDatabase(String $sql)
     $result = $stmt->fetchAll();
     return $result; // retourne un tuple d'informations
 
+}
+
+// fonction à utiliser pour transmettre des données en base de données
+// paramètre : requête SQL (format string) de type INSERT
+function sendDataToDatabase(String $sql) {
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
 }
