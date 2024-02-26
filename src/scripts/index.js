@@ -7,10 +7,25 @@ function closeElement(id) {
   document.getElementById(id).style.display = 'none';
 }
 
-
-//GAMES
+// appel de la fonction get RawgApiData
+// récupère les données de l'API
+let apiRawgData = getRawgApiData(); 
 console.log(list_all_games);
+console.log(apiRawgData);
 
+/** Function getRawgApiData :
+ * Récupère les données de l'API Rawg avec une requête fetch
+ * Doit retourner un tableau d'objets au format json 
+ * (fonction à initier au lancement et à stocker dans la base de données)
+ */
+async function getRawgApiData() { // fonction déclinable avec 
+  const rawgData = await fetch('https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88', {
+    // url doir inclure la clé de l'API (API Key) en paramètre
+    method: "GET"
+    });
+    console.log(rawgData);
+    return rawgData;
+}
 
 //AFFICHER LA LISTE JEUX
 function showGames(games) {
