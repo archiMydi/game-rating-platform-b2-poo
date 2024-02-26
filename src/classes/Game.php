@@ -2,7 +2,8 @@
 
 include_once("src/templates/database.php");
 
-class game {
+class game
+{
     private int $id;
     private $name;
     private $infos;
@@ -32,7 +33,8 @@ class game {
      *
      * @return string Retourne le nom
      */
-    public function getName() : string {
+    public function getName(): string
+    {
         // renvoie le nom du jeu
         return $this->name;
     }
@@ -42,10 +44,10 @@ class game {
      *
      * @return int Retourne l'identifiant
      */
-    function getID() : int {
+    function getID(): int
+    {
 
         return $this->id;
-
     }
 
     /**
@@ -53,7 +55,8 @@ class game {
      *
      * @return string Retourne les informations
      */
-    public function getGameInfos() : string {
+    public function getGameInfos(): string
+    {
         // renvoie les infos du jeu
         return $this->infos;
     }
@@ -63,7 +66,8 @@ class game {
      *
      * @return string Retourne l'URL
      */
-    public function getVisuel() : string {
+    public function getVisuel(): string
+    {
         // renvoie l'image principale du jeu
         return $this->visuel;
     }
@@ -78,13 +82,14 @@ class game {
      *
      * @return ?array Retourne la liste ou false si aucun utilisateur a noté le jeu
      */
-    public function GetRatingUsers() : ?array {
+    public function getRatingUsers(): ?array
+    {
         // renvoie la liste des users ayant notés un jeu
 
         // requête récupérant la liste des jeux notés par l'utilisateur
         $sql = 'SELECT u.pseudo FROM rating r 
         INNER JOIN user u ON u.id = r.user_id
-        WHERE r.game_id = '.$this->id.' GROUP BY u.pseudo;';
+        WHERE r.game_id = ' . $this->id . ' GROUP BY u.pseudo;';
 
         // appelle une fonction pour récupérer les données dans database.php
         $result = getInfosFromDatabase($sql);
@@ -92,21 +97,13 @@ class game {
         return $result;
     }
 
-/**
- * Transmet en base de données les données d'un objet de la classe game
- *
- */
-    public function sendNewGameToDatabase() {
-        // renvoie la liste des users ayant notés un jeu
+    public static function getTop10()
+    {
+        $sql = 'SELECT * FROM game
+        ORDER BY name ASC
+        LIMIT 10;';
 
-        // requête récupérant la liste des jeux notés par l'utilisateur
-        $sql = 'INSERT INTO game(name, visuel, infos, metacritic) VALUES (
-            '.$this->name.', '.$this->visuel.', '.$this->infos.', '.$this->metacritic.' 
-        );';
-
-        // appelle une fonction dans database.php
-        // pour envoyer les données dans la database
-        sendDataToDatabase($sql);
+        $top10 = getInfosFromDatabase($sql);
+        return json_encode($top10);
     }
 }
-
