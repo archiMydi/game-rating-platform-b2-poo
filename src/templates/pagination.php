@@ -19,16 +19,11 @@
                 $visu = $game->getVisuel();
                 $name = str_replace("'", "#%7!8$9%#", $name);
                 $desc = str_replace("'", "#%7!8$9%#", $desc);
-                //$show = "showGameDetails('".$name."',".$game->getID().", '$visu', '".$desc."')";
-                //echo '<article class="game" onclick="'.$show.'">
-                //<p>'.$game->getName().'</p>
-                //<img class="game-img" src="'.$visu.'" alt="'.$visu.'"/>
-            //</article>';
-
-                echo '<a href="?id_g='.$id.'"><article class="game">
+                $show = "showGameDetails('".$name."',".$game->getID().", '$visu', '".$desc."', [3, 3, 3])";
+                echo '<article class="game" onclick="'.$show.'">
                 <p>'.$game->getName().'</p>
                 <img class="game-img" src="'.$visu.'" alt="'.$visu.'"/>
-            </article></a>';
+            </article>';
 
             }
             echo "</section><br>";
