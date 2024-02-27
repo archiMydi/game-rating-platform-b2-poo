@@ -4,7 +4,7 @@ include_once('connection.inc.php');
 include_once('src/classes/User.php');
 include_once('src/classes/Game.php');
 $conn = null;
-$nb_jeu_par_page = 3;
+$nb_jeu_par_page = 15;
 try {
     $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -735,5 +735,17 @@ function sendDataToDatabase(String $sql) {
     $stmt->execute();
 }
 
+/* $datajson_array = array('js/dataJSON/data1.json','js/dataJSON/data2.json','js/dataJSON/data3.json');
+
+// récupérer chaque genre
+// temps de chargment limité à 30 secondes, 3 requêtes à la fois
+foreach ($datajson_array as $x) {
+    game::prepareFetchToDatabase($x);
+    } */
+
 //echo(dirname(__DIR__)); // permet de renvoyer le chamin d'accès (current)
-game::prepareFetchToDatabase('js/dataJSON/data1.json');
+
+// game::prepareFetchToDatabase('js/dataJSON/data1.json');
+// game::prepareFetchToDatabase('js/dataJSON/data2.json');
+// game::prepareFetchToDatabase('js/dataJSON/data3.json');
+
