@@ -2,15 +2,16 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$folder = "/home/xjeypbqy/poo-denis/user-profiles/";
-$file = $uid . ".json";
+//$folder = "/home/xjeypbqy/poo-denis/user-profiles/";
+//$file = $uid . ".json";
 
-$myfile = fopen($folder . $file, "a") or die("Unable to open file !");
-$json = "{['uid': N,'cosResult': X],['uid': N+1, 'cosResult': Y]}";
-fwrite($myfile, $json);
+//$myfile = fopen($folder . $file, "a") or die("Unable to open file !");
+//$json = "{['uid': N,'cosResult': X],['uid': N+1, 'cosResult': Y]}";
+//fwrite($myfile, $txt);
 
+include("src/classes/Rating.php");
 
-function cosSimilarity($u, $v) //Deux vecteurs u et v
+function cosSimilarity($vector1, $vector2)
 {
     // Calcul du produit scalaire des deux vecteurs
     $scalarProduct = 0;
@@ -32,6 +33,33 @@ function cosSimilarity($u, $v) //Deux vecteurs u et v
     // Retourne la similarité cosinus calculée
     return $similarity;
 }
+
+function getUsers($id_debut, $nb_user)
+{
+
+    $list = array();
+
+    global $conn;
+
+    $sql = "SELECT * FROM user WHERE id > $id_debut ORDER BY id LIMIT $nb_user";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+
+        foreach ($tab as $user) {
+            $id = $user['id'];
+            $list[$id] = Rating::getUserVector($id);
+        }
+
+        return $list;
+    } else {
+
+        return null;
+    }
+}
+
+var_dump(getUsers(0, 5));
 
 function saveData($uid)
 {
