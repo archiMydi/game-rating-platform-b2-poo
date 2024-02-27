@@ -1,4 +1,8 @@
-//FUNCTION DISPLAY POP-UP
+//FUNCTION DISPLAY POP-UP AFFICHAGE
+/**
+ * Fonction utilisée dans showGameDetails pour afficher la pop-up de rating
+ * Prend l'id de la balise afin de lui appliquer un display flex.
+ */
 function showElement(id) {
   document.getElementById(id).style.display = 'flex';
 }
@@ -6,6 +10,12 @@ function showElement(id) {
 function closeElement(id) {
   document.getElementById(id).style.display = 'none';
 }
+
+
+/**
+ * FONCTION OBSOLÈTE
+ * Récupération des données de l'API pour l'intégrer dans un fichier .json afin de recueillir des données indépendantes de l'API
+ */
 
 // ../ redescend à src puis à game-rating-plat... pour accéder au fichier rawgdata.json via route js/rawgdata.json
 /* import data from '../../js/rawgdata.json'; // importer le fichier json rawgdata.json dans index.js
@@ -100,30 +110,31 @@ let test_data = [];
 // getDataToPostToDatabase(test_data);
 
 
-//AFFICHER LA LISTE JEUX
-function showGames(games) {
-    let cible = document.getElementById("game-section");
-    let hide = document.getElementById("details-game-section");
+
+//AFFICHER LA LISTE JEUX FONCTION OBSOLÈTE -> AFFICHAGE DEPUIS DATABASE
+// function showGames(games) {
+//     let cible = document.getElementById("game-section");
+//     let hide = document.getElementById("details-game-section");
     
 
-    //cible.innerHTML = '';
+//     //cible.innerHTML = '';
 
-    games.forEach(game => {
-      let gameName = game.name;
-      let gameVisual = './img/gameVisual.jpeg';
+//     games.forEach(game => {
+//       let gameName = game.name;
+//       let gameVisual = './img/gameVisual.jpeg';
 
-      let contenu = `<article class="game" onclick="showGameDetails('${gameName}')">
-        <p>${gameName}</p>
-        <img class="game-img" src="${gameVisual}" alt="${gameVisual}"/>
-    </article>`;
+//       let contenu = `<article class="game" onclick="showGameDetails('${gameName}')">
+//         <p>${gameName}</p>
+//         <img class="game-img" src="${gameVisual}" alt="${gameVisual}"/>
+//     </article>`;
 
-    //cible.innerHTML += contenu;
-    })
+//     //cible.innerHTML += contenu;
+//     })
     
 
-    hide.style.display = 'none';
-    cible.style.display = 'flex';
-}
+//     hide.style.display = 'none';
+//     cible.style.display = 'flex';
+// }
 
 
 
@@ -131,6 +142,10 @@ function showGames(games) {
 
 
 //AFFICHER LES DETAILS DU JEU
+/**
+ * Cible la section details-game-section pour afficher les données du jeu à l'intérieur
+ * Applique un display none sur les autres sections de la page
+ */
 function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisual.jpeg", gameDesc = "Lorem Ipsum", data = [3, 3, 3]) {
     // balise cible dans laquelle on ajoute le contenu
     let cible = document.getElementById("details-game-section");
@@ -285,11 +300,9 @@ function goBack() {
 
 
 
-//FORM RATING
-
 
 //USER CHART
-//User data
+//User data à remplacer et adapter par la suite
 let users = [
   { id: 1, name: 'A', data: [3, 4, 4] },
   { id: 2, name: 'B', data: [3, 5, 5] },
@@ -297,15 +310,14 @@ let users = [
 ];
 
 //FONCTION USER CHART
+/**Prend une liste de users, données : name, data(vecteur avec les notes des critères)
+ * Critères définis dans la variable data -> RESPECTER L'ORDRE des données du vecteur afin d'être en accord avec label 'Gameplay', 'Graphisme', 'Sound Design'
+ */
 function userChart(users) {
 
   for (let i = 0; i < 3; i++) {
     let canvas = document.getElementById('user-chart' + i);
     let cibleNameUser = document.getElementById('user' + i);
-
-    console.log(cibleNameUser);
-    console.log(i);
-    console.log(users[i].name, users[i].data);
 
     cibleNameUser.innerHTML = users[i].name;
 
@@ -361,6 +373,10 @@ function userChart(users) {
 
 
 //GAME CHART
+/**
+ * Création du chart radar du jeu, prend la data du jeu (vecteur)
+ * Critères définis dans la variable data -> RESPECTER L'ORDRE des données du vecteur afin d'être en accord avec label 'Gameplay', 'Graphisme', 'Sound Design'
+ */
 function gameChart(data_) {
   let canvas = document.getElementById('game-chart');
 
@@ -414,13 +430,11 @@ function gameChart(data_) {
 
 
 
-
-
-
-
-
-
 //SEARCH
+/**
+ * Fonction de la barre de recherche onkeyup, filtrer les resultats incluant les termes de la recherche
+ * CHANGER list_all_games
+ */
 async function searchGame() {
   let searchTerm = document.getElementById("input-search").value.toLowerCase();
   let resultat = list_all_games.filter(game => game.name.toLowerCase().includes(searchTerm));
@@ -430,13 +444,17 @@ async function searchGame() {
 }
 
 //SELECT FILTRE
+/**
+ * Fonction de select Filtre, selection de la value du select
+ * Switch case en prenant la value des options du select index.php
+ */
 function selectFiltre() {
   let select = document.getElementById("select-filtre");
   let selectedValue = select.options[select.selectedIndex].value;
 
   switch(selectedValue) {
     case 'pertinence':
-      showGames(games);
+      // showGames(games); Fonction obsolète
       break;
     case 'alphabetique':
       filtreASC();
@@ -446,6 +464,9 @@ function selectFiltre() {
 
 
 //FILTRE PAR ORDRE ALPHABETIQUE
+/**
+ * Fonction filtrage par ordre alphabétique sort() -> tri les éléments du tableau list_all_games (À REDEFINIR)
+ */
 function filtreASC() {
   let filterASC = list_all_games.sort(function(a, b) {
     if (a.name.toLowerCase() < b.name.toLowerCase()) {
@@ -455,13 +476,5 @@ function filtreASC() {
     }
   });
 
-  showGames(filterASC);
+  // showGames(filterASC); Fonction obsolète
 }
-
-
-//FONCTION GET GAMES
-
-function  getGames() {
-  
-}
-// https://api.rawg.io/api/games
