@@ -9,7 +9,7 @@ if ($_SESSION['user'] == null) {
 <!DOCTYPE html>
 <html>
 
-<?php include_once __DIR__.'src/templates/html_head.php';
+<?php include_once $_SERVER['DOCUMENT_ROOT'].'/src/templates/html_head.php';
 htmlHead('Game Rating'); 
 include(__DIR__."src/templates/rate_game.php");
     $id_g = $_GET['id_g'] ?? -1;
@@ -58,7 +58,7 @@ include(__DIR__."src/templates/rate_game.php");
 
             <section id="global-game-section">
                 <?php
-                include_once(__DIR__."src/templates/pagination.php");
+                include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/pagination.php");
                 $src = $_GET['src'] ?? null;
                 if($src == null) {
                     echo "<h1>Jeux déjà notés</h1><br>";
