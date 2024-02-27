@@ -1,5 +1,4 @@
 <?php
-require_once("src/templates/init.php");
 include_once 'src/templates/database.php';
 $userListJSON = getUserListJSON($conn);
 ?>
