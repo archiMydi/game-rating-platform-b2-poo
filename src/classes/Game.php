@@ -158,6 +158,17 @@ class game
 
     }
 
+/**
+ * function prepareFetchToDatabase
+ * Passe un objet json récupéré grâce à la requête fetch en paramètre et le traite 
+ * pour créer des objets de la classe game et les envoyer en base de données 
+ * 
+ * @param array $list_json
+ */
+    public static function prepareFetchToDatabase($list_json) {
+
+    }
+
 
     public static function getTop10()
     {
