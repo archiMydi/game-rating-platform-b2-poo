@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__."src/templates/database.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
 
 class game
 {
