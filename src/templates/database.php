@@ -1,8 +1,8 @@
 <?php
 
-include_once('connection.inc.php');
-include_once('src/classes/User.php');
-include_once('src/classes/Game.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/templates/connection.inc.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/classes/User.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/classes/Game.php');
 $conn = null;
 $nb_jeu_par_page = 15;
 try {
@@ -33,6 +33,18 @@ function getInfosUser(String $sql): ?user
     }
 }
 
+function getLastUserID(): int
+{
+
+    global $conn;
+
+    $stmt = $conn->prepare("SELECT id FROM user ORDER BY id DESC");
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+        return $tab[0]['id'];
+    }
+}
 
 /**
  * Permet de récupérer la liste des utilisateurs au format JSON
@@ -553,7 +565,7 @@ function getSpecificGamesInPage(int $page, $sql): ?array
  *
  * @return array Retourne une liste de jeux (liste[id jeu] = [id critere => [nom, note]])
  */
-function getAllRatedGame(int $id_user): array
+function getAllRatedGame(int $id_user, bool $name = true, bool $normalise = false): array
 {
 
     $rated_games = getRatedGame($id_user);
@@ -561,7 +573,7 @@ function getAllRatedGame(int $id_user): array
 
     foreach ($rated_games as $game) {
 
-        $list[$game->getID()] = getRatingGame($game->getID(), $id_user);
+        $list[$game->getID()] = getRatingGame($game->getID(), $id_user, $name, $normalise);
     }
 
     return $list;
@@ -575,7 +587,7 @@ function getAllRatedGame(int $id_user): array
  *
  * @return array Retourne une liste de jeux (liste[id critere] = [nom, note])
  */
-function getRatingGame(int $id_game, int $id_user): array
+function getRatingGame(int $id_game, int $id_user, bool $name = true, bool $normalise = false): array
 {
 
     global $conn;
@@ -584,6 +596,10 @@ function getRatingGame(int $id_game, int $id_user): array
 
     $sql = "SELECT c.id id_c, c.name nom, r.value note FROM `rating` r JOIN criterion c ON r.criterion_id = c.id WHERE game_id = $id_game AND user_id = $id_user";
 
+    if ($normalise) {
+        $sql = "SELECT c.id id_c, c.name nom, r.value-2.5 note FROM `rating` r JOIN criterion c ON r.criterion_id = c.id WHERE game_id = $id_game AND user_id = $id_user;";
+    }
+
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $tab = $stmt->fetchAll();
@@ -591,7 +607,11 @@ function getRatingGame(int $id_game, int $id_user): array
 
         foreach ($tab as $elm) {
 
-            $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
+            if ($name) {
+                $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
+            } else {
+                $list[$elm['id_c']] = $elm['note'];
+            }
         }
     }
 
@@ -612,7 +632,7 @@ function getRatedGame($id_user): array
 
     $list = array();
 
-    $sql = "SELECT game.name name, game.id id, game.infos infos, game.visuel visuel FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
+    $sql = "SELECT game.name name, game.id id, game.infos infos, game.visuel visuel, game.metacritic metacritic FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -729,7 +749,8 @@ function getInfosFromDatabase(String $sql)
 
 // fonction à utiliser pour transmettre des données en base de données
 // paramètre : requête SQL (format string) de type INSERT
-function sendDataToDatabase(String $sql) {
+function sendDataToDatabase(String $sql)
+{
     global $conn;
     $stmt = $conn->prepare($sql);
     $stmt->execute();

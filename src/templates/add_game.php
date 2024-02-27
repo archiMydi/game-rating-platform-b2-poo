@@ -1,5 +1,5 @@
 <?php
-include_once("src/templates/database.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
     session_start();
     if($_SESSION['user'] == null) {
         header("Location: login.php");

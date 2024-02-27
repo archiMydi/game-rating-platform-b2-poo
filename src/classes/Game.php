@@ -1,6 +1,6 @@
 <?php
 
-include_once("src/templates/database.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . "/src/templates/database.php");
 
 class game
 {
@@ -20,7 +20,8 @@ class game
      * @param int $metacritic       Note metacritic du jeu
      *
      */
-    public function __construct($id, $name, $infos, $visuel, $metacritic) {
+    public function __construct($id, $name, $infos, $visuel, $metacritic)
+    {
         $this->id = $id;
         $this->name = $name;
         $this->infos = $infos;
@@ -72,7 +73,8 @@ class game
         return $this->visuel;
     }
 
-    public function getMetacritic() : int {
+    public function getMetacritic(): int
+    {
         // retourne note du jeu
         return $this->metacritic;
     }
@@ -214,7 +216,7 @@ class game2 extends game {
         // insérer les genres dans la table catégorie (table de liaison entre jeux et genres)
         foreach ($gender_id_array as $y) {
             $sql_insert_into_category = 'INSERT INTO category (game_id, gender_id) 
-            VALUES ('.$game_id.', '.$y.')';
+            VALUES (' . $game_id . ', ' . $y . ')';
             sendDataToDatabase($sql_insert_into_category);
         }
 
@@ -224,5 +226,28 @@ class game2 extends game {
             VALUES ('.$game_id.', "'.$z.'")';
             sendDataToDatabase($sql_insert_into_gallery);
         }
+
+    }
+
+/**
+ * function prepareFetchToDatabase
+ * Passe un objet json récupéré grâce à la requête fetch en paramètre et le traite 
+ * pour créer des objets de la classe game et les envoyer en base de données 
+ * 
+ * @param array $list_json
+ */
+    public static function prepareFetchToDatabase($list_json) {
+
+    }
+
+
+    public static function getTop10()
+    {
+        $sql = 'SELECT * FROM game
+        ORDER BY name ASC
+        LIMIT 10;';
+
+        $top10 = getInfosFromDatabase($sql);
+        return json_encode($top10);
     }
 }

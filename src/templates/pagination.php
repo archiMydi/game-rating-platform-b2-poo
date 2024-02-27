@@ -1,7 +1,7 @@
 <?php
     function getPage($page) {
         $page = $_GET['page'] ?? 1;
-        include_once("src/templates/database.php");
+        include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
         $nb = getMaxPages();
         if($page < 1) {
             $page = 1;
@@ -40,7 +40,7 @@
 
     function getSQLPage($page, $sql, $sql_max) {
         $page = $_GET['page'] ?? 1;
-        include_once("src/templates/database.php");
+        include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
         //$sql_max = "SELECT r.user_id, COUNT(r.user_id) nb FROM game JOIN rating r ON game.id = r.game_id WHERE r.user_id = 1 AND r.criterion_id = 1;";
         $nb = getSQLMaxPages($sql_max);
         if($page < 1) {
