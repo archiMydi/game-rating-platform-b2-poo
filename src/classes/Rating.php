@@ -14,7 +14,7 @@ class Rating
      */
     public static function getUserVector($uid)
     {
-        $userRatings = getAllRatedGame($uid, false);
+        $userRatings = getAllRatedGame($uid, false, true);
         return $userRatings;
     }
 
