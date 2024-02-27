@@ -9,8 +9,6 @@ class game
     private $infos;
     private $visuel;
     private int $metacritic;
-    private array $listGender; 
-    private array $listGallery;
 
     /**
      * Création d'un nouvel objet game
@@ -24,14 +22,12 @@ class game
      * @param array $listGallery    Liste des images de la galerie
      *
      */
-    public function __construct($id, $name, $infos, $visuel, $metacritic, $listGender, $listGallery) {
+    public function __construct($id, $name, $infos, $visuel, $metacritic) {
         $this->id = $id;
         $this->name = $name;
         $this->infos = $infos;
         $this->visuel = $visuel;
         $this->metacritic = $metacritic;
-        $this->listGender = $listGender;
-        $this->listGallery = $listGallery;
     }
 
     /**
