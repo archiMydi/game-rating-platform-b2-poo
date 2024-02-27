@@ -82,7 +82,7 @@
                 background-color: var.$background-color;
 
                 //BARRE SEARCH
-                #search form {
+                #search {
                     display: flex;
                     flex-direction: row;
                     width: 1000px;
@@ -229,7 +229,7 @@
 
         //SECTION GAME
         #details-game-section {
-            display: flex;
+            display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
