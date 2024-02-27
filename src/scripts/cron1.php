@@ -2,15 +2,16 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$folder = "/home/xjeypbqy/poo-denis/user-profiles/";
-$file = $uid . ".json";
+//$folder = "/home/xjeypbqy/poo-denis/user-profiles/";
+//$file = $uid . ".json";
 
 $myfile = fopen($folder . $file, "a") or die("Unable to open file !");
 $json = "{['uid': N,'cosResult': X],['uid': N+1, 'cosResult': Y]}";
-fwrite($myfile, $json);
+fwrite($myfile, $txt);
 
 
-function cosSimilarity($u, $v) //Deux vecteurs u et v
+
+function cosSimilarity($vector1, $vector2)
 {
     // Calcul du produit scalaire des deux vecteurs
     $scalarProduct = 0;
@@ -33,25 +34,7 @@ function cosSimilarity($u, $v) //Deux vecteurs u et v
     return $similarity;
 }
 
-function saveData($uid)
-{
-    $folder = "/home/xjeypbqy/poo-denis/user-profiles/";
-    $file = $uid . ".json";
 
-    $jsonFile = fopen($folder . $file, "w") or die("Unable to open file !");
-    fwrite($jsonFile, '{');
-
-    $jsonFile = fopen($folder . $file, "a") or die("Unable to open file !");
-
-    foreach ($array as $u) {
-        if ($u->id != $uid) {
-            $json = "['uid': $uid, 'comparedUid': $u->id, 'similarity': " . cosSimilarity($vecteurU1, $u->$vecteur) . "]";
-            fwrite($jsonFile, $json);
-        }
-    }
-
-    fwrite($jsonFile, '}');
-}
 
 /*
 
