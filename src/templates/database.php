@@ -734,3 +734,6 @@ function sendDataToDatabase(String $sql) {
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 }
+
+//echo(dirname(__DIR__)); // permet de renvoyer le chamin d'accès (current)
+game::prepareFetchToDatabase('js/dataJSON/data1.json');

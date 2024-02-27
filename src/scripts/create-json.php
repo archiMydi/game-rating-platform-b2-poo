@@ -23,7 +23,7 @@ function insertData($data)
 
     $fileContent = file_get_contents('data.json');
 
-    echo "Petit test accès data.json" . $fileContent;
+    //echo "Petit test accès data.json" . $fileContent;
 };
 
 function dataGame($game)
