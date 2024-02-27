@@ -47,10 +47,7 @@ htmlHead('Game Rating'); ?>
 
 
             <section id="details-game-section">
-                <?php
-                include_once(__DIR__."src/scripts/create-json.php");
-                getRawgApiData();
-                ?>
+
             </section>
 
 

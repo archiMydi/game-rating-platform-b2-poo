@@ -1,6 +1,9 @@
 <?php
-include("src/templates/database.php");
-$user = getUserById(1);
+include_once("src/templates/database.php");
+require_once("src/templates/init.php");
+if ($_SESSION['user'] == null) {
+    header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>

@@ -82,13 +82,13 @@
                 background-color: var.$background-color;
 
                 //BARRE SEARCH
-                #search form {
+                #search {
                     display: flex;
                     flex-direction: row;
-                    width: 1000px;
+                    width: 100%;
 
                     input {
-                        width: 100%;
+                        width: 50%;
                         height: 40px;
                         padding-left: 20px;
 
