@@ -1,169 +1,261 @@
 <?php
-include_once("src/templates/database.php");
-    session_start();
-    if($_SESSION['user'] == null) {
-        header("Location: login.php");
-    }
-
-    $user = $_SESSION['user'];
-    $id_g = $_GET['id_g'];
-    $new = $_GET['new'] ?? false;
-
-    if($new !== true && $new !== false) {
-        $new = false;
-    }
-
-    $list = array();
-
-    $criterion = getListCriterion();
-    foreach($criterion as $id => $name) {
-
-        $note = $_POST[$id] ?? null;
-        if($note != null) {
-
-            $list[$id] = $note;
-
-        }
-        else {
-            break;
+    function checkRatingForm($isNewGame, $id_game, $user, $URL) {
+        if($_SESSION['user'] == null) {
+            header("Location: login.php");
         }
 
+        $list = array();
 
-    }
+        $criterion = getListCriterion();
+        foreach($criterion as $id => $name) {
 
-    if(count($list) > 0) {
+            $note = $_POST["stars-".$id] ?? null;
+            if($note != null) {
 
-        if($new) {
+                $list[$id] = $note;
 
-            $err = insertRating($user->getID(), $id_g, $list);
-
-            if($err == 1) {
-                echo "Nous rencontrons un problème, merci de réessayer plus tard";
             }
             else {
-                header("Location: account.php");
+                break;
             }
 
+
         }
-        else {
 
-            $err = updateRating($user->getID(), $id_g, $list);
+        if(count($list) > 0) {
 
-            if($err == 1) {
-                echo "Nous rencontrons un problème, merci de réessayer plus tard";
+            if($isNewGame) {
+
+                $err = insertRating($user->getID(), $id_game, $list);
+
+                if($err == 1) {
+                    echo "Nous rencontrons un problème, merci de réessayer plus tard";
+                }
+                else {
+                    header("Location: $URL");
+                }
+
             }
             else {
-                header("Location: account.php");
+
+                $err = updateRating($user->getID(), $id_game, $list);
+
+                if($err == 1) {
+                    echo "Nous rencontrons un problème, merci de réessayer plus tard";
+                }
+                else {
+                    header("Location: $URL");
+                }
+
             }
 
         }
-
     }
-    else {
-    }
-?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Note</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
-</head>
-<body>
-    <a href="account.php">Retour</a>
-    <form method="POST" action="#">
-        <?php
+    function setRatingForm($isNewGame, $user, $id_game, $backURL) {
+        //echo "<section id='rating-form-section'><a href='$backURL'>Retour</a>";
+        $span = "closeElement('rating-section')";
+        echo '<span onclick="'.$span.'">x</span><form method="POST" id="rating-form" action="#">';
 
-            if($new) {
+            if($isNewGame) {
 
                 $criterion = getListCriterion();
                 foreach($criterion as $id => $name) {
-                    
-                    echo "<label for='$id'>$name</label>
-                        <br>
-                        <input name='$id' type='radio' value='0' required>0
-                        <br>
-                        <input name='$id' type='radio' value='1' required>1
-                        <br>
-                        <input name='$id' type='radio' value='2' required>2
-                        <br>
-                        <input name='$id' type='radio' value='3' required>3
-                        <br>
-                        <input name='$id' type='radio' value='4' required>4
-                        <br>
-                        <input name='$id' type='radio' value='5' required>5
-                        <br><br>";
 
-                }
+                    echo '<h3>Rating '.$name.'</h3>
+                          <section class="rating" id="rating-'.$name.'">
+                          <section class="rating-container">
 
-            }
-            else {
+                                <input type="radio" name="stars-'.$id.'" id="st5-'.$id.'" data-rating="5" value="5">
+                                <label for="st5-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="Excellent"></div>
+                                </label>
 
-                $list_c = getListCriterion();
-                $criterion = getRatingGame($id_g, $user->getID());
-                foreach($criterion as $id => $elm) {
-                    unset($list_c[$id]);
-                    $nom = $elm[0];
-                    $note = $elm[1];
-                    echo "<label for='$id'>$nom</label><br>";
-                    echo "<input name='$id' type='radio' value='0' required";
-                    if($note == 0) {
-                        echo " checked";
-                    }
-                    echo ">0<br><input name='$id' type='radio' value='1' required";
-                    if($note == 1) {
-                        echo " checked";
-                    }
-                    echo ">1<br><input name='$id' type='radio' value='2' required";
-                    if($note == 2) {
-                        echo " checked";
-                    }
-                    echo ">2<br><input name='$id' type='radio' value='3' required";
-                    if($note == 3) {
-                        echo " checked";
-                    }
-                    echo ">3<br><input name='$id' type='radio' value='4' required";
-                    if($note == 4) {
-                        echo " checked";
-                    }
-                    echo ">4<br><input name='$id' type='radio' value='5' required";
-                    if($note == 5) {
-                        echo " checked";
-                    }
-                    echo ">5<br><br>";
+                                <input type="radio" name="stars-'.$id.'" id="st4-'.$id.'" data-rating="4" value="4">
+                                <label for="st4-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="Bon"></div>
+                                </label>
 
-                }
+                                <input type="radio" name="stars-'.$id.'" id="st3-'.$id.'" data-rating="3" value="3">
+                                <label for="st3-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="OK"></div>
+                                </label>
 
-                if(count($list_c) > 0) {
+                                <input type="radio" name="stars-'.$id.'" id="st2-'.$id.'" data-rating="2" value="2">
+                                <label for="st2-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="Mauvais"></div>
+                                </label>
 
-                    foreach($list_c as $id => $nom) {
+                                <input type="radio" name="stars-'.$id.'" id="st1-'.$id.'" data-rating="1" value="1">
+                                <label for="st1-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="Terrible"></div>
+                                </label>
 
-                        echo "<label for='$id'>$nom</label><br>
-                        <input name='$id' type='radio' value='0' required>0
-                        <br>
-                        <input name='$id' type='radio' value='1' required>1
-                        <br>
-                        <input name='$id' type='radio' value='2' required>2
-                        <br>
-                        <input name='$id' type='radio' value='3' required>3
-                        <br>
-                        <input name='$id' type='radio' value='4' required>4
-                        <br>
-                        <input name='$id' type='radio' value='5' required>5
-                        <br><br>";
+                            </section>
+                        </section>';
 
                     }
 
                 }
+                else {
 
-            }
+                    $list_c = getListCriterion();
+                    $criterion = getRatingGame($id_game, $user->getID());
+                    foreach($criterion as $id => $elm) {
+                        unset($list_c[$id]);
+                        $nom = $elm[0];
+                        $note = $elm[1];
 
-        ?>
-        <input type="submit" Value="Valider">
-    </form>
-</body>
-</html>
+                        echo '<h3>Rating '.$nom.'</h3>
+                        <section class="rating" id="rating-'.$nom.'">
+                            <section class="rating-container">
+
+                                <input type="radio" name="stars-'.$id.'" id="st5-'.$id.'" data-rating="5" value="5"';
+
+                        if($note == 5) {
+                            echo " checked";
+                        }
+                                
+                        echo '>
+                                <label for="st5-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="Excellent"></div>
+                                </label>
+
+                                <input type="radio" name="stars-'.$id.'" id="st4-'.$id.'" data-rating="4" value="4"';
+
+                                if($note == 4) {
+                                    echo " checked";
+                                }
+                                        
+                                echo '>
+                                <label for="st4-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="Bon"></div>
+                                </label>
+
+                                <input type="radio" name="stars-'.$id.'" id="st3-'.$id.'" data-rating="3" value="3"';
+
+                                if($note == 3) {
+                                    echo " checked";
+                                }
+                                        
+                                echo '>
+                                <label for="st3-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="OK"></div>
+                                </label>
+
+                                <input type="radio" name="stars-'.$id.'" id="st2-'.$id.'" data-rating="2" value="2"';
+
+                                if($note == 2) {
+                                    echo " checked";
+                                }
+                                        
+                                echo '>
+                                <label for="st2-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="Mauvais"></div>
+                                </label>
+
+                                <input type="radio" name="stars-'.$id.'" id="st1-'.$id.'" data-rating="1" value="1"';
+
+                                if($note == 1) {
+                                    echo " checked";
+                                }
+                                        
+                                echo '>
+                                <label for="st1-'.$id.'">
+                                    <div class="star-stroke">
+                                        <div class="star-fill"></div>
+                                    </div>
+                                    <div class="label-description" data-content="Terrible"></div>
+                                </label>
+
+                            </section>
+                        </section>';
+
+                    }
+
+                    if(count($list_c) > 0) {
+
+                        foreach($list_c as $id => $nom) {
+
+                            echo '<h3>Rating '.$nom.'</h3>
+                                <section class="rating" id="rating-'.$nom.'">
+                                    <section class="rating-container">
+
+                                        <input type="radio" name="stars-'.$id.'" id="st5-'.$id.'" data-rating="5" value="5">
+                                        <label for="st5-'.$id.'">
+                                            <div class="star-stroke">
+                                                <div class="star-fill"></div>
+                                            </div>
+                                            <div class="label-description" data-content="Excellent"></div>
+                                        </label>
+
+                                        <input type="radio" name="stars-'.$id.'" id="st4-'.$id.'" data-rating="4" value="4">
+                                        <label for="st4-'.$id.'">
+                                            <div class="star-stroke">
+                                                <div class="star-fill"></div>
+                                            </div>
+                                            <div class="label-description" data-content="Bon"></div>
+                                        </label>
+
+                                        <input type="radio" name="stars-'.$id.'" id="st3-'.$id.'" data-rating="3" value="3">
+                                        <label for="st3-'.$id.'">
+                                            <div class="star-stroke">
+                                                <div class="star-fill"></div>
+                                            </div>
+                                            <div class="label-description" data-content="OK"></div>
+                                        </label>
+
+                                        <input type="radio" name="stars-'.$id.'" id="st2-'.$id.'" data-rating="2" value="2">
+                                        <label for="st2-'.$id.'">
+                                            <div class="star-stroke">
+                                                <div class="star-fill"></div>
+                                            </div>
+                                            <div class="label-description" data-content="Mauvais"></div>
+                                        </label>
+
+                                        <input type="radio" name="stars-'.$id.'" id="st1-'.$id.'" data-rating="1" value="1">
+                                        <label for="st1-'.$id.'">
+                                            <div class="star-stroke">
+                                                <div class="star-fill"></div>
+                                            </div>
+                                            <div class="label-description" data-content="Terrible"></div>
+                                        </label>
+
+                                    </section>
+                                </section>';
+
+                        }
+
+                    }
+
+                }
+            echo "<input type='submit' Value='Valider'></form>";
+        }
+    ?>

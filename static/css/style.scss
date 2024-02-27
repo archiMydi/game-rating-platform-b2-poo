@@ -1,6 +1,7 @@
 @use 'var';
 @use 'user_list';
 @use 'index';
+@use 'reco';
 
 * {
     margin: 0;
@@ -9,6 +10,16 @@
     border: 0;
     text-decoration: none;
     font-family: 'Montserrat', sans-serif;
+}
+
+a,
+a:visited,
+a:active {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 nav {
@@ -28,6 +39,12 @@ nav {
 
     box-shadow: 0 10px 10px var.$box-shadow;
 
+    a:hover,
+    p:hover {
+        cursor: pointer;
+        background-color: var.$second-color;
+        text-decoration: none;
+    }
 
     .navbar {
         display: flex;
@@ -36,6 +53,10 @@ nav {
         flex-wrap: wrap;
 
         padding: 0 100px;
+
+        .no-padding-a {
+            padding: 0;
+        }
 
         a,
         p {
@@ -48,12 +69,6 @@ nav {
             color: var.$white;
 
             transition: 1s;
-        }
-
-        a:hover,
-        p:hover {
-            cursor: pointer;
-            background-color: var.$second-color;
         }
     }
 }
@@ -72,7 +87,7 @@ nav {
     .login-modal-content {
         background-color: white;
         border-radius: 30px;
-        margin: 3% auto;
+        margin: 8% auto;
         padding: 2%;
         border: 1px solid #888;
         width: 26vw;
@@ -122,6 +137,7 @@ nav {
         }
     }
 }
+
 footer {
     display: flex;
     align-items: center;

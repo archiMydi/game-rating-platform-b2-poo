@@ -1,0 +1,52 @@
+@use 'var';
+
+.reco-page {
+    width: 100%;
+    color: white;
+    background-color: var.$background-color;
+
+    .reco-section {
+        padding: 4%;
+
+        strong {
+            color: white;
+        }
+
+        .reco-h1 {
+            margin-bottom: 2%;
+        }
+
+        .reco-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-evenly;
+            text-align: center;
+            margin-top: 4%;
+
+            .reco-container {
+                background-color: white;
+                border-radius: 30px;
+                padding: 2%;
+                width: 34%;
+                margin-bottom: 4%;
+                color: #121212;
+
+                h1 {
+                    margin-bottom: 2%;
+                }
+
+                .reco-img-container {
+                    overflow: hidden;
+
+                    img {
+                        width: auto;
+                        height: 40vh;
+                        margin-bottom: 2%;
+                    }
+                }
+            }
+        }
+    }
+}

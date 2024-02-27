@@ -7,6 +7,14 @@ function closeElement(id) {
   document.getElementById(id).style.display = 'none';
 }
 
+// ../ redescend à src puis à game-rating-plat... pour accéder au fichier rawgdata.json via route js/rawgdata.json
+/* import data from '../../js/rawgdata.json'; // importer le fichier json rawgdata.json dans index.js
+console.log(data); */
+
+// ../ redescend à src puis à game-rating-plat... pour accéder au fichier rawgdata.json via route js/rawgdata.json
+/* import data from '../../js/rawgdata.json'; // importer le fichier json rawgdata.json dans index.js
+console.log(data); */
+
 
 //ANCIENNES FONCTIONS POUR APPELER L'API ET TRAITER LES DONNÉES
 // appel de la fonction get RawgApiData
@@ -19,46 +27,82 @@ function closeElement(id) {
  * Doit retourner un tableau d'objets au format json 
  * (fonction à initier au lancement et à stocker dans la base de données)
  */
-// async function getRawgApiData() { // fonction déclinable avec 
-//   let response = await fetch('https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88&page_size=1000', {
-//     // url doir inclure la clé de l'API (API Key) en paramètre
-//     method: "GET"
-//     });
-//   let rawgData = await response.json();
-//   console.log("RawgData : ",rawgData);
-//   insertData(rawgData);
-// }
+async function getRawgApiData() { // fonction déclinable avec 
+  const rawgData = await fetch('https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88', {
+    // url doir inclure la clé de l'API (API Key) en paramètre
+    method: "GET"
+    });
+    console.log(rawgData);
+    return rawgData;
+}
 
+/* 
+let test_data = []; 
+*/
 
-// function insertData(data) {
-//   let results = data.results;
+/** Function sendDataToBack :
+ * Paramètre : tab : tableau d'objets traité par la fonction getDataToPostToDatabase
+ * Transmet les données traitées au serveur
+ */
+async function sendDataToBack(tab) {
+  await fetch("../templates/database.php", {
+    method: "POST",
+    body: JSON.stringify(tab),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+} 
 
-//   results.forEach(element => {
-//     dataGame(element)
-//   });
-// };
+/** Function getDataToPostToDatabase :
+ * Paramètre : data : tableau d'objets reçu par la requête fetch dans getRawgApiData()
+ * Traite les données de l'API Rawg avec une requête fetch
+ * Doit retourner tableau contenant un objet json pour chaque élément de la requête 
+ * 
+ */
+function getDataToPostToDatabase(p_data) {
 
-// function dataGame(game) {
+  // tableau contenant plusieurs objet à envoyer au back-end en requête POST
+  let tabToPost = [];
 
-//     let name = game.name;
-//     let visuel = game.background_image;
-//     let genres = game.genres.map(genre => genre.name);
-//     let galery = game.short_screenshots.map(screen => screen.image);
-//     let tags = game.tags.map(tag => tag.name);
-//     let metacritic = game.metacritic;
-    
-//     let gameData = {"name": name, "visuel": visuel, "genres": [genres], "galery": [galery], "tags": [tags], "metacritic": metacritic};
+  p_data.forEach(object => {
+      var gameName = object.name;
+      var gameVisual = object.background_image; 
+      var gameGenre = [];
+      var gameInfos = "Date de sortie : " + object.released;
+      var gameGallery = [];
+      var gameMetacritic = object.metacritic
 
-//     let gameString = JSON.stringify(gameData);
+      object.short_screenshots.forEach(screenshots => {
+        gameGallery.push(screenshots.image);
+      });
+      object.tags.forEach(tag => {
+        gameGenre.push(tag.name);
+      });
 
-//     console.log("Game String : ", gameString);
+      let object_game_to_post = {
+        "name": gameName,
+        "visuel": gameVisual,
+        "infos": gameInfos,
+        "metacritic": gameMetacritic,
+        "genders": gameGenre,
+        "gallery": gameGallery
+      };
+      console.log(object_game_to_post);
+      tabToPost.push(object_game_to_post);
+  });
 
-//     let fs = require('fs');
-//     fs.writeFile('data.json', gameString, function(error, result) {
-//       if(error) console.log('error', error);
-//     });
+  console.log(tabToPost);
+  // utiliser le tableau tabToPost dans une requête POST
+  return tabToPost;
+}
 
-// }
+// phase de test : prendre test_data en paramètre
+// tester avec apiRawgData
+// getDataToPostToDatabase(apiRawgData);
+getDataToPostToDatabase(test_data);
 
 
 //AFFICHER LA LISTE JEUX
@@ -92,12 +136,13 @@ function showGames(games) {
 
 
 //AFFICHER LES DETAILS DU JEU
-function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisual.jpeg", gameDesc = "Lorem Ipsum") {
+function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisual.jpeg", gameDesc = "Lorem Ipsum", data = [3, 3, 3]) {
     // balise cible dans laquelle on ajoute le contenu
     let cible = document.getElementById("details-game-section");
     let hide = document.getElementById("game-section");
     let hide2 = document.getElementById("global-game-section");
     let hide3 = document.getElementById("second-header");
+    console.log("LES DATAS (NOTES) : " + data[0]);
 
     gameName = gameName.replace("#%7!8$9%#", "'");
     gameDesc = gameDesc.replace("#%7!8$9%#", "'");
@@ -139,7 +184,6 @@ function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisu
                         <section class="details-game-genre">
                             <h3>Genres</h3>
                             <ul>
-                                <li>`+ gameGenre + `</li>
                                 <li>`+ gameGenre + `</li>
                             </ul>
                         </section>
@@ -203,7 +247,7 @@ function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisu
     $("#details-game-list_genre").append(li_genre);
     });
 
-    gameChart();
+    gameChart(data);
     userChart(users);
 }
 
@@ -251,7 +295,7 @@ function goBack() {
 
 //USER CHART
 //User data
-users = [
+let users = [
   { id: 1, name: 'A', data: [3, 4, 4] },
   { id: 2, name: 'B', data: [3, 5, 5] },
   { id: 3, name: 'C', data: [3, 2, 4] }
@@ -318,7 +362,7 @@ function userChart(users) {
 
 
 //GAME CHART
-function gameChart() {
+function gameChart(data_) {
   let canvas = document.getElementById('game-chart');
 
   let data = {
@@ -329,7 +373,7 @@ function gameChart() {
     ],
     datasets: [{
       label: 'Game Rating',
-      data: [3, 4, 4],
+      data: data_,
       fill: true,
       backgroundColor: 'rgba(82, 123, 212, 0.5)',
       borderColor: 'rgb(82, 123, 212)',

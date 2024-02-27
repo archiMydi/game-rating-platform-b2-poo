@@ -218,7 +218,7 @@
   flex-direction: row;
   /*SOURCE RATING CSS : https://codepen.io/Diegobrix/pen/vYQKJbE*/
 }
-#body-game-list main button font {
+#body-game-list main font {
   size: 22px;
 }
 #body-game-list main #menu-aside {
@@ -228,7 +228,6 @@
   flex-wrap: wrap;
   min-width: 150px;
   width: 15%;
-  height: 800px;
   padding: 100px 30px;
   overflow-y: auto;
   z-index: 1;
@@ -569,6 +568,49 @@
   transform: rotateY(180deg);
 }
 
+.reco-page {
+  width: 100%;
+  color: white;
+  background-color: rgb(85, 81, 194);
+}
+.reco-page .reco-section {
+  padding: 4%;
+}
+.reco-page .reco-section strong {
+  color: white;
+}
+.reco-page .reco-section .reco-h1 {
+  margin-bottom: 2%;
+}
+.reco-page .reco-section .reco-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-evenly;
+  text-align: center;
+  margin-top: 4%;
+}
+.reco-page .reco-section .reco-list .reco-container {
+  background-color: white;
+  border-radius: 30px;
+  padding: 2%;
+  width: 34%;
+  margin-bottom: 4%;
+  color: #121212;
+}
+.reco-page .reco-section .reco-list .reco-container h1 {
+  margin-bottom: 2%;
+}
+.reco-page .reco-section .reco-list .reco-container .reco-img-container {
+  overflow: hidden;
+}
+.reco-page .reco-section .reco-list .reco-container .reco-img-container img {
+  width: auto;
+  height: 40vh;
+  margin-bottom: 2%;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -576,6 +618,16 @@
   border: 0;
   text-decoration: none;
   font-family: "Montserrat", sans-serif;
+}
+
+a,
+a:visited,
+a:active {
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 nav {
@@ -591,12 +643,21 @@ nav {
   color: white;
   box-shadow: 0 10px 10px rgba(52, 69, 168, 0.5);
 }
+nav a:hover,
+nav p:hover {
+  cursor: pointer;
+  background-color: rgb(107, 101, 194);
+  text-decoration: none;
+}
 nav .navbar {
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
   padding: 0 100px;
+}
+nav .navbar .no-padding-a {
+  padding: 0;
 }
 nav .navbar a,
 nav .navbar p {
@@ -606,11 +667,6 @@ nav .navbar p {
   padding: 28px 40px;
   color: white;
   transition: 1s;
-}
-nav .navbar a:hover,
-nav .navbar p:hover {
-  cursor: pointer;
-  background-color: rgb(107, 101, 194);
 }
 
 .login-modal {
@@ -627,7 +683,7 @@ nav .navbar p:hover {
 .login-modal .login-modal-content {
   background-color: white;
   border-radius: 30px;
-  margin: 3% auto;
+  margin: 8% auto;
   padding: 2%;
   border: 1px solid #888;
   width: 26vw;

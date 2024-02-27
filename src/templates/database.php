@@ -90,7 +90,7 @@ function getInfosGame(String $sql): ?game
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
-        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel']);
+        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel'], $tab[0]['metacritic'], $tab[0]['listGender'], $tab[0]['listGallery']);
     } else {
         return null;
     }
@@ -443,6 +443,40 @@ function getMaxPages(): ?int
 }
 
 /**
+ * Calcule le nombre de pages requis pour afficher la totalité des jeux
+ *
+ * @return ?int Nombre de pages
+ */
+function getSQLMaxPages($sql): ?int
+{
+
+    global $conn;
+    global $nb_jeu_par_page;
+
+    //$sql = "SELECT COUNT(*) nb FROM game";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if (count($tab) > 0) {
+
+        $nb = $tab[0]['nb'];
+        $reste = $nb % $nb_jeu_par_page;
+        $reste = $nb_jeu_par_page - $reste;
+        $nb += $reste;
+        $nb = $nb / $nb_jeu_par_page;
+
+        if ($reste == $nb_jeu_par_page) {
+            $nb -= 1;
+        }
+
+        return $nb;
+    } else {
+
+        return null;
+    }
+}
+
+/**
  * Récupère les jeux sur une page spécifique
  *
  * @param int     $page   Numéro de la page
@@ -465,7 +499,7 @@ function getGamesInPage(int $page): ?array
     if (count($tab) > 0) {
 
         foreach ($tab as $game_) {
-            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel']);
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic'], $game_['listGender'], $game_['listGallery']);
             array_push($list, $game);
         }
 
@@ -493,15 +527,15 @@ function getSpecificGamesInPage(int $page, $sql): ?array
     $list = array();
     $id_min = ($page - 1) * $nb_jeu_par_page;
 
-    $sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
-    $sql .= "ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
+    //$sql = "SELECT * FROM game ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
+    $sql .= " ORDER BY id LIMIT $nb_jeu_par_page OFFSET $id_min;";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
 
         foreach ($tab as $game_) {
-            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel']);
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic'], $game_['listGender'], $game_['listGallery']);
             array_push($list, $game);
         }
 
@@ -587,7 +621,7 @@ function getRatedGame($id_user): array
 
         foreach ($tab as $elm) {
 
-            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel']);
+            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel'], $elm['metacritic'], $elm['listGender'], $elm['listGallery']);
             array_push($list, $game);
         }
     }
@@ -641,7 +675,7 @@ function getAllGames(): array
     $liste = array();
     foreach ($tab as $game) {
 
-        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel']);
+        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel'], $game['metacritic'], $game['listGender'], $game['listGallery']);
         array_push($liste, $game_obj);
     }
 
@@ -691,4 +725,12 @@ function getInfosFromDatabase(String $sql)
     $result = $stmt->fetchAll();
     return $result; // retourne un tuple d'informations
 
+}
+
+// fonction à utiliser pour transmettre des données en base de données
+// paramètre : requête SQL (format string) de type INSERT
+function sendDataToDatabase(String $sql) {
+    global $conn;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
 }
