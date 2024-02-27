@@ -29,7 +29,7 @@
             
             if($pseudo != null && $email != null && $mdp != null) {
             
-                include_once("src/templates/database.php");
+                include_once(__DIR__."src/templates/database.php");
             
                 $err = registerNewUser($pseudo, $mdp, $email);
                 if ($err == 1) {

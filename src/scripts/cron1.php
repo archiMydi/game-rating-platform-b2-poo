@@ -9,7 +9,7 @@ ini_set('display_errors', 1);
 //$json = "{['uid': N,'cosResult': X],['uid': N+1, 'cosResult': Y]}";
 //fwrite($myfile, $txt);
 
-include("src/classes/Rating.php");
+include(__DIR__."src/classes/Rating.php");
 
 function cosSimilarity($u, $v)
 {

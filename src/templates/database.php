@@ -1,8 +1,8 @@
 <?php
 
-include_once('connection.inc.php');
-include_once('src/classes/User.php');
-include_once('src/classes/Game.php');
+include_once(__DIR__.'connection.inc.php');
+include_once(__DIR__.'src/classes/User.php');
+include_once(__DIR__.'src/classes/Game.php');
 $conn = null;
 $nb_jeu_par_page = 3;
 try {

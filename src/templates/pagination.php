@@ -1,7 +1,7 @@
 <?php
     function getPage($page) {
         $page = $_GET['page'] ?? 1;
-        include_once("src/templates/database.php");
+        include_once(__DIR__."src/templates/database.php");
         $nb = getMaxPages();
         if($page < 1) {
             $page = 1;
