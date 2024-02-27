@@ -11,6 +11,42 @@ ini_set('display_errors', 1);
 
 include($_SERVER['DOCUMENT_ROOT']."/src/classes/Rating.php");
 
+/**
+* Défini le dernier utilisateur mis-à-jour
+*
+* @param int   $uid - Identifiant de l'utilisateur
+*
+*/
+function setLastUserCheck($uid) {
+
+    $folder = __DIR__."/";
+    $file = "last.txt";
+
+    $myfile = fopen($folder . $file, "r+") or die("Unable to open file !");
+    fwrite($myfile, $uid);
+
+}
+
+/**
+* Récupère le dernier utilisateur mis-à-jour
+*
+* @return string Identifiant du dernier utilisateur mis-à-jour
+*
+*/
+function getLastUserCheck() : string {
+
+    $folder = __DIR__."/";
+    $file = "last.txt";
+
+    $myfile = fopen($folder . $file, "r") or die("Unable to open file !");
+    return fread($myfile, filesize(__DIR__."/"."last.txt"));
+
+}
+
+setLastUserCheck(1);
+
+echo "<br>".getLastUserCheck();
+
 function cosSimilarity($u, $v)
 {
     // Calcul du produit scalaire des deux vecteurs
@@ -34,8 +70,18 @@ function cosSimilarity($u, $v)
     return $similarity;
 }
 
-function getUsers($id_debut, $nb_user)
+/**
+* Récupère les vecteurs d'un certain nombre d'utilisateurs
+*
+* @param int $nb_user
+*
+* @return string Identifiant du dernier utilisateur mis-à-jour
+*
+*/
+function getUsers($nb_user)
 {
+
+    $id_debut = getLastUserCheck();
 
     $list = array();
 
@@ -45,6 +91,7 @@ function getUsers($id_debut, $nb_user)
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $tab = $stmt->fetchAll();
+    $id = 0;
     if (count($tab) > 0) {
 
         foreach ($tab as $user) {
@@ -52,14 +99,23 @@ function getUsers($id_debut, $nb_user)
             $list[$id] = Rating::getUserVector($id);
         }
 
+        if($id == getLastUserID()) {
+            $id = 0;
+        }
+
+        setLastUserCheck($id);
+
         return $list;
     } else {
-
+        $id = 0;
+        setLastUserCheck($id);
         return null;
     }
 }
 
-var_dump(getUsers(0, 5));
+var_dump(getUsers(2));
+echo "<br><br><br>";
+var_dump(getUsers(2));
 
 function saveData($uid)
 {

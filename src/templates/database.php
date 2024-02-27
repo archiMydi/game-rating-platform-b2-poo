@@ -33,6 +33,18 @@ function getInfosUser(String $sql): ?user
     }
 }
 
+function getLastUserID(): int {
+
+    global $conn;
+
+    $stmt = $conn->prepare("SELECT id FROM user ORDER BY id DESC");
+    $stmt->execute();
+    $tab = $stmt->fetchAll();
+    if(count($tab) > 0) {
+        return $tab[0]['id'];
+    }
+
+}
 
 /**
  * Permet de récupérer la liste des utilisateurs au format JSON
@@ -553,7 +565,7 @@ function getSpecificGamesInPage(int $page, $sql): ?array
  *
  * @return array Retourne une liste de jeux (liste[id jeu] = [id critere => [nom, note]])
  */
-function getAllRatedGame(int $id_user, bool $name = true): array
+function getAllRatedGame(int $id_user, bool $name = true, bool $normalise = false): array
 {
 
     $rated_games = getRatedGame($id_user);
@@ -561,7 +573,7 @@ function getAllRatedGame(int $id_user, bool $name = true): array
 
     foreach ($rated_games as $game) {
 
-        $list[$game->getID()] = getRatingGame($game->getID(), $id_user, $name);
+        $list[$game->getID()] = getRatingGame($game->getID(), $id_user, $name, $normalise);
     }
 
     return $list;
@@ -575,7 +587,7 @@ function getAllRatedGame(int $id_user, bool $name = true): array
  *
  * @return array Retourne une liste de jeux (liste[id critere] = [nom, note])
  */
-function getRatingGame(int $id_game, int $id_user, bool $name = true): array
+function getRatingGame(int $id_game, int $id_user, bool $name = true, bool $normalise = false): array
 {
 
     global $conn;
@@ -583,6 +595,10 @@ function getRatingGame(int $id_game, int $id_user, bool $name = true): array
     $list = array();
 
     $sql = "SELECT c.id id_c, c.name nom, r.value note FROM `rating` r JOIN criterion c ON r.criterion_id = c.id WHERE game_id = $id_game AND user_id = $id_user";
+
+    if($normalise) {
+        $sql = "SELECT c.id id_c, c.name nom, r.value-2.5 note FROM `rating` r JOIN criterion c ON r.criterion_id = c.id WHERE game_id = $id_game AND user_id = $id_user;";
+    }
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
