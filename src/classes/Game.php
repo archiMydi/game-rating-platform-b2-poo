@@ -4,11 +4,11 @@ include_once("src/templates/database.php");
 
 class game
 {
-    private int $id;
-    private $name;
-    private $infos;
-    private $visuel;
-    private int $metacritic;
+    protected int $id;
+    protected $name;
+    protected $infos;
+    protected $visuel;
+    protected int $metacritic;
 
     /**
      * Création d'un nouvel objet game
@@ -18,8 +18,6 @@ class game
      * @param string $infos         Informations du jeu
      * @param string $visuel        URL du visuel du jeu
      * @param int $metacritic       Note metacritic du jeu
-     * @param array $listGender     Liste des genres du jeu
-     * @param array $listGallery    Liste des images de la galerie
      *
      */
     public function __construct($id, $name, $infos, $visuel, $metacritic) {
@@ -99,10 +97,64 @@ class game
         return $result;
     }
 
-    /**
- * Transmet en base de données les données d'un objet de la classe game
+
+/**
+ * function prepareFetchToDatabase
+ * Passe un objet json récupéré grâce à la requête fetch en paramètre et le traite 
+ * pour créer des objets de la classe game et les envoyer en base de données 
  * 
+ * @param array $list_json
  */
+    public static function prepareFetchToDatabase($list_json) {
+        foreach ($list_json as $x) {
+            $obj = new game2($x);
+    }
+}
+
+
+    public static function getTop10()
+    {
+        $sql = 'SELECT * FROM game
+        ORDER BY name ASC
+        LIMIT 10;';
+
+        $top10 = getInfosFromDatabase($sql);
+        return json_encode($top10);
+    }
+}
+
+// Nouvelle classe avec 2 données supplémentaires (listGender et listGallery)
+class game2 extends game {
+
+    private array $listGender;
+    private array $listGallery;
+
+    /**
+     * Création d'un nouvel objet game
+     * 
+     * @param int $id               Identifiant du jeu
+     * @param string $name          Nom du jeu
+     * @param string $infos         Informations du jeu
+     * @param string $visuel        URL du visuel du jeu
+     * @param int $metacritic       Note metacritic du jeu
+     * @param array $listGender     Liste des genres du jeu
+     * @param array $listGallery    Liste des images de la galerie
+     *
+     */
+    public function __construct($id, $name, $infos, $visuel, $metacritic, $listGender, $listGallery) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->infos = $infos;
+        $this->visuel = $visuel;
+        $this->metacritic = $metacritic;
+        $this->listGender = $listGender;
+        $this->listGallery = $listGallery;
+    }
+
+    /** function sendNewGameToDatabase
+     * Transmet en base de données les données d'un objet de la classe game
+     * 
+     */
     public function sendNewGameToDatabase() {
         // renvoie la liste des users ayant notés un jeu
 
@@ -136,7 +188,7 @@ class game
                 $gender_id = getInfosFromDatabase($sql_get_insert_gender_id);
                 array_push($gender_id_array, $gender_id[0]);
             }
-          }
+        }
 
         // insérer les genres dans la table catégorie (table de liaison entre jeux et genres)
         foreach ($gender_id_array as $y) {
@@ -151,28 +203,5 @@ class game
             VALUES ('.$game_id.', '.$z.')';
             sendDataToDatabase($sql_insert_into_gallery);
         }
-
-    }
-
-/**
- * function prepareFetchToDatabase
- * Passe un objet json récupéré grâce à la requête fetch en paramètre et le traite 
- * pour créer des objets de la classe game et les envoyer en base de données 
- * 
- * @param array $list_json
- */
-    public static function prepareFetchToDatabase($list_json) {
-
-    }
-
-
-    public static function getTop10()
-    {
-        $sql = 'SELECT * FROM game
-        ORDER BY name ASC
-        LIMIT 10;';
-
-        $top10 = getInfosFromDatabase($sql);
-        return json_encode($top10);
     }
 }
