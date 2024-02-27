@@ -553,7 +553,7 @@ function getSpecificGamesInPage(int $page, $sql): ?array
  *
  * @return array Retourne une liste de jeux (liste[id jeu] = [id critere => [nom, note]])
  */
-function getAllRatedGame(int $id_user, bool $name = true): array
+function getAllRatedGame(int $id_user): array
 {
 
     $rated_games = getRatedGame($id_user);
@@ -561,7 +561,7 @@ function getAllRatedGame(int $id_user, bool $name = true): array
 
     foreach ($rated_games as $game) {
 
-        $list[$game->getID()] = getRatingGame($game->getID(), $id_user, $name);
+        $list[$game->getID()] = getRatingGame($game->getID(), $id_user);
     }
 
     return $list;
@@ -575,7 +575,7 @@ function getAllRatedGame(int $id_user, bool $name = true): array
  *
  * @return array Retourne une liste de jeux (liste[id critere] = [nom, note])
  */
-function getRatingGame(int $id_game, int $id_user, bool $name = true): array
+function getRatingGame(int $id_game, int $id_user): array
 {
 
     global $conn;
@@ -591,13 +591,7 @@ function getRatingGame(int $id_game, int $id_user, bool $name = true): array
 
         foreach ($tab as $elm) {
 
-            if($name) {
-                $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
-            }
-            else {
-                $list[$elm['id_c']] = $elm['note'];
-            }
-
+            $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
         }
     }
 
@@ -618,7 +612,7 @@ function getRatedGame($id_user): array
 
     $list = array();
 
-    $sql = "SELECT game.name name, game.id id, game.infos infos, game.visuel visuel, game.metacritic metacritic FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
+    $sql = "SELECT game.name name, game.id id, game.infos infos, game.visuel visuel FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
