@@ -1,10 +1,6 @@
 <?php
-require_once("src/templates/init.php");
 include("src/templates/database.php");
 ?>
-
-<?php include("src/templates/navbar.php"); ?>
-    <?php include("src/templates/login.php"); ?>
 
 <!DOCTYPE html>
 <html>
@@ -12,23 +8,9 @@ include("src/templates/database.php");
 <?php include_once 'src/templates/html_head.php';
 htmlHead('Game Rating'); ?>
 
-<script>
-        // récupère les informations de chaque jeu
-        let list_all_games = <?php
-                                getInfosForFrontend('SELECT g.*, json_arrayagg(ge.name) AS gender
-        FROM game g, category c, gender ge
-        WHERE g.id = c.game_id 
-        AND c.gender_id = ge.id
-        GROUP BY g.name 
-        ORDER BY g.id;'); 
-        ?>;
-        let list_all_genders = <?php 
-        getInfosForFrontend('SELECT * FROM gender;'); 
-        ?>;
-    </script>
-<script src='src/scripts/index.js'></script>
-
 <body id="body-game-list">
+    <?php include("src/templates/navbar.php"); ?>
+    <?php include("src/templates/login.php"); ?>
 
     <main>
         <aside id="menu-aside">
@@ -56,14 +38,19 @@ htmlHead('Game Rating'); ?>
 
             <section id="global-game-section">
                 <?php
+
                 include_once("src/templates/pagination.php");
                 getPage(1);
                 ?>
+
             </section>
 
 
             <section id="details-game-section">
-
+                <?php
+                include_once("src/scripts/create-json.php");
+                getRawgApiData();
+                ?>
             </section>
 
 
@@ -224,6 +211,22 @@ htmlHead('Game Rating'); ?>
     <?php
     include_once("src/templates/footer.php");
     ?>
+
+    <script>
+        // récupère les informations de chaque jeu
+        let list_all_games = <?php
+                                getInfosForFrontend('SELECT g.*, json_arrayagg(ge.name) AS gender
+        FROM game g, category c, gender ge
+        WHERE g.id = c.game_id 
+        AND c.gender_id = ge.id
+        GROUP BY g.name 
+        ORDER BY g.id;');
+                                ?>;
+        let list_all_genders = <?php
+                                getInfosForFrontend('SELECT * FROM gender;');
+                                ?>;
+    </script>
+    <script src='src/scripts/index.js'></script>
 
 </body>
 
