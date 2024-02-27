@@ -1,16 +1,16 @@
 <?php
-include(__DIR__."src/templates/database.php");
+include($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
 ?>
 
 <!DOCTYPE html>
 <html>
 
-<?php include_once __DIR__.'src/templates/html_head.php';
+<?php include_once $_SERVER['DOCUMENT_ROOT'].'/src/templates/html_head.php';
 htmlHead('Game Rating'); ?>
 
 <body id="body-game-list">
-    <?php include(__DIR__."src/templates/navbar.php"); ?>
-    <?php include(__DIR__."src/templates/login.php"); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT']."/src/templates/navbar.php"); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT']."/src/templates/login.php"); ?>
 
     <main>
         <aside id="menu-aside">
@@ -39,7 +39,7 @@ htmlHead('Game Rating'); ?>
             <section id="global-game-section">
                 <?php
 
-                include_once(__DIR__."src/templates/pagination.php");
+                include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/pagination.php");
                 getPage(1);
                 ?>
 
@@ -206,7 +206,7 @@ htmlHead('Game Rating'); ?>
 
     </main>
     <?php
-    include_once(__DIR__."src/templates/footer.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/footer.php");
     ?>
 
     <script>
