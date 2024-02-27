@@ -1,8 +1,16 @@
+@use 'var';
+
 .reco-page {
     width: 100%;
+    color: white;
+    background-color: var.$background-color;
 
     .reco-section {
         padding: 4%;
+
+        strong {
+            color: white;
+        }
 
         .reco-h1 {
             margin-bottom: 2%;
@@ -18,8 +26,12 @@
             margin-top: 4%;
 
             .reco-container {
-                width: 45%;
+                background-color: white;
+                border-radius: 30px;
+                padding: 2%;
+                width: 34%;
                 margin-bottom: 4%;
+                color: #121212;
 
                 h1 {
                     margin-bottom: 2%;
@@ -30,7 +42,7 @@
 
                     img {
                         width: auto;
-                        height: 60vh;
+                        height: 40vh;
                         margin-bottom: 2%;
                     }
                 }

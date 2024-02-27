@@ -1,12 +1,18 @@
 <!--NAVBAR-->
 <nav>
-    <h3>Game Rating Platform</h3>
+    <h3><a href='index.php'>Game Rating Platform</a></h3>
     <ul class="navbar">
         <li><a href="index.php">Jeux</a></li>
         <li><a href="user_list.php">Users</a></li>
         <li><a href="recommandation.php">Recommandations</a></li>
         <li>
-            <p onclick='showLoginForm()'>Login</p>
+            <?php
+            if (isset($_SESSION['user'])) {
+                echo "<p><a class='no-padding-a' href='src/templates/logout.php'>Log out</a></p>";
+            } else {
+                echo "<p onclick='showLoginForm()'>Login</p>";
+            }
+            ?>
         </li>
     </ul>
 </nav>
