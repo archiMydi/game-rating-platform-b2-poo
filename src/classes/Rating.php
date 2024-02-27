@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include_once 'src/templates/database.php';
+include_once ('src/templates/database.php');
 
 class Rating
 {
@@ -14,7 +14,7 @@ class Rating
      */
     public static function getUserVector($uid)
     {
-        $userRatings = getAllRatedGame($uid);
+        $userRatings = getAllRatedGame($uid, false);
         return $userRatings;
     }
 

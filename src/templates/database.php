@@ -90,7 +90,7 @@ function getInfosGame(String $sql): ?game
     $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $tab = $stmt->fetchAll();
     if (count($tab) > 0) {
-        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel'], $tab[0]['metacritic'], $tab[0]['listGender'], $tab[0]['listGallery']);
+        return new game($tab[0]['id'], $tab[0]['name'], $tab[0]['infos'], $tab[0]['visuel'], $tab[0]['metacritic']);
     } else {
         return null;
     }
@@ -499,7 +499,7 @@ function getGamesInPage(int $page): ?array
     if (count($tab) > 0) {
 
         foreach ($tab as $game_) {
-            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic'], $game_['listGender'], $game_['listGallery']);
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic']);
             array_push($list, $game);
         }
 
@@ -535,7 +535,7 @@ function getSpecificGamesInPage(int $page, $sql): ?array
     if (count($tab) > 0) {
 
         foreach ($tab as $game_) {
-            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic'], $game_['listGender'], $game_['listGallery']);
+            $game = new game($game_['id'], $game_['name'], $game_['infos'], $game_['visuel'], $game_['metacritic']);
             array_push($list, $game);
         }
 
@@ -553,7 +553,7 @@ function getSpecificGamesInPage(int $page, $sql): ?array
  *
  * @return array Retourne une liste de jeux (liste[id jeu] = [id critere => [nom, note]])
  */
-function getAllRatedGame(int $id_user): array
+function getAllRatedGame(int $id_user, bool $name = true): array
 {
 
     $rated_games = getRatedGame($id_user);
@@ -561,7 +561,7 @@ function getAllRatedGame(int $id_user): array
 
     foreach ($rated_games as $game) {
 
-        $list[$game->getID()] = getRatingGame($game->getID(), $id_user);
+        $list[$game->getID()] = getRatingGame($game->getID(), $id_user, $name);
     }
 
     return $list;
@@ -575,7 +575,7 @@ function getAllRatedGame(int $id_user): array
  *
  * @return array Retourne une liste de jeux (liste[id critere] = [nom, note])
  */
-function getRatingGame(int $id_game, int $id_user): array
+function getRatingGame(int $id_game, int $id_user, bool $name = true): array
 {
 
     global $conn;
@@ -591,7 +591,13 @@ function getRatingGame(int $id_game, int $id_user): array
 
         foreach ($tab as $elm) {
 
-            $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
+            if($name) {
+                $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
+            }
+            else {
+                $list[$elm['id_c']] = $elm['note'];
+            }
+
         }
     }
 
@@ -612,7 +618,7 @@ function getRatedGame($id_user): array
 
     $list = array();
 
-    $sql = "SELECT game.name name, game.id id, game.infos infos, game.visuel visuel FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
+    $sql = "SELECT game.name name, game.id id, game.infos infos, game.visuel visuel, game.metacritic metacritic FROM rating JOIN game ON rating.game_id = game.id WHERE user_id = $id_user GROUP BY game_id";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -621,7 +627,7 @@ function getRatedGame($id_user): array
 
         foreach ($tab as $elm) {
 
-            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel'], $elm['metacritic'], $elm['listGender'], $elm['listGallery']);
+            $game = new game($elm['id'], $elm['name'], $elm['infos'], $elm['visuel'], $elm['metacritic']);
             array_push($list, $game);
         }
     }
@@ -675,7 +681,7 @@ function getAllGames(): array
     $liste = array();
     foreach ($tab as $game) {
 
-        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel'], $game['metacritic'], $game['listGender'], $game['listGallery']);
+        $game_obj = new game($game['id'], $game['name'], $game['infos'], $game['visuel'], $game['metacritic']);
         array_push($liste, $game_obj);
     }
 
