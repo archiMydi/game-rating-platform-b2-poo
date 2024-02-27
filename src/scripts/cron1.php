@@ -11,7 +11,7 @@ ini_set('display_errors', 1);
 
 include($_SERVER['DOCUMENT_ROOT']."src/classes/Rating.php");
 
-function cosSimilarity($vector1, $vector2)
+function cosSimilarity($u, $v)
 {
     // Calcul du produit scalaire des deux vecteurs
     $scalarProduct = 0;
@@ -71,12 +71,12 @@ function saveData($uid)
 
     $jsonFile = fopen($folder . $file, "a") or die("Unable to open file !");
 
-    foreach ($array as $u) {
-        if ($u->id != $uid) {
-            $json = "['uid': $uid, 'comparedUid': $u->id, 'similarity': " . cosSimilarity($vecteurU1, $u->$vecteur) . "]";
-            fwrite($jsonFile, $json);
-        }
-    }
+    // foreach ($array as $u) {
+    //     if ($u->id != $uid) {
+    //         $json = "['uid': $uid, 'comparedUid': $u->id, 'similarity': " . cosSimilarity($vecteurU1, $u->$vecteur) . "]";
+    //         fwrite($jsonFile, $json);
+    //     }
+    // }
 
     fwrite($jsonFile, '}');
 }
