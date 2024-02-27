@@ -17,7 +17,7 @@ $mdp = $_POST['pwd'] ?? null;
 
 if ($id != null && $mdp != null) {
 
-    include_once("src/templates/database.php");
+    include_once(__DIR__."src/templates/database.php");
 
     $user = getUser($id, $mdp);
 
