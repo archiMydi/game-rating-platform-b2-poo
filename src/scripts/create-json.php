@@ -1,7 +1,7 @@
 <?php
 function getRawgApiData()
 {
-    $url = 'https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88&page_size=10000';
+    $url = './data-1000.json';
     $data = file_get_contents($url);
     $rawgData = json_decode($data, true);
     insertData($rawgData);

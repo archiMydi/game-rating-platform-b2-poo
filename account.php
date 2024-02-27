@@ -1,18 +1,18 @@
 <?php
 include_once("src/templates/database.php");
-session_start();
+require_once("src/templates/init.php");
 if ($_SESSION['user'] == null) {
     header("Location: index.php");
 }
 ?>
 
 <!DOCTYPE html>
-
 <html>
 <?php include('src/templates/html_head.php');
 htmlHead('Compte'); ?>
 
 <body>
+    <?php include 'src/templates/navbar.php'; ?>
     <?php
     $user = $_SESSION['user'];
     echo "<h2>
@@ -23,7 +23,7 @@ htmlHead('Compte'); ?>
                     Modifier le profil
                 </button>
             </a>
-            <a href='login.php'>
+            <a href='src/templates/logout.php'>
                 <button>
                     Déconnexion
                 </button>

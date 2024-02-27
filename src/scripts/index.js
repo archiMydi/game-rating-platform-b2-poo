@@ -11,30 +11,25 @@ function closeElement(id) {
 /* import data from '../../js/rawgdata.json'; // importer le fichier json rawgdata.json dans index.js
 console.log(data); */
 
-// ../ redescend à src puis à game-rating-plat... pour accéder au fichier rawgdata.json via route js/rawgdata.json
-/* import data from '../../js/rawgdata.json'; // importer le fichier json rawgdata.json dans index.js
-console.log(data); */
-
-
-//ANCIENNES FONCTIONS POUR APPELER L'API ET TRAITER LES DONNÉES
 // appel de la fonction get RawgApiData
 // récupère les données de l'API
 // let apiRawgData = getRawgApiData(); 
-// console.log("API RawData : ",apiRawgData);
+// console.log(list_all_games);
+// console.log(apiRawgData);
 
 /** Function getRawgApiData :
  * Récupère les données de l'API Rawg avec une requête fetch
  * Doit retourner un tableau d'objets au format json 
  * (fonction à initier au lancement et à stocker dans la base de données)
  */
-async function getRawgApiData() { // fonction déclinable avec 
-  const rawgData = await fetch('https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88', {
-    // url doir inclure la clé de l'API (API Key) en paramètre
-    method: "GET"
-    });
-    console.log(rawgData);
-    return rawgData;
-}
+// async function getRawgApiData() { // fonction déclinable avec 
+//   const rawgData = await fetch('https://api.rawg.io/api/games?key=8bfd7a86de0c43139aae5337a6a07d88', {
+//     // url doir inclure la clé de l'API (API Key) en paramètre
+//     method: "GET"
+//     });
+//     console.log(rawgData);
+//     return rawgData;
+// }
 
 /* 
 let test_data = []; 
@@ -44,65 +39,65 @@ let test_data = [];
  * Paramètre : tab : tableau d'objets traité par la fonction getDataToPostToDatabase
  * Transmet les données traitées au serveur
  */
-async function sendDataToBack(tab) {
-  await fetch("../templates/database.php", {
-    method: "POST",
-    body: JSON.stringify(tab),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8"
-    }
-  })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
-} 
+// async function sendDataToBack(tab) {
+//   await fetch("../templates/database.php", {
+//     method: "POST",
+//     body: JSON.stringify(tab),
+//     headers: {
+//       "Content-type": "application/json; charset=UTF-8"
+//     }
+//   })
+//     .then((response) => response.json())
+//     .then((json) => console.log(json));
+// } 
 
-/** Function getDataToPostToDatabase :
- * Paramètre : data : tableau d'objets reçu par la requête fetch dans getRawgApiData()
- * Traite les données de l'API Rawg avec une requête fetch
- * Doit retourner tableau contenant un objet json pour chaque élément de la requête 
- * 
- */
-function getDataToPostToDatabase(p_data) {
+// /** Function getDataToPostToDatabase :
+//  * Paramètre : data : tableau d'objets reçu par la requête fetch dans getRawgApiData()
+//  * Traite les données de l'API Rawg avec une requête fetch
+//  * Doit retourner tableau contenant un objet json pour chaque élément de la requête 
+//  * 
+//  */
+// function getDataToPostToDatabase(p_data) {
 
-  // tableau contenant plusieurs objet à envoyer au back-end en requête POST
-  let tabToPost = [];
+//   // tableau contenant plusieurs objet à envoyer au back-end en requête POST
+//   let tabToPost = [];
 
-  p_data.forEach(object => {
-      var gameName = object.name;
-      var gameVisual = object.background_image; 
-      var gameGenre = [];
-      var gameInfos = "Date de sortie : " + object.released;
-      var gameGallery = [];
-      var gameMetacritic = object.metacritic
+//   p_data.forEach(object => {
+//       var gameName = object.name;
+//       var gameVisual = object.background_image; 
+//       var gameGenre = [];
+//       var gameInfos = "Date de sortie : " + object.released;
+//       var gameGallery = [];
+//       var gameMetacritic = object.metacritic
 
-      object.short_screenshots.forEach(screenshots => {
-        gameGallery.push(screenshots.image);
-      });
-      object.tags.forEach(tag => {
-        gameGenre.push(tag.name);
-      });
+//       object.short_screenshots.forEach(screenshots => {
+//         gameGallery.push(screenshots.image);
+//       });
+//       object.tags.forEach(tag => {
+//         gameGenre.push(tag.name);
+//       });
 
-      let object_game_to_post = {
-        "name": gameName,
-        "visuel": gameVisual,
-        "infos": gameInfos,
-        "metacritic": gameMetacritic,
-        "genders": gameGenre,
-        "gallery": gameGallery
-      };
-      console.log(object_game_to_post);
-      tabToPost.push(object_game_to_post);
-  });
+//       let object_game_to_post = {
+//         "name": gameName,
+//         "visuel": gameVisual,
+//         "infos": gameInfos,
+//         "metacritic": gameMetacritic,
+//         "genders": gameGenre,
+//         "gallery": gameGallery
+//       };
+//       console.log(object_game_to_post);
+//       tabToPost.push(object_game_to_post);
+//   });
 
-  console.log(tabToPost);
-  // utiliser le tableau tabToPost dans une requête POST
-  return tabToPost;
-}
+//   console.log(tabToPost);
+//   // utiliser le tableau tabToPost dans une requête POST
+//   return tabToPost;
+// }
 
-// phase de test : prendre test_data en paramètre
-// tester avec apiRawgData
-// getDataToPostToDatabase(apiRawgData);
-getDataToPostToDatabase(test_data);
+// // phase de test : prendre test_data en paramètre
+// // tester avec apiRawgData
+// // getDataToPostToDatabase(apiRawgData);
+// getDataToPostToDatabase(test_data);
 
 
 //AFFICHER LA LISTE JEUX
@@ -308,6 +303,10 @@ function userChart(users) {
     let canvas = document.getElementById('user-chart' + i);
     let cibleNameUser = document.getElementById('user' + i);
 
+    console.log(cibleNameUser);
+    console.log(i);
+    console.log(users[i].name, users[i].data);
+
     cibleNameUser.innerHTML = users[i].name;
 
     let data = {
@@ -458,3 +457,11 @@ function filtreASC() {
 
   showGames(filterASC);
 }
+
+
+//FONCTION GET GAMES
+
+function  getGames() {
+  
+}
+// https://api.rawg.io/api/games
