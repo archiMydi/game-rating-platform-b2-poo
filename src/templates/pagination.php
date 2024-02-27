@@ -1,13 +1,7 @@
 <?php
-
-    /**
-     * Affiche une page précise de jeu
-     *
-     * @param int $page Numéros de la page
-     */
-    function getPage(int $page) {
+    function getPage($page) {
         $page = $_GET['page'] ?? 1;
-        include_once("src/templates/database.php");
+        include_once(__DIR__."src/templates/database.php");
         $nb = getMaxPages();
         if($page < 1) {
             $page = 1;
@@ -44,12 +38,6 @@
         }
     }
 
-    /**
-     * Affiche une page précise de jeu avec une requête spécifique
-     *
-     * @param string $sql Requête permettant de récupérer les jeux
-     * @param string $sql Requête permettant d'avoir le nombre maximum de jeu (colonne renommer obligatoirement en nb)
-     */
     function getSQLPage($page, $sql, $sql_max) {
         $page = $_GET['page'] ?? 1;
         include_once("src/templates/database.php");

@@ -1,20 +1,23 @@
 <?php
-include("src/templates/database.php");
-$user = getUserById(1);
+include_once("src/templates/database.php");
+require_once("src/templates/init.php");
+if ($_SESSION['user'] == null) {
+    header("Location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 
-<?php include_once 'src/templates/html_head.php';
+<?php include_once __DIR__.'src/templates/html_head.php';
 htmlHead('Game Rating'); 
-include("src/templates/rate_game.php");
+include(__DIR__."src/templates/rate_game.php");
     $id_g = $_GET['id_g'] ?? -1;
     if($id_g != -1) {
         checkRatingForm(false, $id_g, $user, "account.php?id_g=$id_g");
     }
-    include("src/templates/navbar.php"); 
-    include("src/templates/login.php");
+    include(__DIR__."src/templates/navbar.php"); 
+    include(__DIR__."src/templates/login.php");
 ?>
 <script>
         // récupère les informations de chaque jeu
@@ -55,7 +58,7 @@ include("src/templates/rate_game.php");
 
             <section id="global-game-section">
                 <?php
-                include_once("src/templates/pagination.php");
+                include_once(__DIR__."src/templates/pagination.php");
                 $src = $_GET['src'] ?? null;
                 if($src == null) {
                     echo "<h1>Jeux déjà notés</h1><br>";

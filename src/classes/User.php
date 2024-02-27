@@ -1,5 +1,5 @@
 <?php
-include("src/templates/connection.inc.php");
+include(__DIR__."src/templates/connection.inc.php");
 
 class User
 {

@@ -1,15 +1,15 @@
 <?php
-include_once 'src/templates/database.php';
+include_once __DIR__.'src/templates/database.php';
 $userListJSON = getUserListJSON($conn);
 ?>
 <html>
-<?php include_once 'src/templates/html_head.php';
+<?php include_once __DIR__.'src/templates/html_head.php';
 htmlHead('Utilisateurs'); ?>
 
 <body id='user-list-page'>
-    <?php include 'src/templates/navbar.php'; ?>
-    <?php include_once 'src/templates/user_details.php'; ?>
-    <?php include("src/templates/login.php"); ?>
+    <?php include __DIR__.'src/templates/navbar.php'; ?>
+    <?php include_once __DIR__.'src/templates/user_details.php'; ?>
+    <?php include(__DIR__."src/templates/login.php"); ?>
 
     <section class='user-list-container'>
 

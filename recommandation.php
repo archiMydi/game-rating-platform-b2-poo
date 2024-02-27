@@ -1,9 +1,9 @@
 <?php
-include 'src/templates/html_head.php';
-include_once 'src/classes/Rating.php';
-include_once 'src/classes/User.php';
-include_once 'src/classes/Game.php';
-require_once("src/templates/init.php");
+include __DIR__.'src/templates/html_head.php';
+include_once __DIR__.'src/classes/Rating.php';
+include_once __DIR__.'src/classes/User.php';
+include_once __DIR__.'src/classes/Game.php';
+require_once(__DIR__."src/templates/init.php");
 
 htmlHead('Recommandations');
 
@@ -19,8 +19,8 @@ if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
 ?>
 
 <body class='reco-page'>
-    <?php include 'src/templates/navbar.php'; ?>
-    <?php include("src/templates/login.php"); ?>
+    <?php include __DIR__.'src/templates/navbar.php'; ?>
+    <?php include(__DIR__."src/templates/login.php"); ?>
 
     <script src='static/js/reco.js'></script>
     <section class='reco-section'>
