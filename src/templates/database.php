@@ -1,8 +1,8 @@
 <?php
 
-include_once(__DIR__.'connection.inc.php');
-include_once(__DIR__.'src/classes/User.php');
-include_once(__DIR__.'src/classes/Game.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/templates/connection.inc.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/classes/User.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/classes/Game.php');
 $conn = null;
 $nb_jeu_par_page = 3;
 try {
@@ -591,13 +591,11 @@ function getRatingGame(int $id_game, int $id_user, bool $name = true): array
 
         foreach ($tab as $elm) {
 
-            if($name) {
+            if ($name) {
                 $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
-            }
-            else {
+            } else {
                 $list[$elm['id_c']] = $elm['note'];
             }
-
         }
     }
 
@@ -735,7 +733,8 @@ function getInfosFromDatabase(String $sql)
 
 // fonction à utiliser pour transmettre des données en base de données
 // paramètre : requête SQL (format string) de type INSERT
-function sendDataToDatabase(String $sql) {
+function sendDataToDatabase(String $sql)
+{
     global $conn;
     $stmt = $conn->prepare($sql);
     $stmt->execute();
