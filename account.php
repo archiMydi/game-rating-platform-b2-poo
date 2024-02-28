@@ -80,7 +80,9 @@ include($_SERVER['DOCUMENT_ROOT']."/src/templates/rate_game.php");
 
 
             <section id="details-game-section">
-
+                <?php
+                $users = getInfosUser('SELE');
+                ?>
             </section>
 
             <section id="rating-section">

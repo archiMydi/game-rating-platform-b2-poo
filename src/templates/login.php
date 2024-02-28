@@ -7,7 +7,7 @@
             <input type="password" placeholder="Password" name="pwd" required>
             <input type="submit" Value="Submit">
         </form>
-        <p>You don't have an account yet ? <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Sign up</a></p>
+        <p>You don't have an account yet ? <a href="./signup.php">Sign up</a></p>
     </div>
 </div>
 
@@ -17,7 +17,7 @@ $mdp = $_POST['pwd'] ?? null;
 
 if ($id != null && $mdp != null) {
 
-    include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
+    include_once($_SERVER['DOCUMENT_ROOT'] . "/src/templates/database.php");
 
     $user = getUser($id, $mdp);
 

@@ -1,10 +1,10 @@
 <?php
 
-include_once($_SERVER['DOCUMENT_ROOT'].'/src/templates/connection.inc.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/src/classes/User.php');
-include_once($_SERVER['DOCUMENT_ROOT'].'/src/classes/Game.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/templates/connection.inc.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/classes/User.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/src/classes/Game.php');
 $conn = null;
-$nb_jeu_par_page = 3;
+$nb_jeu_par_page = 15;
 try {
     $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname;charset=utf8", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -33,17 +33,17 @@ function getInfosUser(String $sql): ?user
     }
 }
 
-function getLastUserID(): int {
+function getLastUserID(): int
+{
 
     global $conn;
 
     $stmt = $conn->prepare("SELECT id FROM user ORDER BY id DESC");
     $stmt->execute();
     $tab = $stmt->fetchAll();
-    if(count($tab) > 0) {
+    if (count($tab) > 0) {
         return $tab[0]['id'];
     }
-
 }
 
 /**
@@ -596,7 +596,7 @@ function getRatingGame(int $id_game, int $id_user, bool $name = true, bool $norm
 
     $sql = "SELECT c.id id_c, c.name nom, r.value note FROM `rating` r JOIN criterion c ON r.criterion_id = c.id WHERE game_id = $id_game AND user_id = $id_user";
 
-    if($normalise) {
+    if ($normalise) {
         $sql = "SELECT c.id id_c, c.name nom, r.value-2.5 note FROM `rating` r JOIN criterion c ON r.criterion_id = c.id WHERE game_id = $id_game AND user_id = $id_user;";
     }
 
@@ -607,13 +607,11 @@ function getRatingGame(int $id_game, int $id_user, bool $name = true, bool $norm
 
         foreach ($tab as $elm) {
 
-            if($name) {
+            if ($name) {
                 $list[$elm['id_c']] = [$elm['nom'], $elm['note']];
-            }
-            else {
+            } else {
                 $list[$elm['id_c']] = $elm['note'];
             }
-
         }
     }
 
@@ -751,8 +749,24 @@ function getInfosFromDatabase(String $sql)
 
 // fonction à utiliser pour transmettre des données en base de données
 // paramètre : requête SQL (format string) de type INSERT
-function sendDataToDatabase(String $sql) {
+function sendDataToDatabase(String $sql)
+{
     global $conn;
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 }
+
+/* $datajson_array = array('js/dataJSON/data1.json','js/dataJSON/data2.json','js/dataJSON/data3.json');
+
+// récupérer chaque genre
+// temps de chargment limité à 30 secondes, 3 requêtes à la fois
+foreach ($datajson_array as $x) {
+    game::prepareFetchToDatabase($x);
+    } */
+
+//echo(dirname(__DIR__)); // permet de renvoyer le chamin d'accès (current)
+
+// game::prepareFetchToDatabase('js/dataJSON/data1.json');
+// game::prepareFetchToDatabase('js/dataJSON/data2.json');
+// game::prepareFetchToDatabase('js/dataJSON/data3.json');
+

@@ -6,12 +6,12 @@ include($_SERVER['DOCUMENT_ROOT']."/src/templates/init.php");
 <!DOCTYPE html>
 <html>
 
-<?php include_once $_SERVER['DOCUMENT_ROOT'].'/src/templates/html_head.php';
+<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/src/templates/html_head.php';
 htmlHead('Game Rating'); ?>
 
 <body id="body-game-list">
-    <?php include($_SERVER['DOCUMENT_ROOT']."/src/templates/navbar.php"); ?>
-    <?php include($_SERVER['DOCUMENT_ROOT']."/src/templates/login.php"); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'] . "/src/templates/navbar.php"); ?>
+    <?php include($_SERVER['DOCUMENT_ROOT'] . "/src/templates/login.php"); ?>
 
     <main>
         <aside id="menu-aside">
@@ -21,9 +21,12 @@ htmlHead('Game Rating'); ?>
 
         <section id="main-section">
             <section id="second-header">
+                <h1 style="color: white;">Rechercher un nouveau jeu à noter</h1><br>
                 <section id="search">
-                    <input type="search" id="input-search" onkeyup="searchGame()">
-                    <button type="button" onclick="searchGame()"><i class="material-icons" id="icon_search">search</i></button>
+                    <form id='search-form' action="#" method="GET">
+                        <input type="search" name='src' id="input-search" onkeyup="searchGame()">
+                        <button type="submit" form="search-form" onclick="searchGame()"><i class="material-icons" id="icon_search">search</i></button>
+                    </form>
                 </section>
 
                 <section id="filtre">
@@ -40,7 +43,7 @@ htmlHead('Game Rating'); ?>
             <section id="global-game-section">
                 <?php
 
-                include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/pagination.php");
+                include_once($_SERVER['DOCUMENT_ROOT'] . "/src/templates/pagination.php");
                 getPage(1);
                 ?>
 
@@ -207,7 +210,7 @@ htmlHead('Game Rating'); ?>
 
     </main>
     <?php
-    include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/footer.php");
+    include_once($_SERVER['DOCUMENT_ROOT'] . "/src/templates/footer.php");
     ?>
 
     <script>

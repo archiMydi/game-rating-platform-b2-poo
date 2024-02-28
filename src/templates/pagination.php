@@ -23,7 +23,8 @@
                 echo '<article class="game" onclick="'.$show.'">
                 <p>'.$game->getName().'</p>
                 <img class="game-img" src="'.$visu.'" alt="'.$visu.'"/>
-            </article>';
+            </article>
+            ';
 
             }
             echo "</section><br>";
