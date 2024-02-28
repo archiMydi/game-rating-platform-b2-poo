@@ -1,6 +1,8 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+$_SERVER['DOCUMENT_ROOT'] = dirname(__DIR__) . "/../";
 include_once($_SERVER['DOCUMENT_ROOT'] . '/src/templates/database.php');
 
 class Rating

@@ -64,11 +64,11 @@
 .modal .modal-content {
   background-color: white;
   border-radius: 30px;
-  margin: 3% auto;
+  margin: 6% auto;
   padding: 2%;
   border: 1px solid #888;
   width: 40%;
-  height: 80%;
+  height: 76%;
   color: #121212;
   display: flex;
   flex-direction: row;
@@ -246,13 +246,25 @@
   flex-wrap: wrap;
   width: 100%;
 }
+#body-game-list main #main-section #user-section {
+  background-color: rgb(85, 81, 194);
+  padding: 2%;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+#body-game-list main #main-section #user-section h2 {
+  margin: 2%;
+  color: white;
+}
 #body-game-list main #main-section #second-header {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
-  padding: 50px 0px 50px 50px;
+  padding: 0 0 2% 2%;
   background-color: rgb(85, 81, 194);
+}
+#body-game-list main #main-section #second-header h1 {
+  margin-left: 4%;
 }
 #body-game-list main #main-section #second-header #search {
   display: flex;
@@ -265,9 +277,9 @@
   width: 100%;
 }
 #body-game-list main #main-section #second-header #search form input {
-  width: 50%;
-  height: 40px;
-  padding-left: 20px;
+  width: 27%;
+  height: 6vh;
+  margin-left: 2%;
   border: none;
   border-radius: 25px 0 0 25px;
   background-color: aliceblue;
@@ -318,15 +330,21 @@
 }
 #body-game-list main #global-game-section a button.actif {
   background-color: rgb(52, 69, 168);
-  padding: 0.5%;
   border-radius: 5px;
   color: white;
+  padding: 1vw;
+  max-width: 3vw;
+  min-width: 3vw;
+  margin-bottom: 1%;
 }
 #body-game-list main #global-game-section a button.innactif {
   background-color: rgb(85, 81, 194);
-  padding: 0.5%;
+  margin-bottom: 1%;
   border-radius: 5px;
   color: white;
+  padding: 1vw;
+  max-width: 3vw;
+  min-width: 3vw;
 }
 #body-game-list main #game-section {
   display: flex;

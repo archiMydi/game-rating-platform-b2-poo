@@ -9,6 +9,7 @@
             <?php
             if (isset($_SESSION['user'])) {
                 echo "<p><a class='no-padding-a' href='src/templates/logout.php'>Log out</a></p>";
+                echo "</li><li><p><a class='no-padding-a' href='account.php'>Account</a></p>";
             } else {
                 echo "<p onclick='showLoginForm()'>Login</p>";
             }

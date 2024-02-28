@@ -7,7 +7,7 @@
             <input type="password" placeholder="Password" name="pwd" required>
             <input type="submit" Value="Submit">
         </form>
-        <p>You don't have an account yet ? <a href="./signup.php">Sign up</a></p>
+        <p>You don't have an account yet ? <a href="/src/templates/signup.php">Sign up</a></p>
     </div>
 </div>
 
