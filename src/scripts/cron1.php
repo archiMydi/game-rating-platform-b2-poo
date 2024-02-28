@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include($_SERVER['DOCUMENT_ROOT'] . "/src/classes/Rating.php");
+include(dirname(__DIR__) . "/classes/Rating.php");
 
 /**
  * Défini le dernier utilisateur mis-à-jour
@@ -117,7 +117,7 @@ function getUsers($nb_user)
     }
 }
 
-$data = getUsers(1700);
+$data = getUsers(1000);
 
 
 // Similarité de profils entre plusieurs users
@@ -150,27 +150,20 @@ function calculateUserSimilarity($data)
     }
 
     var_export($user_similarity);
+    saveData(json_encode($user_similarity));
+    return $user_similarity;
 }
 
 calculateUserSimilarity($data);
 
 
 
-function saveData($uid, $dataToSave)
+function saveData($dataToSave)
 {
-    // $bigArray = getUsers(0, 5);
-    // $userNotedGames = $bigArray[$uid];
+    $folder = $_SERVER['DOCUMENT_ROOT'] . "/static/data/";
+    $file = "profiles.json";
 
-    // $folder = "/home/xjeypbqy/poo-denis/user-profiles/";
-    // $file = $uid . ".json";
+    $jsonFile = fopen($folder . $file, "w") or die("Unable to open file !");
 
-    // $jsonFile = fopen($folder . $file, "w") or die("Unable to open file !");
-    // fwrite($jsonFile, '{');
-
-    // $jsonFile = fopen($folder . $file, "a") or die("Unable to open file !");
-
-    // $json = "['uid': $uid, 'comparedUid': $u->id, 'similarity': " . cosSimilarity([1, 1], [1, 1]) . "]";
-    // fwrite($jsonFile, $json);
-
-    // fwrite($jsonFile, '}');
+    fwrite($jsonFile, $dataToSave);
 }
