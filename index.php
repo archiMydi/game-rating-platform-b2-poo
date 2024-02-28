@@ -1,6 +1,6 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
-include($_SERVER['DOCUMENT_ROOT']."/src/templates/init.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/src/templates/database.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/src/templates/init.php");
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +42,6 @@ htmlHead('Game Rating'); ?>
 
             <section id="global-game-section">
                 <?php
-
                 include_once($_SERVER['DOCUMENT_ROOT'] . "/src/templates/pagination.php");
                 getPage(1);
                 ?>

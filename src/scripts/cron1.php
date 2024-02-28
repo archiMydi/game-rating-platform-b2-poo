@@ -13,10 +13,10 @@ include(dirname(__DIR__) . "/classes/Rating.php");
 function setLastUserCheck($uid)
 {
 
-    $folder = __DIR__ . "/";
+    $folder = dirname(dirname(__DIR__)) . "/static/data/";
     $file = "last.txt";
 
-    $myfile = fopen($folder . $file, "r+") or die("Unable to open file !");
+    $myfile = fopen($folder . $file, "w") or die("Unable to open file !");
     fwrite($myfile, $uid);
 }
 
@@ -29,16 +29,14 @@ function setLastUserCheck($uid)
 function getLastUserCheck(): string
 {
 
-    $folder = __DIR__ . "/";
+    $folder = dirname(dirname(__DIR__)) . "/static/data/";
     $file = "last.txt";
 
     $myfile = fopen($folder . $file, "r") or die("Unable to open file !");
     return fread($myfile, filesize(__DIR__ . "/" . "last.txt"));
 }
 
-setLastUserCheck(1);
-
-echo "<br>" . getLastUserCheck();
+setLastUserCheck(0);
 
 function cosSimilarity($u, $v)
 {
@@ -78,7 +76,7 @@ function cosSimilarity($u, $v)
     $similarity = $scalarProduct / ($norm1 * $norm2);
 
     // Retourne la similarité cosinus calculée
-    return $similarity;
+    return round($similarity, 3);
 }
 
 
@@ -151,12 +149,8 @@ function calculateUserSimilarity($data)
 
     var_export($user_similarity);
     saveData(json_encode($user_similarity));
-    return $user_similarity;
+    //return $user_similarity; 
 }
-
-calculateUserSimilarity($data);
-
-
 
 function saveData($dataToSave)
 {
@@ -167,3 +161,6 @@ function saveData($dataToSave)
 
     fwrite($jsonFile, $dataToSave);
 }
+
+
+calculateUserSimilarity($data); //Processing data
