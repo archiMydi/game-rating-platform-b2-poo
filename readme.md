@@ -1,4 +1,5 @@
 Projet de plateforme de notation/recommandation de jeux vidéos mené par Julie, Antoine, Enzo, Archibald et Denis (Chef de projet)
+Idées nom : Jeu note, VGR, Gamecrit
 
 Liste (non-exhaustive) des fonctionnalités à développer par version du projet :
 

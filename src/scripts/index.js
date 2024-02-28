@@ -112,32 +112,29 @@ let test_data = [];
 
 
 //AFFICHER LA LISTE JEUX FONCTION OBSOLÈTE -> AFFICHAGE DEPUIS DATABASE
-// function showGames(games) {
-//     let cible = document.getElementById("game-section");
-//     let hide = document.getElementById("details-game-section");
+function showGames(games) {
+    let cible = document.getElementById("game-section");
+    let hide = document.getElementById("details-game-section");
     
 
-//     //cible.innerHTML = '';
+    //cible.innerHTML = '';
 
-//     games.forEach(game => {
-//       let gameName = game.name;
-//       let gameVisual = './img/gameVisual.jpeg';
+    games.forEach(game => {
+      let gameName = game.name;
+      let gameVisual = './img/gameVisual.jpeg';
 
-//       let contenu = `<article class="game" onclick="showGameDetails('${gameName}')">
-//         <p>${gameName}</p>
-//         <img class="game-img" src="${gameVisual}" alt="${gameVisual}"/>
-//     </article>`;
+      let contenu = `<article class="game" onclick="showGameDetails('${gameName}')">
+        <p>${gameName}</p>
+        <img class="game-img" src="${gameVisual}" alt="${gameVisual}"/>
+    </article>`;
 
-//     //cible.innerHTML += contenu;
-//     })
+    //cible.innerHTML += contenu;
+    })
     
 
-//     hide.style.display = 'none';
-//     cible.style.display = 'flex';
-// }
-
-
-
+    hide.style.display = 'none';
+    cible.style.display = 'flex';
+}
 
 
 
@@ -163,7 +160,6 @@ function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisu
 
     let gameGenre;
 
-
     list_all_games.forEach(game => {
       if (game.id == gameID) {
         gameName = game.name;
@@ -173,7 +169,7 @@ function showGameDetails(gameName, game_id = 1, gameVisual = "../../img/gameVisu
       }
     });
 
-    console.log(gameGenre);
+    
 
 
 
@@ -282,7 +278,7 @@ function selectGamesByGender(gender_name) {
     }
   }); 
   console.log(list_games_by_gender);
-  showGames(list_games_by_gender)
+  showGames(list_games_by_gender);
 }
 
 //GO BACK
@@ -440,7 +436,6 @@ async function searchGame() {
   let resultat = list_all_games.filter(game => game.name.toLowerCase().includes(searchTerm));
 
   showGames(resultat);
-  
 }
 
 //SELECT FILTRE
@@ -448,33 +443,36 @@ async function searchGame() {
  * Fonction de select Filtre, selection de la value du select
  * Switch case en prenant la value des options du select index.php
  */
-function selectFiltre() {
-  let select = document.getElementById("select-filtre");
-  let selectedValue = select.options[select.selectedIndex].value;
+// function selectFiltre() {
+//   let select = document.getElementById("select-filtre");
+//   let selectedValue = select.options[select.selectedIndex].value;
 
-  switch(selectedValue) {
-    case 'pertinence':
-      // showGames(games); Fonction obsolète
-      break;
-    case 'alphabetique':
-      filtreASC();
-      break;
-  }
-}
+//   switch(selectedValue) {
+//     case 'pertinence':
+//       // showGames(games); Fonction obsolète
+//       break;
+//     case 'alphabetique':
+//       filtreASC();
+//       break;
+//   }
+// }
 
 
 //FILTRE PAR ORDRE ALPHABETIQUE
 /**
  * Fonction filtrage par ordre alphabétique sort() -> tri les éléments du tableau list_all_games (À REDEFINIR)
  */
-function filtreASC() {
-  let filterASC = list_all_games.sort(function(a, b) {
-    if (a.name.toLowerCase() < b.name.toLowerCase()) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
+// function filtreASC() {
 
-  // showGames(filterASC); Fonction obsolète
-}
+//   let filterASC = list_all_games.sort(function(a, b) {
+//     if (a.name.toLowerCase() < b.name.toLowerCase()) {
+//       return -1;
+//     } else {
+//       return 1;
+//     }
+//   });
+
+//   console.log(filterASC);
+
+//   // showGames(filterASC); Fonction obsolète
+// }
