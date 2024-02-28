@@ -1,5 +1,15 @@
 <?php
-    function checkRatingForm($isNewGame, $id_game, $user, $URL) {
+
+    /**
+     * Permet de vérifier et d'utiliser les informations du formulaire de notation
+     * 
+     * @param bool   $isNewGame     Indique si le jeu a déjà été noter par l'utilisateur
+     * @param int    $id_game       Identifiant du jeu
+     * @param ?user  $user          L'utilisateur
+     * @param string $URL           URL de redirection
+     * 
+     */
+    function checkRatingForm(bool $isNewGame, int $id_game, ?user $user, string $URL) {
         if($_SESSION['user'] == null) {
             header("Location: login.php");
         }
@@ -52,7 +62,16 @@
         }
     }
 
-    function setRatingForm($isNewGame, $user, $id_game, $backURL) {
+    /**
+     * Affiche le formulaire de notation
+     * 
+     * @param bool   $isNewGame     Indique si le jeu a déjà été noter par l'utilisateur
+     * @param ?user  $user          L'utilisateur
+     * @param int    $id_game       Identifiant du jeu
+     * @param string $backURL           URL de redirection
+     * 
+     */
+    function setRatingForm(bool $isNewGame, ?user $user, int $id_game, string $backURL) {
         //echo "<section id='rating-form-section'><a href='$backURL'>Retour</a>";
         $span = "closeElement('rating-section')";
         echo '<span onclick="'.$span.'">x</span><form method="POST" id="rating-form" action="#">';

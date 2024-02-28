@@ -43,8 +43,18 @@ htmlHead('Game Rating'); ?>
             <section id="global-game-section">
                 <?php
 
-                include_once($_SERVER['DOCUMENT_ROOT'] . "/src/templates/pagination.php");
-                getPage(1);
+                include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/pagination.php");
+                $src = $_GET['src'] ?? null;
+                if($src == null) {
+                    getPage(1);
+                }
+                else {
+                    $sql = "SELECT * FROM game WHERE name LIKE '%$src%'";
+                    //getSpecificGamesInPage(1, $sql);
+                    $sql_max = "SELECT COUNT(*) nb FROM game WHERE name LIKE '%$src%'";
+                    getSQLPage(1, $sql, $sql_max);
+                }
+
                 ?>
 
             </section>

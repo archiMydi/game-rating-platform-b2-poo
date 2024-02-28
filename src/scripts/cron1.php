@@ -16,7 +16,7 @@ function setLastUserCheck($uid)
     $folder = __DIR__ . "/";
     $file = "last.txt";
 
-    $myfile = fopen($folder . $file, "r+") or die("Unable to open file !");
+    $myfile = fopen($folder . $file, "w") or die("Unable to open file !");
     fwrite($myfile, $uid);
 }
 
@@ -35,10 +35,6 @@ function getLastUserCheck(): string
     $myfile = fopen($folder . $file, "r") or die("Unable to open file !");
     return fread($myfile, filesize(__DIR__ . "/" . "last.txt"));
 }
-
-setLastUserCheck(1);
-
-echo "<br>" . getLastUserCheck();
 
 function cosSimilarity($u, $v)
 {
