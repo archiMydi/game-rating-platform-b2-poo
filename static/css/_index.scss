@@ -87,7 +87,14 @@
                     flex-direction: row;
                     width: 100%;
 
+                    form {
+                        display: flex;
+                        flex-direction: row;
+                        width: 100%;
+                    }
+
                     form input {
+                        
                         width: 50%;
                         height: 40px;
                         padding-left: 20px;

@@ -259,6 +259,11 @@
   flex-direction: row;
   width: 100%;
 }
+#body-game-list main #main-section #second-header #search form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
 #body-game-list main #main-section #second-header #search form input {
   width: 50%;
   height: 40px;

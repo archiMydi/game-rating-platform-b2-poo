@@ -1,9 +1,10 @@
 <?php
-include_once("src/templates/database.php");
-require_once("src/templates/init.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/src/templates/init.php");
 if ($_SESSION['user'] == null) {
     header("Location: index.php");
 }
+$user = $_SESSION['user'];
 ?>
 
 <!DOCTYPE html>
@@ -11,13 +12,13 @@ if ($_SESSION['user'] == null) {
 
 <?php include_once $_SERVER['DOCUMENT_ROOT'].'/src/templates/html_head.php';
 htmlHead('Game Rating'); 
-include(__DIR__."src/templates/rate_game.php");
+include($_SERVER['DOCUMENT_ROOT']."/src/templates/rate_game.php");
     $id_g = $_GET['id_g'] ?? -1;
     if($id_g != -1) {
         checkRatingForm(false, $id_g, $user, "account.php?id_g=$id_g");
     }
-    include(__DIR__."src/templates/navbar.php"); 
-    include(__DIR__."src/templates/login.php");
+    include($_SERVER['DOCUMENT_ROOT']."/src/templates/navbar.php"); 
+    include($_SERVER['DOCUMENT_ROOT']."/src/templates/login.php");
 ?>
 <script>
         // récupère les informations de chaque jeu
@@ -80,7 +81,7 @@ include(__DIR__."src/templates/rate_game.php");
 
             <section id="details-game-section">
                 <?php
-                $users = getInfosUser('SELE');
+                //$users = getInfosUser('SELE');
                 ?>
             </section>
 
