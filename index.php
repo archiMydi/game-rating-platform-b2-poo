@@ -236,6 +236,7 @@ htmlHead('Game Rating'); ?>
                                 getInfosForFrontend('SELECT * FROM gender;');
                                 ?>;
     </script>
+
     <script src='src/scripts/index.js'></script>
 
 </body>
