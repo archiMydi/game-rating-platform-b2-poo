@@ -37,7 +37,7 @@ function insertData($data, $page)
 
     $fileContent = file_get_contents('./data'. $page .'.json');
 
-    echo "Petit test accès data.json : " . $fileContent;
+    // //echo "Petit test accès data.json : " . $fileContent;
 };
 
 /**
