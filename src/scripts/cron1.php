@@ -117,11 +117,8 @@ function getUsers($nb_user)
     }
 }
 
-var_dump(getUsers(2));
-echo "<br><br><br>";
-var_dump(getUsers(2));
+$data = getUsers(1700);
 
-$data = getUsers(0, 1700);
 
 // Similarité de profils entre plusieurs users
 function calculateUserSimilarity($data)
