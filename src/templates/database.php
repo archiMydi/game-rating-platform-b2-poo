@@ -506,6 +506,10 @@ function getGamesInPage(int $page): ?array
     global $conn;
     global $nb_jeu_par_page;
 
+    if($page < 1) {
+        $page = 1;
+    }
+
     $list = array();
     $id_min = ($page - 1) * $nb_jeu_par_page;
 
