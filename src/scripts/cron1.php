@@ -76,7 +76,7 @@ function cosSimilarity($u, $v)
     $similarity = $scalarProduct / ($norm1 * $norm2);
 
     // Retourne la similarité cosinus calculée
-    return $similarity;
+    return round($similarity, 3);
 }
 
 

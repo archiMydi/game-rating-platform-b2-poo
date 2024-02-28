@@ -1,9 +1,9 @@
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/src/templates/html_head.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/src/classes/Rating.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/src/classes/User.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/src/classes/Game.php';
-require_once($_SERVER['DOCUMENT_ROOT'] . "/src/templates/init.php");
+include $_SERVER['DOCUMENT_ROOT'].'/src/templates/html_head.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/src/classes/Rating.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/src/classes/User.php';
+include_once $_SERVER['DOCUMENT_ROOT'].'/src/classes/Game.php';
+require_once($_SERVER['DOCUMENT_ROOT']."/src/templates/init.php");
 
 htmlHead('Recommandations');
 
@@ -19,8 +19,8 @@ if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
 ?>
 
 <body class='reco-page'>
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/src/templates/navbar.php'; ?>
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/src/templates/login.php"); ?>
+    <?php include $_SERVER['DOCUMENT_ROOT'].'/src/templates/navbar.php'; ?>
+    <?php include($_SERVER['DOCUMENT_ROOT']."/src/templates/login.php"); ?>
 
     <script src='static/js/reco.js'></script>
     <section class='reco-section'>
@@ -45,7 +45,7 @@ function constructRecoPage($uid, $isUser)
 
     if (isset($userVector) && (count($userVector) >= 10)) {
         echo "<h1>CES JEUX DEVRAIENT VOUS PLAIRE</h1>";
-        $recos = User::getReco($uid); //À remplacer par la fonction qui retourne les recommandations pour current user
+        $recos = Game::getTop10(); //À remplacer par la fonction qui retourne les recommandations pour current user
         echo "<script>displayReco($recos)</script>";
     } else {
         echo "<h1 class='reco-h1'>TOP 10 DES MEILLEURS JEUX</h1>
