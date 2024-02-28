@@ -216,6 +216,7 @@
 #body-game-list main {
   display: flex;
   flex-direction: row;
+  /*SOURCE RATING CSS : https://codepen.io/Diegobrix/pen/vYQKJbE*/
 }
 #body-game-list main font {
   size: 22px;
@@ -331,7 +332,6 @@
   width: 100%;
   padding: 50px 0;
   background-color: rgb(59, 57, 133);
-  /*SOURCE RATING CSS : https://codepen.io/Diegobrix/pen/vYQKJbE*/
 }
 #body-game-list main #game-section .game {
   display: flex;
@@ -363,7 +363,7 @@
 #body-game-list main #game-section .game:hover {
   transform: scale(1.01);
 }
-#body-game-list main #game-section #details-game-section {
+#body-game-list main #details-game-section {
   display: none;
   justify-content: center;
   align-items: center;
@@ -373,14 +373,14 @@
   padding: 0 0 100px;
   background-color: aliceblue;
 }
-#body-game-list main #game-section #details-game-section .gameFiche {
+#body-game-list main #details-game-section .gameFiche {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   width: 100%;
 }
-#body-game-list main #game-section #details-game-section .gameFiche h2 {
+#body-game-list main #details-game-section .gameFiche h2 {
   display: flex;
   align-items: center;
   font-size: 30px;
@@ -389,13 +389,13 @@
   color: white;
   background-color: rgb(85, 81, 194);
 }
-#body-game-list main #game-section #details-game-section .gameFiche .game-header {
+#body-game-list main #details-game-section .gameFiche .game-header {
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 100%;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .galery {
+#body-game-list main #details-game-section .gameFiche .galery {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -403,39 +403,39 @@
   height: 650px;
   padding: 30px 0;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .galery img {
+#body-game-list main #details-game-section .gameFiche .galery img {
   width: 70%;
   height: 100%;
   border-radius: 20px;
   -o-object-fit: cover;
      object-fit: cover;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .details-game-info {
+#body-game-list main #details-game-section .gameFiche .details-game-info {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: 100%;
   color: white;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .details-game-info .details-game-description {
+#body-game-list main #details-game-section .gameFiche .details-game-info .details-game-description {
   width: 50%;
   padding: 50px;
   border-radius: 20px 0 0 20px;
   background-color: rgb(59, 57, 133);
 }
-#body-game-list main #game-section #details-game-section .gameFiche .details-game-info .details-game-genre {
+#body-game-list main #details-game-section .gameFiche .details-game-info .details-game-genre {
   padding: 50px;
   border-radius: 0 20px 20px 0;
   background-color: rgb(52, 69, 168);
 }
-#body-game-list main #game-section #details-game-section .gameFiche .recommandation {
+#body-game-list main #details-game-section .gameFiche .recommandation {
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 100%;
   margin: 100px 0;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .recommandation .game-list-recommandation {
+#body-game-list main #details-game-section .gameFiche .recommandation .game-list-recommandation {
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -443,12 +443,12 @@
   gap: 20px;
   margin: 40px 0;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .recommandation .game-list-recommandation img {
+#body-game-list main #details-game-section .gameFiche .recommandation .game-list-recommandation img {
   min-width: 200px;
   width: 20%;
   border-radius: 20px;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .user-appreciation {
+#body-game-list main #details-game-section .gameFiche .user-appreciation {
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -457,22 +457,22 @@
   width: 100%;
   gap: 100px;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .user-appreciation .users {
+#body-game-list main #details-game-section .gameFiche .user-appreciation .users {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .user-appreciation .canvas {
+#body-game-list main #details-game-section .gameFiche .user-appreciation .canvas {
   display: flex;
 }
-#body-game-list main #game-section #details-game-section .gameFiche .game-note {
+#body-game-list main #details-game-section .gameFiche .game-note {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 40px 0;
 }
-#body-game-list main #game-section #rating-section {
+#body-game-list main #rating-section {
   display: none;
   align-items: center;
   justify-content: center;
@@ -488,7 +488,7 @@
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.486);
 }
-#body-game-list main #game-section #rating-section span {
+#body-game-list main #rating-section span {
   display: flex;
   z-index: 2;
   position: relative;
@@ -501,11 +501,11 @@
   cursor: pointer;
   transition: 0.5s;
 }
-#body-game-list main #game-section #rating-section span:hover {
+#body-game-list main #rating-section span:hover {
   background-color: rgb(52, 69, 168);
   transform: scale(0.95);
 }
-#body-game-list main #game-section #rating-section #rating-form {
+#body-game-list main #rating-section #rating-form {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -516,16 +516,16 @@
   background-color: rgb(52, 69, 168);
   color: white;
 }
-#body-game-list main #game-section #rating-section #rating-form h3 {
+#body-game-list main #rating-section #rating-form h3 {
   margin-top: 20px;
 }
-#body-game-list main #game-section #rating-section .rating {
+#body-game-list main #rating-section .rating {
   min-width: 50px;
   width: 35%;
   margin: 30px 0;
   transform: rotateY(180deg);
 }
-#body-game-list main #game-section #rating-section .rating .rating-container {
+#body-game-list main #rating-section .rating .rating-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -533,15 +533,15 @@
   width: 100%;
   height: 100%;
 }
-#body-game-list main #game-section #rating-section .rating .rating-container input {
+#body-game-list main #rating-section .rating .rating-container input {
   display: none;
 }
-#body-game-list main #game-section #rating-section .rating .rating-container label {
+#body-game-list main #rating-section .rating .rating-container label {
   width: 20%;
   aspect-ratio: 1;
   cursor: pointer;
 }
-#body-game-list main #game-section #rating-section .rating .rating-container .star-stroke {
+#body-game-list main #rating-section .rating .rating-container .star-stroke {
   display: grid;
   place-items: center;
   width: 100%;
@@ -551,7 +551,7 @@
           clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   transition: 0.5s;
 }
-#body-game-list main #game-section #rating-section .rating .rating-container .star-fill {
+#body-game-list main #rating-section .rating .rating-container .star-fill {
   width: 70%;
   aspect-ratio: 1;
   background-color: rgb(52, 69, 168);
@@ -559,14 +559,14 @@
           clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   transition: 0.5s;
 }
-#body-game-list main #game-section #rating-section .rating .rating-container input:hover ~ label .star-stroke,
-#body-game-list main #game-section #rating-section .rating .rating-container input:checked ~ label .star-stroke {
+#body-game-list main #rating-section .rating .rating-container input:hover ~ label .star-stroke,
+#body-game-list main #rating-section .rating .rating-container input:checked ~ label .star-stroke {
   background-color: rgb(219, 152, 88);
 }
-#body-game-list main #game-section #rating-section .rating .rating-container input:checked ~ label .star-stroke .star-fill {
+#body-game-list main #rating-section .rating .rating-container input:checked ~ label .star-stroke .star-fill {
   background-color: rgb(219, 152, 88);
 }
-#body-game-list main #game-section #rating-section .rating .rating-container label:hover .label-description::after {
+#body-game-list main #rating-section .rating .rating-container label:hover .label-description::after {
   content: attr(data-content);
   position: fixed;
   left: 0;
