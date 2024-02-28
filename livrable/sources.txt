@@ -1,0 +1,3 @@
+Sources :
+API pour intégrer les jeux dans la base de données -> https://rawg.io/apidocs
+Bibliothèque Chart.js pour concevoir des radar chart -> https://www.chartjs.org/docs/latest/
