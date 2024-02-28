@@ -14,6 +14,7 @@ $user = $_SESSION['user'];
 htmlHead('Game Rating'); 
 include($_SERVER['DOCUMENT_ROOT']."/src/templates/rate_game.php");
     $id_g = $_GET['id_g'] ?? -1;
+    echo ("VOICI LE ID : $id_g");
     if($id_g != -1) {
         checkRatingForm(false, $id_g, $user, "account.php?id_g=$id_g");
     }
@@ -83,9 +84,15 @@ include($_SERVER['DOCUMENT_ROOT']."/src/templates/rate_game.php");
 
             </section>
 
+            <section id="game-section">
+
+            </section>
+
             <section id="rating-section">
                 <?php
+                echo ("JE PASSE BIEN ICI");
                     if($id_g != -1) {
+                        echo ("JE PASSE BIEN ICI");
                         $game = getGameById($id_g);
                         $list = getRatingGame($id_g, $user->getID());
                         $notes = "-1";
