@@ -44,6 +44,7 @@
                 else {
                     echo "Connexion réussi !";
                     $_SESSION['user'] = getUserByPseudo($pseudo);
+                    header("Location: ../../account.php");
                 }
             }
         ?>
