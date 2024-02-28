@@ -17,7 +17,7 @@ try {
  *
  * @param string     $sql Requête SQL
  *
- * @return user      retourne l'utilisateur sous forme d'objet user ou null s'il n'existe pas
+ * @return user      Retourne l'utilisateur sous forme d'objet user ou null s'il n'existe pas
  */
 function getInfosUser(String $sql): ?user
 {
@@ -33,6 +33,11 @@ function getInfosUser(String $sql): ?user
     }
 }
 
+/**
+ * Récupère l'identifiant du dernier utilisateur dans la base de données
+ *
+ * @return user      Retourne l'identifiant
+ */
 function getLastUserID(): int
 {
 
@@ -51,7 +56,7 @@ function getLastUserID(): int
  *
  * @param     $conn    Connexion à la base de données
  *
- * @return ?string Renvoie une liste JSON ou 'false' en cas d'erreur
+ * @return ?string     Renvoie une liste JSON ou 'false' en cas d'erreur
  */
 
 function getUserListJSON($conn): ?string //Récupérer la liste des users
@@ -113,7 +118,7 @@ function getInfosGame(String $sql): ?game
  *
  * @param string     $id     Identifiant du compte
  *
- * @return user      retourne l'utilisateur sous forme d'objet user
+ * @return user      Retourne l'utilisateur sous forme d'objet user
  */
 function getUserById(int $id): user
 {
@@ -128,7 +133,7 @@ function getUserById(int $id): user
  * @param string     $id     Pseudo ou adresse email
  * @param string     $mdp    Mot de passe
  *
- * @return user      retourne l'utilisateur sous forme d'objet user ou null s'il n'existe pas
+ * @return ?user     Retourne l'utilisateur sous forme d'objet user ou null s'il n'existe pas
  */
 function getUser(string $id, string $mdp): ?user
 {
@@ -142,7 +147,7 @@ function getUser(string $id, string $mdp): ?user
  *
  * @param string     $pseudo     Pseudo du compte
  *
- * @return user      retourne l'utilisateur sous forme d'objet user
+ * @return user      Retourne l'utilisateur sous forme d'objet user
  */
 function getUserByPseudo(String $pseudo): user
 {
@@ -157,7 +162,7 @@ function getUserByPseudo(String $pseudo): user
  *
  * @param string     $email     Adresse e-mail du compte
  *
- * @return user      retourne l'utilisateur sous forme d'objet user
+ * @return user      Retourne l'utilisateur sous forme d'objet user
  */
 function getUserByEmail(String $email): user
 {
@@ -172,7 +177,7 @@ function getUserByEmail(String $email): user
  *
  * @param int     $id     Identifiant du jeu
  *
- * @return ?game      Retourne le jeu sous forme d'objet game
+ * @return ?game  Retourne le jeu sous forme d'objet game
  */
 function getGameById(int $id): ?game
 {
@@ -187,7 +192,7 @@ function getGameById(int $id): ?game
  *
  * @param string     $name     Nom du jeu
  *
- * @return ?game      Retourne le jeu sous forme d'objet game
+ * @return ?game     Retourne le jeu sous forme d'objet game
  */
 function getGameByName(string $name): ?game
 {
@@ -202,7 +207,7 @@ function getGameByName(string $name): ?game
  *
  * @param user     $user    Utilisateur
  *
- * @return string  retourne le mot de passe
+ * @return string  Retourne le mot de passe
  */
 function getMDP(user $user): String
 {
@@ -493,7 +498,7 @@ function getSQLMaxPages($sql): ?int
  *
  * @param int     $page   Numéro de la page
  *
- * @return array[game] Liste des jeux
+ * @return array[game]    Liste des jeux
  */
 function getGamesInPage(int $page): ?array
 {
@@ -528,7 +533,7 @@ function getGamesInPage(int $page): ?array
  * @param int     $page   Numéro de la page
  * @param         $sql    Requête pour la selection de jeu
  *
- * @return array[game] Liste des jeux
+ * @return array[game]    Liste des jeux
  */
 function getSpecificGamesInPage(int $page, $sql): ?array
 {

@@ -49,8 +49,8 @@ include($_SERVER['DOCUMENT_ROOT']."/src/templates/rate_game.php");
                 <h1 style="color: white;">Rechercher un nouveau jeu à noter</h1><br>
                 <section id="search">
                     <form id='search-form' action="#" method="GET">
-                        <input type="search" name='src' id="input-search" onkeyup="searchGame()">
-                        <button type="submit" form="search-form" onclick="searchGame()"><i class="material-icons" id="icon_search">search</i></button>
+                        <input type="search" name='src' id="input-search">
+                        <button type="submit" form="search-form"><i class="material-icons" id="icon_search">search</i></button>
                     </form>
                 </section>
             </section>
@@ -88,14 +88,20 @@ include($_SERVER['DOCUMENT_ROOT']."/src/templates/rate_game.php");
                     if($id_g != -1) {
                         $game = getGameById($id_g);
                         $list = getRatingGame($id_g, $user->getID());
-                        $notes = "[";
+                        $notes = "-1";
                         foreach($list as $elm) {
-                            if($elm != end($list)) {
+                            if($elm == $list[0]) {
+                                $notes = "[".$elm[1].", ";
+                            }
+                            else if($elm != end($list)) {
                                 $notes .= $elm[1].", ";
                             }
                             else {
                                 $notes .= $elm[1]."]";
                             }
+                        }
+                        if($notes == "-1") {
+                            $notes = "[3, 3, 3]";
                         }
                         echo '<script>showGameDetails("'.$game->getName().'", '.$id_g.', "'.$game->getVisuel().'", "'.$game->getGameInfos().'",'.$notes.')</script>';
                         setRatingForm(false, $user, $id_g, "account.php?id_g=$id_g");

@@ -1,6 +1,6 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/src/templates/database.php");
-include($_SERVER['DOCUMENT_ROOT']."/src/templates/init.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/src/templates/database.php");
+include($_SERVER['DOCUMENT_ROOT'] . "/src/templates/init.php");
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +44,16 @@ htmlHead('Game Rating'); ?>
                 <?php
 
                 include_once($_SERVER['DOCUMENT_ROOT'] . "/src/templates/pagination.php");
-                getPage(1);
+                $src = $_GET['src'] ?? null;
+                if ($src == null) {
+                    getPage(1);
+                } else {
+                    $sql = "SELECT * FROM game WHERE name LIKE '%$src%'";
+                    //getSpecificGamesInPage(1, $sql);
+                    $sql_max = "SELECT COUNT(*) nb FROM game WHERE name LIKE '%$src%'";
+                    getSQLPage(1, $sql, $sql_max);
+                }
+
                 ?>
 
             </section>

@@ -29,8 +29,12 @@ function showUserDetails(uid) {
 
 window.onclick = function (event) {
     let modal = $('.modal')[0];
+    let modalLogin = $('.login-modal')[0];
     if (event.target == modal) {
         modal.remove();
+    }
+    if (event.target == modalLogin) {
+        $(modalLogin).hide();
     }
 }
 
