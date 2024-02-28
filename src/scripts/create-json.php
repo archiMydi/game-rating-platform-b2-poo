@@ -23,6 +23,8 @@ function insertData($data, $page)
     $gamesData = array();
 
     $results = $data["results"];
+    // echo $results;
+    
     foreach ($results as $element) {
         $gamesData[] = dataGame($element);
     };
@@ -31,11 +33,11 @@ function insertData($data, $page)
     $jsonData = json_encode($gamesData);
 
     $file = './data'. $page .'.json';
-    file_put_contents($file, $jsonData, FILE_APPEND);
+    file_put_contents($file, $jsonData);
 
-    // $fileContent = file_get_contents('./data'. $page .'.json');
+    $fileContent = file_get_contents('./data'. $page .'.json');
 
-    // echo "Petit test accès data.json : " . $fileContent;
+    echo "Petit test accès data.json : " . $fileContent;
 };
 
 /**
